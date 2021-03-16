@@ -13,6 +13,6 @@
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/TW-HomeAssistant-Config?style=for-the-badge">
   <img src="https://img.shields.io/badge/HA--Version-5.12-brightgreen?style=for-the-badge">
-  <img scr="https://img.shields.io/maintenance/yes/2021?style=for-the-badge">
+  <img src="https://img.shields.io/maintenance/yes/2021?style=for-the-badge">
   <img src="https://img.shields.io/github/stars/twhite96/TW-HomeAssistant-Config?style=social">
 </p>
