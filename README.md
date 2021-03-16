@@ -2,7 +2,7 @@
   <img src="/images/suburban-smarts.png" width="250"/>
 </p>
 
-<h1 align="center">TW Suburban Smarts Smart Home Configuration</h1>
+<h1 align="center">TW Suburban Smarts Smart Home Configuration</h1><br />
 
 <h3 align="center">Home Assistant Configuration &amp; Documentation for my Smart Apartment.</h3>
 <p align="center">
