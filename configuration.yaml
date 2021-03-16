@@ -1,0 +1,27 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+vacuum:
+  - platform: xiaomi_miio
+    host: 192.168.68.101
+    token: 567a6e67653743396f3175674673446a
+    name: Jeeves
+spotify:
+  client_id: # client id
+  client_secret: # client secret
+media_player:
+  - platform: itunes
+    host: 192.168.1.50
+http:
+  base_url: https://xxxxx.duckdns.org:8123
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
