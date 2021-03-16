@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/twhite96/TW-HomeAssistant-Config/blob/master/images/suburban-smarts.png" width="250"/>
+  <img src="https://github.com/twhite96/TW-HomeAssistant-Config/images/suburban-smarts.png" width="250"/>
 </p>
 
 <h1 align="center">TW Suburban Smarts Smart Home Configuration</h1>
