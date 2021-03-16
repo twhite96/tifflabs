@@ -3,6 +3,7 @@
 </p>
 
 <h1 align="center">TW Suburban Smarts Smart Home Configuration</h1>
+
 <h3 align="center">Home Assistant Configuration &amp; Documentation for my Smart Apartment.</h3>
 <p align="center">
   I live in <img src="https://github.com/oxguy3/flags/blob/master/mini/us.png"/>, and therefor my links are for where I purchased from. There may be better (and most likely cheaper) sites in your local regions.</p>
