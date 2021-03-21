@@ -1,0 +1,238 @@
+#################################################################
+#                                                               #
+#                        Packages/Github                        #
+#                                                               #
+#################################################################
+
+#################################################################
+#                                                               #
+#                          Customize                            #
+#                                                               #
+#################################################################
+
+homeassistant:
+  customize:
+    sensor.stars:
+      icon: 'fab:github'     
+    sensor.subscribers:
+      icon: 'far:eye'   
+    sensor.forks:
+      icon: 'mdi:directions-fork'    
+    sensor.issues:
+      icon: 'fas:exclamation-circle' 
+    sensor.git_stars_next_dif:
+      icon: 'fas:arrow-circle-right'
+    sensor.git_stars_last_dif:
+      icon: 'fas:arrow-circle-left'   
+    sensor.git_stars_trend_dif:
+      icon: 'mdi:trending-up'
+    sensor.monthly_github:
+      friendly_name: 'This Month'
+    sensor.stars_last_month:
+      icon: 'mdi:counter' 
+    sensor.weekly_github:
+      friendly_name: 'This Week'
+    sensor.stars_last_week:
+      icon: 'mdi:counter' 
+      
+#################################################################
+#                                                               #
+#                            Sensors                            #
+#                                                               #
+#################################################################
+
+sensor:
+
+#################################################################
+#                                                               #
+#                         Command Line                          #
+#                                                               #
+#################################################################
+
+  - platform: command_line
+    command: 'curl https://api.github.com/repos/twhite96/TW-HomeAssistant-Config
+'
+    name: github
+    scan_interval: 3600
+    value_template: '{{ value_json.name }}'
+    json_attributes:
+      - open_issues
+      - subscribers_count
+      - forks
+      - stargazers_count
+      
+  - platform: command_line
+    command: 'curl https://api.github.com/repos/geekofweek/homeassistant'
+    name: Github Next
+    scan_interval: 3600
+    value_template: '{{ value_json.name }}'
+    json_attributes:
+      - stargazers_count
+      
+  - platform: command_line
+    command: 'curl https://api.github.com/repos/bruhautomation/BRUH3-Home-Assistant-Configuration'
+    name: Github Previous
+    scan_interval: 3600
+    value_template: '{{ value_json.name }}'
+    json_attributes:
+      - stargazers_count
+      
+  - platform: command_line
+    command: 'curl https://api.github.com/repos/CCOSTAN/Home-AssistantConfig'
+    name: Github Trending
+    scan_interval: 3600
+    value_template: '{{ value_json.name }}'
+    json_attributes:
+      - stargazers_count
+  
+  - platform: command_line
+    command: 'curl https://api.github.com/repos/JamesMcCarthy79/Home-Assistant-Config'
+    name: Github Trending
+    scan_interval: 3600
+    value_template: '{{ value_json.name }}'
+    json_attributes:
+      - stargazers_count
+
+####################################################
+#                                                  #
+#                   Sensor - MQTT                  #
+#                                                  #
+####################################################
+
+  - platform: mqtt
+    name: "Best Month"
+    state_topic: "github/month/best"
+    
+  - platform: mqtt
+    name: "Best Week"
+    state_topic: "github/week/best"
+    
+#################################################################
+#                                                               #
+#                            Template                           #
+#                                                               #
+#################################################################
+
+  - platform: template
+    sensors:
+    
+      issues:
+        value_template: "{{ state_attr('sensor.github', 'open_issues') }}"
+        entity_id: sensor.github
+        friendly_name: 'Issues'
+        
+      subscribers:
+        value_template: "{{ state_attr('sensor.github', 'subscribers_count') }}"
+        entity_id: sensor.github
+        friendly_name: 'Subscribers'
+        
+      forks:
+        value_template: "{{ state_attr('sensor.github', 'forks') }}"
+        entity_id: sensor.github
+        friendly_name: 'Forks'
+
+      stars:
+        value_template: "{{ state_attr('sensor.github', 'stargazers_count') }}"
+        entity_id: sensor.github
+        friendly_name: 'Stars'
+        
+      stars_next:
+        value_template: "{{ state_attr('sensor.github_next', 'stargazers_count') }}"
+        entity_id: sensor.github_next
+        friendly_name: 'Next Target'
+        
+      stars_previous:
+        value_template: "{{ state_attr('sensor.github_previous', 'stargazers_count') }}"
+        entity_id: sensor.github_previous
+        friendly_name: 'Last Target'
+        
+      stars_trending:
+        value_template: "{{ state_attr('sensor.github_trending', 'stargazers_count') }}"
+        entity_id: sensor.github_trending
+        friendly_name: 'Trending'
+        
+      stars_last_week:
+        value_template: "{{ states.sensor.weekly_github.attributes.last_period }}"
+        friendly_name: 'Last Week'
+        
+      stars_last_month:
+        value_template: "{{ states.sensor.monthly_github.attributes.last_period }}"
+        friendly_name: 'Last Month'
+        
+      git_stars_next_dif:
+        value_template: "{{ states('sensor.stars_next')|int - states('sensor.stars')|int }}"
+        friendly_name: 'Next' 
+        
+      git_stars_last_dif:
+        value_template: "{{ states('sensor.stars')|int - states('sensor.stars_previous')|int }}"
+        friendly_name: 'Last'
+        
+      git_stars_trend_dif:
+        value_template: "{{ states('sensor.stars_trending')|int - states('sensor.stars')|int }}"
+        friendly_name: 'Trending'
+        
+#################################################################
+#                                                               #
+#                           Statistics                          #
+#                                                               #
+#################################################################
+        
+  - platform: statistics
+    name: Stars This Week
+    entity_id: sensor.stars
+    max_age:
+      days: 7
+      
+  - platform: statistics
+    name: Stars Last Week
+    entity_id: sensor.stars
+    max_age:
+      days: 14
+      
+  - platform: statistics
+    name: Stars This Month
+    entity_id: sensor.stars
+    max_age:
+      days: 30
+      
+  - platform: statistics
+    name: Stars Last Month
+    entity_id: sensor.stars
+    max_age:
+      days: 60
+      
+  - platform: statistics
+    name: Target Next Change
+    entity_id: sensor.stars_next
+    max_age:
+      days: 7
+      
+  - platform: statistics
+    name: Target Last Change
+    entity_id: sensor.stars_last
+    max_age:
+      days: 7
+  
+#################################################################
+#                                                               #
+#                        Utility Meter                          #
+#                                                               #
+################################################################# 
+
+utility_meter:
+  weekly_github:
+    source: sensor.stars
+    cycle: weekly
+    
+  monthly_github:
+    source: sensor.stars
+    cycle: monthly
+    
+#################################################################
+#                                                               #
+#                         Automations                           #
+#                                                               #
+#################################################################
+
+## All automations for this package have now been moved to Node-RED please see Node-Red Flows folder within this package for more infomation! ##
+automation:
