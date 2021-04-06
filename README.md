@@ -14,9 +14,8 @@
   <img src="https://img.shields.io/github/last-commit/twhite96/TW-HomeAssistant-Config?style=for-the-badge">
   <img src="https://img.shields.io/badge/HA--Version-5.12-brightgreen?style=for-the-badge">
   <img src="https://img.shields.io/maintenance/yes/2021?style=for-the-badge">
-  <img src="https://img.shields.io/packagist/l/twhite96/TW-HomeAssistant-Config?style=for-the-badge" />
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
-  <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/TW-HomeAssistant-Config?logoColor=%23ff0000&style=for-the-badge">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/TW-HomeAssistant-Config?logoColor=yellow&style=for-the-badge">
   <img src="https://img.shields.io/github/stars/twhite96/TW-HomeAssistant-Config?style=social">
 </p>
 

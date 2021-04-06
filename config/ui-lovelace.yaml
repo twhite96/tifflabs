@@ -1,0 +1,5 @@
+title: TW Suburban Smarts
+
+resources:
+  - url: /hacsfiles/github-flexi-card/github-flexi-card.js
+    type: module
