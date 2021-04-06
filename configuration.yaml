@@ -1,4 +1,3 @@
-
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
@@ -10,18 +9,80 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-vacuum:
-  - platform: xiaomi_miio
-    host: 192.168.68.101
-    token: 567a6e67653743396f3175674673446a
-    name: Jeeves
 spotify:
-  client_id: # client id
-  client_secret: # client secret
+  client_id: !secret spotify_client_id
+  client_secret: !secret spotify_client_secret
 media_player:
   - platform: itunes
     host: 192.168.1.50
-http:
-  base_url: https://xxxxx.duckdns.org:8123
-  ssl_certificate: /ssl/fullchain.pem
-  ssl_key: /ssl/privkey.pem
+frontend:
+  themes: !include_dir_merge_named themes
+frontend.set_theme: synthwave.yaml
+
+# GitHub Integration
+sensor:
+  - platform: github
+    access_token: !secret github_access_token
+    repositories:
+      - path: 'twhite96/TW-HomeAssistant-Config'
+        name: TW HA Config
+      - path: 'twhite96/js-dev-reads'
+        name: JS Dev Reads
+      - path: 'twhite/checkyoself'
+        name: Check Yo Self
+      - path: 'twhite/portfolio-v5'
+        name: Portfolio
+        
+# Custom Themes Input Select
+input_select:
+
+  themes:
+    name: 'Themes'
+    icon: fas:paint-roller
+    options:
+      - Caule Black Rose
+      - Caule Black Purple
+      - Caule Black Blue 
+      - Caule Black Aqua
+      - Caule Black Green
+      - Caule Black Yellow
+      - Caule Black Orange
+      - Caule Black Coral
+      - Caule Black Pink
+      - Caule Black Gray
+      - Caule Dark Rose
+      - Caule Dark Purple
+      - Caule Dark Blue 
+      - Caule Dark Aqua
+      - Caule Dark Green
+      - Caule Dark Yellow
+      - Caule Dark Orange
+      - Caule Dark Coral
+      - Caule Dark Pink
+      - Caule Dark Gray
+      - Caule Light Rose
+      - Caule Light Purple
+      - Caule Light Blue 
+      - Caule Light Aqua
+      - Caule Light Green
+      - Caule Light Yellow
+      - Caule Light Orange
+      - Caule Light Coral
+      - Caule Light Pink
+      - Caule Light Gray
+      - Caule Black Rose Glass
+      - Caule Black Purple Glass
+      - Caule Black Blue Glass 
+      - Caule Black Aqua Glass
+      - Caule Black Green Glass
+      - Caule Black Yellow Glass
+      - Caule Black Orange Glass
+      - Caule Black Coral Glass
+      - Caule Black Pink Glass
+      - Caule Black Gray Glass      
+      - Default
+# Nanoleaf Lights
+light:
+  - platform: nanoleaf
+    host: 192.168.1.110
+    token: !secret nanoleaf_token

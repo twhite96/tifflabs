@@ -1,0 +1,32 @@
+# Kitchen Lights
+group:
+  kitchen:
+    name: Kitchen
+    entities:
+      - light.kitchen_overhead_2
+      - light.smart_led_light_strip_msl320c_main_channel
+  living_room_lights:
+    name: Living Room Lights
+    entities:
+      - light.living_room_1
+      - light.living_room_2
+      - light.tv_strip
+  all_audio:
+    name: AirPlay and HomePods
+    entities:
+      - input_boolean.bedpods
+      - input_boolean.tvpods
+      - input_boolean.stereopods
+      - media_player.family_room
+  office_lights:
+    name: Office Lighting
+    entities:
+      - light.bookshelf_light
+      - light.bookshelf_light_2
+      - light.desk_strip_2
+      - switch.desk_light
+  bedroom_lights:
+    name: Bedroom Lighting
+    entities:
+      - light.glass_lamp
+      - light.bedroom_light_2
