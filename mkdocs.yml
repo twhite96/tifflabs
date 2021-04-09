@@ -24,8 +24,8 @@ theme:
   palette:
     primary: 'Pink'
     accent: 'Pink'
-repo_name: 'twhite96/tw-homeassistant-config'
-repo_url: 'https://github.com/twhite96/tw-homeassistant-config'
+repo_name: 'twhite96/SmartHome'
+repo_url: 'https://github.com/twhite96/SmartHome'
 extra:
   disqus: docs-ss-org
   social:
