@@ -29,14 +29,14 @@ repo_url: 'https://github.com/twhite96/tw-homeassistant-config'
 extra:
   disqus: docs-ss-org
   social:
-      link: 'https://tiffanywhite.blog/categories/#smart-home-series'
     - icon: 'fontawesome/solid/rss'
-      link: 'https://github.com/twhite96/tw-homeassistant-config'
+      link: 'https://tiffanywhite.blog/categories/#smart-home-series'
     - icon: 'fontawesome/brands/github'
-      link: 'https://twitter.com/BravesFanPABaby'
+      link: 'https://github.com/twhite96/tw-homeassistant-config'
     - icon: 'fontawesome/brands/twitter'
-      link: 'https://www.youtube.com/channel/UCANizz_NF-Xr6DrnSLg0Ogg'
+      link: 'https://twitter.com/BravesFanPABaby'
     - icon: 'fontawesome/brands/youtube'
+      link: 'https://www.youtube.com/channel/UCANizz_NF-Xr6DrnSLg0Ogg'
 copyright: 'Copyright &copy; 2020 Tiffany White'
 site_author: 'Tiffany White'
 site_name: Suburban Smarts
