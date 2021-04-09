@@ -20,6 +20,7 @@ theme:
   favicon: images/favicon.png
   logo: 'logo.svg'
   font:
+    text: Lato
     code: Fira Code
   name: 'material'
   palette:
