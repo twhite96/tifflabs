@@ -20,4 +20,3 @@ global:
   # custom_popups: #Create custom popups for a whole domain. See popup addons in the docs
   #   - domain: cover
   #     path: 'dwains-dashboard/addons/popups/cover/popup.yaml'
-  

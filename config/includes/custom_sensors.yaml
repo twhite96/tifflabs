@@ -1,0 +1,14 @@
+# GitHub Integration
+
+sensor:
+  - platform: github
+    access_token: !secret github_access_token
+    repositories:
+      - path: 'twhite96/TW-HomeAssistant-Config'
+        name: TW HA Config
+      - path: 'twhite96/js-dev-reads'
+        name: JS Dev Reads
+      - path: 'twhite/checkyoself'
+        name: Check Yo Self
+      - path: 'twhite/portfolio-v5'
+        name: Portfolio
