@@ -29,8 +29,8 @@ repo_url: 'https://github.com/twhite96/tw-homeassistant-config'
 extra:
   disqus: docs-ss-org
   social:
-    - link: 'https://tiffanywhite.blog/categories/#smart-home-series'
-      icon: 'fontawesome/solid/rss'
+      link: 'https://tiffanywhite.blog/categories/#smart-home-series'
+    - icon: 'fontawesome/solid/rss'
       link: 'https://github.com/twhite96/tw-homeassistant-config'
     - icon: 'fontawesome/brands/github'
       link: 'https://twitter.com/BravesFanPABaby'
