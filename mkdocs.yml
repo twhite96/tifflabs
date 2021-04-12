@@ -23,9 +23,9 @@ theme:
     text: Fira Code
     code: Fira Code
   name: 'material'
-  palette:
-    primary: 'Pink'
-    accent: 'Pink'
+  # palette:
+  #   primary: 'Pink'
+  #   accent: 'Pink'
 repo_name: 'twhite96/SmartHome'
 repo_url: 'https://github.com/twhite96/SmartHome'
 extra:
@@ -44,3 +44,5 @@ site_author: 'Tiffany White'
 site_name: Suburban Smarts
 site_url: 'https://docs.suburbansmarts.org/'
 site_description: 'Documentation for my over-engineered smart apartment'
+extra_css:
+  - stylesheets/extra.css
