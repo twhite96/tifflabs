@@ -26,8 +26,8 @@ theme:
   # palette:
   #   primary: 'Pink'
   #   accent: 'Pink'
-repo_name: 'twhite96/SmartHome'
-repo_url: 'https://github.com/twhite96/SmartHome'
+repo_name: 'twhite96/SuburbanSmarts'
+repo_url: 'https://github.com/twhite96/SuburbanSmarts'
 extra:
   disqus: docs-ss-org
   social:
