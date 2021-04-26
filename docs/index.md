@@ -8,7 +8,7 @@
   I live in <img src="/images/us.png"/>, and therefore my links are for where I purchased from. There may be better (and most likely cheaper) sites in your local regions.</p>
 <p align="center">Be sure to ⭐ my repo!</p> 
 <p align="center">
-<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fdocs.suburbansmarts.org&count_bg=%23E60023&title_bg=%23000000&icon=&icon_color=%23000000&title=hits&edge_flat=true"/></a>
+<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fdocs.suburbansmarts.org&count_bg=%23E60023&title_bg=%23000000&icon=&icon_color=%23000000&title=hits&edge_flat=true&style=for-the-badge"/></a>
 </p>
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?style=for-the-badge">
