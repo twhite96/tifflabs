@@ -29,7 +29,7 @@ theme:
 repo_name: 'twhite96/SuburbanSmarts'
 repo_url: 'https://github.com/twhite96/SuburbanSmarts'
 extra:
-  disqus: docs-ss-org
+  disqus: ''
   social:
     - icon: 'fontawesome/solid/rss'
       link: 'https://tiffanywhite.blog/categories/#smart-home-series'
