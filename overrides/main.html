@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block disqus %}
+
+<!-- replace disqus with isso -->
+<script
+  src="https://utteranc.es/client.js"
+  repo="SuburbanSmarts"
+  issue-term="pathname"
+  theme="github-light"
+  crossorigin="anonymous"
+  async
+></script>
+
+<noscript>Please enable JavaScript to view the comments.</noscript>
+{% endblock %}
+
+{% block analytics %}
+<script async defer data-domain="docs.suburbansmarts.org" src="https://plausible.io/js/plausible.js"></script>
+{% endblock %}

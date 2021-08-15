@@ -23,13 +23,14 @@ theme:
     text: Fira Code
     code: Fira Code
   name: 'material'
+  custom_dir: overrides
   # palette:
   #   primary: 'Pink'
   #   accent: 'Pink'
 repo_name: 'twhite96/SuburbanSmarts'
 repo_url: 'https://github.com/twhite96/SuburbanSmarts'
 extra:
-  disqus: ''
+  disqus: 'SuburbanSmarts'
   social:
     - icon: 'fontawesome/solid/rss'
       link: 'https://tiffanywhite.blog/categories/#smart-home-series'
@@ -46,3 +47,5 @@ site_url: 'https://docs.suburbansmarts.org/'
 site_description: 'Documentation for my over-engineered smart apartment'
 extra_css:
   - stylesheets/extra.css
+extra_javascript:
+  - javascripts/utterances.js
