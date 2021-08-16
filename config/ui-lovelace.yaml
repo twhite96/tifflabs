@@ -1,5 +1,28 @@
 title: TW Suburban Smarts
 
-resources:
-  - url: /hacsfiles/github-flexi-card/github-flexi-card.js
-    type: module
+lovelace:
+  resources:
+    - url: /hacsfiles/github-flexi-card/github-flexi-card.js
+      type: module
+    - url: /local/mini-graph-card-bundle.js?v=0.10.0
+      type: module
+    - url: /hacsfiles/surveillance-card.js?v=0
+      type: module
+    - url: /local/community/air-purifier/air-purifier-card.js
+      type: module
+
+
+## Eufy Cams   
+views:
+  - title: Surveillance
+    icon: mdi:cctv
+    panel: true
+    cards:
+        type: 'custom:surveillance-card'
+        thumb_interval: 15
+        update_interval: 2
+        recording_duration: 10
+        show_capture_buttons: true
+        cameras:
+          - entity: camera.doorbell
+          - entity: camera.living_room
