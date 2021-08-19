@@ -12,11 +12,12 @@
 </p>
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?style=for-the-badge">
-  <img src="https://img.shields.io/badge/HA--Version-5.12-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/badge/HA--Version-6.2-brightgreen?style=for-the-badge">
   <img src="https://img.shields.io/maintenance/yes/2021?style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
-  <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SmartHome?logoColor=yellow&style=for-the-badge">
-  <img src="https://img.shields.io/github/stars/twhite96/SmartHome?style=social">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SuburbanSmarts?logoColor=yellow&style=for-the-badge">
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/twhite96/SuburbanSmarts?color=%23ff000f&style=for-the-badge">
+  <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?style=for-the-badge">
 </p>
 
 <p align="center">

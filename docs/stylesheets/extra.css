@@ -3,3 +3,18 @@
     --md-primary-fg-color--light: #ECB7B7;
     --md-primary-fg-color--dark: #90030C;
 }
+
+figcaption {
+  margin: 0.5rem 0;
+  font-size: 80%;
+}
+
+.caption-text {
+  color: gray;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 1.66667em;
+  padding-top: 1%;
+  text-align: center;
+}
