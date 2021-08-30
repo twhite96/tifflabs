@@ -1,3 +1,7 @@
+---
+disqus: "overrides/partials/disqus.html"
+---
+
 <p align="center">
   <img src="/images/suburban-smarts.png" width="250"/>
 </p>
