@@ -1,6 +1,6 @@
 <script
   src="https://utteranc.es/client.js"
-  repo="SuburbanSmarts"
+  repo="twhite96/SuburbanSmarts"
   issue-term="title"
   theme="github-light"
   crossorigin="anonymous"
