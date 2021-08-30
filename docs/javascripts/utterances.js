@@ -4,5 +4,5 @@
   issue-term="title"
   theme="github-light"
   crossorigin="anonymous"
-  async
-></script>
+  async>
+</script>
