@@ -47,5 +47,3 @@ site_url: 'https://docs.suburbansmarts.org/'
 site_description: 'Documentation for my over-engineered smart apartment'
 extra_css:
   - stylesheets/extra.css
-extra_javascript:
-  - javascripts/utterances.js
