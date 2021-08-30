@@ -1,21 +1,21 @@
 {% extends "base.html" %}
-
 {% block disqus %}
+  {% if not page.is_homepage %}
+    <script src="https://giscus.app/client.js"
+        data-repo="twhite96/SuburbanSmarts"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkzNDU0NjQ1MzI="
+        data-category="General"
+        data-category-id="DIC_kwDOFJde1M4B-3dV"
+        data-mapping="pathname"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-theme="light"
+        crossorigin="anonymous"
+        async>
+    </script> 
 
-<script src="https://giscus.app/client.js"
-    data-repo="twhite96/SuburbanSmarts"
-    data-repo-id="MDEwOlJlcG9zaXRvcnkzNDU0NjQ1MzI="
-    data-category="General"
-    data-category-id="DIC_kwDOFJde1M4B-3dV"
-    data-mapping="pathname"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-theme="light"
-    crossorigin="anonymous"
-    async>
-</script> 
-
-<noscript>Please enable JavaScript to view the comments.</noscript>
+    <noscript>Please enable JavaScript to view the comments.</noscript>
+  {% endif %}
 {% endblock %}
 
 {% block analytics %}
