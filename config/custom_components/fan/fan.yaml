@@ -1,0 +1,4 @@
+- platform: xiaomi_miio
+  name: fan.office_air_force_one
+  host: 192.168.68.159
+  token: !secret office_air_purifier

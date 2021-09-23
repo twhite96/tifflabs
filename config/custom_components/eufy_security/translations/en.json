@@ -1,0 +1,30 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Eufy Security: Setup",
+        "description": "Enter ip address and port of Eufy Security Web Socket instance",
+        "data": {
+          "host": "Host IP Address (eg 192.168.178.22)",
+          "port": "Port (eg 3000)"
+        }
+      }
+    },
+    "error": {
+      "auth": "Host/Port is wrong."
+    },
+    "abort": {
+      "single_instance_allowed": "Only a single instance is allowed."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Eufy Security: Configuration",
+        "data": {
+          "use_rtsp_server_addon": "ALPHA - Use RTSP Server Add-On instead of File Based Streaming - Requires additional Add-On setup, highly advised - ALPHA"
+        }
+      }
+    }
+  }
+}

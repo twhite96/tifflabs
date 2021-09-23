@@ -1,0 +1,57 @@
+{
+  "title": "Meross LAN",
+  "config": {
+    "flow_title": "Meross {device_type}",
+    "abort": {
+      "single_instance_allowed": "[%key:common::config_flow::abort::single_instance_allowed%]",
+      "no_devices_found": "[%key:common::config_flow::abort::no_devices_found%]"
+    },
+    "step": {
+      "user": {
+        "title": "Meross LAN",
+        "description": "Setup meross device",
+        "data": {
+          "host": "Device host address",
+          "key": "Device key"
+        }
+      },
+      "hub": {
+        "title": "Meross LAN MQTT Hub",
+        "description": "Configure global Meross LAN settings",
+        "data": {
+          "key": "Device key"
+        }
+      },
+      "device": {
+        "title": "Device configuration",
+        "description": "Type: {device_type}\nUUID: {device_id}",
+        "data": {
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "hub": {
+        "title": "Meross LAN MQTT Hub",
+        "description": "Configure global Meross LAN settings",
+        "data": {
+          "key": "Device key"
+        }
+      },
+      "device": {
+        "title": "Device configuration",
+        "description": "Type: {device_type}\nUUID: {device_id}\nHost: {host}\n\n{payload}",
+        "data": {
+          "key": "Device key",
+          "protocol": "Connection protocol",
+          "polling_period": "Polling period",
+          "time_zone": "Device time zone",
+          "trace": "Activate device debug tracing (for 10 min)",
+          "all": "Appliance.System.All",
+          "ability": "Appliance.System.Ability"
+        }
+      }
+    }
+  }
+}

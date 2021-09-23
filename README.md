@@ -12,13 +12,16 @@
 </p>
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?style=for-the-badge">
-  <img src="https://img.shields.io/badge/HA-Version_6.2-41BDF5?style=for-the-badge&logo=homeassistant">
+  <img src="https://img.shields.io/badge/HA-Version_6.4-41BDF5?style=for-the-badge&logo=homeassistant">
 
   <img src="https://img.shields.io/maintenance/yes/2021?style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SuburbanSmarts?logoColor=yellow&style=for-the-badge">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/twhite96/SuburbanSmarts?color=%23ff000f&style=for-the-badge">
   <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?style=for-the-badge">
+  <a href="https://www.buymeacoffee.com/tiffanywhitedev">
+    <img src="https://img.shields.io/badge/-buy_me_a%C2%A0coffee-gray?logo=buy-me-a-coffee&style=for-the-badge">
+  </a>
 </p>
 
 <p align="center">
