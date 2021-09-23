@@ -15,11 +15,11 @@ disqus: "overrides/partials/disqus.html"
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fdocs.suburbansmarts.org&count_bg=%23E60023&title_bg=%23000000&icon=&icon_color=%23000000&title=hits&edge_flat=true&style=for-the-badge"/></a>
 </p>
 <p align="center">
-  <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?style=for-the-badge">
+  <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/HA-Version_6.4-41BDF5?style=for-the-badge&logo=homeassistant">
-  <img src="https://img.shields.io/maintenance/yes/2021?style=for-the-badge">
+  <img src="https://img.shields.io/maintenance/yes/2021?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
-  <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SuburbanSmarts?logoColor=yellow&style=for-the-badge">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SuburbanSmarts?color=%234af2a1&style=for-the-badge">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/twhite96/SuburbanSmarts?color=%23ff000f&style=for-the-badge">
   <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?style=for-the-badge">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/twhite96/SuburbanSmarts?color=%23fa476f&style=for-the-badge">
