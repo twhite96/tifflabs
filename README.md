@@ -10,7 +10,7 @@
 <p align="center">
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fdocs.suburbansmarts.org&count_bg=%23E60023&title_bg=%23000000&icon=&icon_color=%23000000&title=hits&edge_flat=true&style=for-the-badge"/></a>
 </p>
-<p align="center">
+<p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/HA-Version_6.4-41BDF5?style=for-the-badge&logo=homeassistant">
   <img src="https://img.shields.io/maintenance/yes/2021?color=%234af2a1&style=for-the-badge">
