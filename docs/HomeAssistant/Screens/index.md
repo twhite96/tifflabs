@@ -1,7 +1,7 @@
 These are my current Dashboard screens as I currently add more devices.
 
 <figure>
-    <img class="align-center" src="/images/HA-Dashboard-Screenshots/screenshot-2021-08-16_03-27-43_AM.png" />
+    <img class="align-center" src="/images/HA-Dashboard-Screenshots/IMG_1998.webp" />
     <figcaption class="caption-text" style="margin-top: -1.3em;">
       Security Dashboard
        <a href="/images/HA-Dashboard-Screenshots/screenshot-2021-08-16_03-27-43_AM.png">
