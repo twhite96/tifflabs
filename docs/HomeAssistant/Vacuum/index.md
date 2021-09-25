@@ -1,4 +1,4 @@
-I've got two Xiaomi Roborock vacuums, an renewed S5 and a brand new S6 Pure.
+I've got two Xiaomi Roborock vacuums, a renewed S5 and a brand new S6 Pure.
 
 <figure>
     <img class="align-center" src="/images/gifs/IMG_1986.gif" />
