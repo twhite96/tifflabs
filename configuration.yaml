@@ -9,6 +9,8 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+customize: !include includes/customize.yaml
+packages: !include_dir_named packages
 spotify:
   client_id: !secret spotify_client_id
   client_secret: !secret spotify_client_secret

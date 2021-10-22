@@ -1,6 +1,6 @@
 nav:
   - Home: index.md
-  - Getting Started: Software/GettingStarted.md
+  - Getting Started: GettingStarted.md
   - Hardware: Hardware/index.md
   - Home Assistant:
     - Screens: HomeAssistant/Screens/index.md
@@ -32,8 +32,8 @@ repo_url: 'https://github.com/twhite96/SuburbanSmarts'
 extra:
   disqus: 'SuburbanSmarts'
   social:
-    - icon: 'fontawesome/solid/rss'
-      link: 'https://tiffanywhite.blog/categories/#smart-home-series'
+    - icon: 'fontawesome/solid/globe'
+      link: 'https://suburbansmarts.org'
     - icon: 'fontawesome/brands/github'
       link: 'https://github.com/twhite96/SuburbanSmarts'
     - icon: 'fontawesome/brands/twitter'
@@ -48,6 +48,7 @@ site_description: 'Documentation for my over-engineered smart apartment'
 extra_css:
   - stylesheets/extra.css
 markdown_extensions:
+    - codehilite
     - smarty
     - toc:
         permalink: True

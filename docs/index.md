@@ -16,7 +16,7 @@ disqus: "overrides/partials/disqus.html"
 </p>
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
-  <img src="https://img.shields.io/badge/HA-Version_6.4-41BDF5?style=for-the-badge&logo=homeassistant">
+  <img src="https://img.shields.io/badge/HA-Version_6.5-41BDF5?style=for-the-badge&logo=homeassistant">
   <img src="https://img.shields.io/maintenance/yes/2021?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SuburbanSmarts?color=%234af2a1&style=for-the-badge">
@@ -24,7 +24,7 @@ disqus: "overrides/partials/disqus.html"
   <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?style=for-the-badge">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/twhite96/SuburbanSmarts?color=%23fa476f&style=for-the-badge">
   <a href="https://www.buymeacoffee.com/tiffanywhitedev">
-    <img src="https://img.shields.io/badge/-buy_me_a%C2%A0coffee-gray?logo=buy-me-a-coffee&style=for-the-badge">
+    <img src="https://img.shields.io/badge/Buy_Me_A_Coffee-gray?style=for-the-badge&logo=buy-me-a-coffee&logoColor=fdd937" />
   </a>
 </p>
 

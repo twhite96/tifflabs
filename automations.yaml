@@ -1,1 +1,55 @@
-[]
+- id: '1632293006780'
+  alias: Done Work
+  description: ''
+  trigger:
+  - device_id: 8917568565f71c0086aa5ba970fb74e5
+    domain: hue
+    platform: device
+    type: remote_button_short_release
+    subtype: turn_off
+  condition: []
+  action:
+  - scene: scene.night_night
+  mode: single
+- id: '1632293365579'
+  alias: Start Work
+  description: ''
+  trigger:
+  - device_id: 8917568565f71c0086aa5ba970fb74e5
+    domain: hue
+    platform: device
+    type: remote_button_short_release
+    subtype: turn_on
+  condition: []
+  action:
+  - scene: scene.get_ta_work
+  mode: single
+- id: '1634509305214'
+  alias: Office lights activate
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: cf5ec4ba963a9edc92a39be28d5a3651
+    entity_id: binary_sensor.office_motion_sensor_motion
+    domain: binary_sensor
+    id: '0001'
+  condition:
+  - condition: trigger
+    id: '0001'
+  - condition: time
+    after: '12:00:00'
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: sensor.office_motion_sensor_light_level
+      state: ''
+      attribute: daylight
+      for:
+        hours: 15
+        minutes: 0
+        seconds: 0
+        milliseconds: 0
+  action:
+  - scene: scene.entering_office
+  mode: single
