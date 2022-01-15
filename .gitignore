@@ -4,3 +4,5 @@ docs/images/.DS_Store
 
 .DS_Store
 ./build.sh
+
+site/build.sh
