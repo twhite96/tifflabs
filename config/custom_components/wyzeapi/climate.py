@@ -26,9 +26,10 @@ from homeassistant.components.climate.const import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_ATTRIBUTION, TEMP_FAHRENHEIT, TEMP_CELSIUS
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from wyzeapy import Wyzeapy, ThermostatService
 from wyzeapy.services.thermostat_service import Thermostat, TemperatureUnit, HVACMode, Preset, FanMode, HVACState
+from .token_manager import token_exception_handler
 
 from .const import DOMAIN, CONF_CLIENT
 
@@ -37,6 +38,7 @@ ATTRIBUTION = "Data provided by Wyze"
 SCAN_INTERVAL = timedelta(seconds=30)
 
 
+@token_exception_handler
 async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry,
                             async_add_entities: Callable[[List[Any], bool], None]):
     """
@@ -176,6 +178,7 @@ class WyzeThermostat(ClimateEntity):
         else:
             return CURRENT_HVAC_OFF
 
+    @token_exception_handler
     async def async_set_temperature(self, **kwargs) -> None:
         target_temp_low = kwargs['target_temp_low']
         target_temp_high = kwargs['target_temp_high']
@@ -188,10 +191,12 @@ class WyzeThermostat(ClimateEntity):
             self._thermostat.cool_set_point = int(target_temp_high)
 
         self._server_out_of_sync = True
+        self.async_schedule_update_ha_state()
 
     async def async_set_humidity(self, humidity: int) -> None:
         raise NotImplementedError
 
+    @token_exception_handler
     async def async_set_fan_mode(self, fan_mode: str) -> None:
         if fan_mode == FAN_ON:
             await self._thermostat_service.set_fan_mode(self._thermostat, FanMode.ON)
@@ -201,7 +206,9 @@ class WyzeThermostat(ClimateEntity):
             self._thermostat.fan_mode = FanMode.AUTO
 
         self._server_out_of_sync = True
+        self.async_schedule_update_ha_state()
 
+    @token_exception_handler
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         if hvac_mode == HVAC_MODE_OFF:
             await self._thermostat_service.set_hvac_mode(self._thermostat, HVACMode.OFF)
@@ -217,10 +224,12 @@ class WyzeThermostat(ClimateEntity):
             self._thermostat.hvac_mode = HVACMode.AUTO
 
         self._server_out_of_sync = True
+        self.async_schedule_update_ha_state()
 
     async def async_set_swing_mode(self, swing_mode: str) -> None:
         raise NotImplementedError
 
+    @token_exception_handler
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         if preset_mode == PRESET_SLEEP:
             await self._thermostat_service.set_preset(self._thermostat, Preset.SLEEP)
@@ -233,6 +242,7 @@ class WyzeThermostat(ClimateEntity):
             self._thermostat.preset = Preset.HOME
 
         self._server_out_of_sync = True
+        self.async_schedule_update_ha_state()
 
     async def async_turn_aux_heat_on(self) -> None:
         raise NotImplementedError
@@ -257,7 +267,7 @@ class WyzeThermostat(ClimateEntity):
 
     @property
     def should_poll(self) -> bool:
-        return True
+        return False
 
     @property
     def name(self) -> str:
@@ -284,6 +294,7 @@ class WyzeThermostat(ClimateEntity):
             "mac": self.unique_id
         }
 
+    @token_exception_handler
     async def async_update(self) -> None:
         """
         This function updates the state of the Thermostat
@@ -295,3 +306,19 @@ class WyzeThermostat(ClimateEntity):
             self._thermostat = await self._thermostat_service.update(self._thermostat)
         else:
             self._server_out_of_sync = False
+
+    @callback
+    def async_update_callback(self, thermostat: Thermostat):
+        """Update the thermostat's state."""
+        self._thermostat = thermostat
+        self.async_schedule_update_ha_state()
+
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to update events."""
+        self._thermostat.callback_function = self.async_update_callback
+        self._thermostat_service.register_updater(self._thermostat, 30)
+        await self._thermostat_service.start_update_manager()
+        return await super().async_added_to_hass()
+
+    async def async_will_remove_from_hass(self) -> None:
+        self._thermostat_service.unregister_updater()

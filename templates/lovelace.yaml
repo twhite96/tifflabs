@@ -1,0 +1,1212 @@
+card:
+  entities:
+    - card:
+        cards:
+          - cards:
+              - cards:
+                  - aspect_ratio: 112%
+                    entity: device_tracker.note_9_3
+                    image: /local/picture/hodam.jpg
+                    show_name: false
+                    show_state: false
+                    type: picture-entity
+                  - aspect_ratio: 112%
+                    entity: device_tracker.me
+                    image: /local/picture/myvan.jpg
+                    show_name: false
+                    show_state: false
+                    type: picture-entity
+                  - aspect_ratio: 112%
+                    entity: device_tracker.ktuyen
+                    image: /local/picture/ktuyen1.jpg
+                    show_name: false
+                    show_state: false
+                    type: picture-entity
+                  - aspect_ratio: 112%
+                    entity: device_tracker.anhthu
+                    image: /local/picture/anhthu.jpg
+                    show_name: false
+                    show_state: false
+                    type: picture-entity
+                  - aspect_ratio: 112%
+                    entity: device_tracker.anhthy
+                    image: /local/picture/anhthy.jpg
+                    show_name: false
+                    show_state: false
+                    type: picture-entity
+                type: horizontal-stack
+              - cards:
+                  - color_type: card
+                    entity: binary_sensor.thanhdam
+                    icon: mdi:motion-sensor
+                    state:
+                      - value: 'on'
+                        color: '#40FF00'
+                      - value: 'off'
+                        color: rgba(0, 0, 0, 0.1)
+                    styles:
+                      card:
+                        - height: 0px
+                        - font-size: 0px
+                        - font-weight: bold
+                    type: custom:button-card
+                  - color_type: card
+                    entity: binary_sensor.me
+                    icon: mdi:motion-sensor
+                    state:
+                      - value: 'on'
+                        color: '#40FF00'
+                      - value: 'off'
+                        color: rgba(0, 0, 0, 0.1)
+                    styles:
+                      card:
+                        - height: 0px
+                        - font-size: 0px
+                        - font-weight: bold
+                    type: custom:button-card
+                  - color_type: card
+                    entity: binary_sensor.anhninh
+                    icon: mdi:motion-sensor
+                    state:
+                      - value: 'on'
+                        color: '#40FF00'
+                      - value: 'off'
+                        color: rgba(0, 0, 0, 0.1)
+                    styles:
+                      card:
+                        - height: 0px
+                        - font-size: 0px
+                        - font-weight: bold
+                    type: custom:button-card
+                  - color_type: card
+                    entity: binary_sensor.anhthu
+                    icon: mdi:motion-sensor
+                    state:
+                      - value: 'on'
+                        color: '#40FF00'
+                      - value: 'off'
+                        color: rgba(0, 0, 0, 0.1)
+                    styles:
+                      card:
+                        - height: 0px
+                        - font-size: 0px
+                        - font-weight: bold
+                    type: custom:button-card
+                  - color_type: card
+                    entity: binary_sensor.anhthy
+                    icon: mdi:motion-sensor
+                    state:
+                      - value: 'on'
+                        color: '#40FF00'
+                      - value: 'off'
+                        color: rgba(0, 0, 0, 0.1)
+                    styles:
+                      card:
+                        - height: 0px
+                        - font-size: 0px
+                        - font-weight: bold
+                    type: custom:button-card
+                type: horizontal-stack
+              - card:
+                  type: map
+                  entities:
+                    - entity: person.hothanhdam
+                    - entity: person.ktuyen
+                  dark_mode: false
+                style: |
+                  ha-card {
+                    --ha-card-box-shadow: 'none'          
+                  }
+                type: custom:mod-card
+              - card:
+                  entities:
+                    - sensor.tiendien1
+                    - sensor.tiendien1
+                  type: entities
+                style: "ha-card {\n  --ha-card-box-shadow: 'none'; \n  --ha-card-background: \"rgba(0, 0, 0, 0)\"\t\t\t\t\t\n}\n"
+                type: custom:mod-card
+              - card:
+                  type: entities
+                  entities:
+                    - entity: input_select.select_theme
+                    - entity: input_boolean.select_theme
+                style: "ha-card {\n  --ha-card-box-shadow: 'none';\n  --ha-card-background: \"rgba(0, 0, 0, 0)\"\t\n}\n"
+                type: custom:mod-card
+            type: vertical-stack
+          - card:
+              cards:
+                - card:
+                    type: custom:weather-card
+                    entity: weather.dark_sky
+                    number_of_forecasts: '5'
+                    current: true
+                    details: false
+                    forecast: false
+                    hourly_forecast: false
+                  style: "ha-card {\n  --ha-card-box-shadow: 'none';\n  --ha-card-background: \"rgba(0, 0, 0, 0)\"\t\n}\n"
+                  type: custom:mod-card
+                - card:
+                    type: custom:gap-card
+                    height: 110
+                    size: 10
+                  style: "ha-card {\n  --ha-card-box-shadow: 'none';\n  --ha-card-background: \"rgba(0, 0, 0, 0)\"\t\n}\n"
+                  type: custom:mod-card
+                - card:
+                    cards:
+                      - card:
+                          entities:
+                            - entity: sensor.hothanhdam_drive_1_temperature
+                              name: Nhiệt Độ CPU
+                            - entity: sensor.cambiennhietdo_temperature
+                              name: NHiệt Độ Nas
+                          hours_to_show: 48
+                          name: Sever
+                          line_width: 3
+                          show:
+                            extrema: true
+                          type: custom:mini-graph-card
+                        style: |
+                          ha-card {
+                            --ha-card-box-shadow: 'none'
+                            
+                          }
+                        type: custom:mod-card
+                      - card:
+                          cards:
+                            - card:
+                                entities:
+                                  - sensor.hothanhdam_network_down
+                                  - sensor.hothanhdam_network_up
+                                hours_to_show: 48
+                                line_width: 8
+                                name: Network
+                                show:
+                                  extrema: true
+                                type: custom:mini-graph-card
+                              style: |
+                                ha-card {
+                                  --ha-card-box-shadow: 'none':
+                                }
+                              type: custom:mod-card
+                            - card:
+                                entities:
+                                  - entity: sensor.processor_use_percent
+                                    icon: mdi:memory
+                                    name: CPU
+                                    positions:
+                                      icon: inside
+                                      indicator: inside
+                                      minmax: 'off'
+                                      title: inside
+                                      value: inside
+                                    severity:
+                                      - color: '#0066ff'
+                                        from: 0
+                                        to: 50
+                                      - color: Orange
+                                        from: 50
+                                        to: 80
+                                      - color: Red
+                                        from: 80
+                                        to: 100
+                                  - entity: sensor.memory_use_percent
+                                    icon: mdi:memory
+                                    name: RAM
+                                    positions:
+                                      icon: inside
+                                      indicator: inside
+                                      minmax: 'off'
+                                      title: inside
+                                      value: inside
+                                    severity:
+                                      - color: '#0066ff'
+                                        from: 0
+                                        to: 50
+                                      - color: Orange
+                                        from: 50
+                                        to: 80
+                                      - color: Red
+                                        from: 80
+                                        to: 100
+                                  - entity: sensor.disk_use_percent_home
+                                    icon: mdi:harddisk
+                                    name: System
+                                    positions:
+                                      icon: inside
+                                      indicator: inside
+                                      minmax: 'off'
+                                      title: inside
+                                      value: inside
+                                    severity:
+                                      - color: '#0066ff'
+                                        from: 0
+                                        to: 50
+                                      - color: Orange
+                                        from: 50
+                                        to: 80
+                                      - color: Red
+                                        from: 80
+                                        to: 100
+                                  - entity: sensor.hothanhdam_cpu_utilization_total
+                                    icon: mdi:memory
+                                    name: CPU NAS
+                                    positions:
+                                      icon: inside
+                                      indicator: inside
+                                      minmax: 'off'
+                                      title: inside
+                                      value: inside
+                                    severity:
+                                      - color: '#00ff00'
+                                        from: 0
+                                        to: 50
+                                      - color: Orange
+                                        from: 50
+                                        to: 80
+                                      - color: Red
+                                        from: 80
+                                        to: 100
+                                  - entity: sensor.hothanhdam_memory_usage_real
+                                    icon: mdi:memory
+                                    name: RAM NAS
+                                    positions:
+                                      icon: inside
+                                      indicator: inside
+                                      minmax: 'off'
+                                      title: inside
+                                      value: inside
+                                    severity:
+                                      - color: '#00ff00'
+                                        from: 0
+                                        to: 50
+                                      - color: '#00ff00'
+                                        from: 50
+                                        to: 80
+                                      - color: '#00ff00'
+                                        from: 80
+                                        to: 100
+                                  - entity: sensor.hothanhdam_volume_1_volume_used
+                                    icon: mdi:harddisk
+                                    name: Data NAS
+                                    positions:
+                                      icon: inside
+                                      indicator: inside
+                                      minmax: 'off'
+                                      title: inside
+                                      value: inside
+                                    severity:
+                                      - color: '#00ff00'
+                                        from: 0
+                                        to: 50
+                                      - color: '#00ff00'
+                                        from: 50
+                                        to: 80
+                                      - color: '#00ff00'
+                                        from: 80
+                                        to: 100
+                                type: custom:bar-card
+                              style: |
+                                ha-card {
+                                  --ha-card-box-shadow: 'none'
+                                }
+                              type: custom:mod-card
+                          type: horizontal-stack
+                        type: custom:mod-card
+                    parameters:
+                      effect: coverflow
+                      slidesPerView: true
+                      spaceBetween: 2
+                      autoplay:
+                        delay: 7000
+                        disableOnInteraction: false
+                      speed: 3000
+                      slideShadows: false
+                    type: custom:swipe-card
+                  type: custom:mod-card
+                - cards:
+                    - cards:
+                        - type: custom:circle-sensor-card
+                          entity: sensor.processor_use_percent
+                          name: CPU
+                          max: 100
+                          min: 0
+                          fill: '#79E0FC'
+                          stroke_width: 10
+                          stroke_color: '#0066ff'
+                          gradient: true
+                          units: '%'
+                          show_max: false
+                          font_style:
+                            color: '#ffffff'
+                            font-size: 1.2em
+                          style:
+                            top: 5%
+                            left: 20%
+                            width: 120px
+                            height: 90x
+                        - type: custom:circle-sensor-card
+                          entity: sensor.memory_use_percent
+                          name: Ram
+                          max: 100
+                          min: 0
+                          fill: '#79E0FC'
+                          stroke_width: 10
+                          stroke_color: '#0066ff'
+                          gradient: true
+                          units: '%'
+                          show_max: false
+                          font_style:
+                            color: '#ffffff'
+                            font-size: 1.2em
+                          style:
+                            top: 10%
+                            left: 25%
+                            width: 120px
+                            height: 90x
+                      columns: 2
+                      square: false
+                      type: grid
+                    - cards:
+                        - type: custom:circle-sensor-card
+                          entity: sensor.processor_use_percent
+                          name: CPU
+                          max: 100
+                          min: 0
+                          stroke_width: 10
+                          stroke_color: '#FC9240'
+                          gradient: true
+                          units: null
+                          show_max: false
+                          font_style:
+                            color: red
+                            font-size: 1em
+                          color_stops:
+                            '50': '#55FF55'
+                            '75': '#5555FF'
+                            '100': '#FF5555'
+                          style:
+                            top: 5%
+                            left: 20%
+                            width: 120px
+                            height: 90x
+                        - type: custom:circle-sensor-card
+                          entity: sensor.processor_use_percent
+                          name: CPU
+                          max: 100
+                          min: 0
+                          stroke_width: 10
+                          stroke_color: '#FC9240'
+                          gradient: true
+                          units: null
+                          show_max: false
+                          font_style:
+                            color: red
+                            font-size: 1em
+                          color_stops:
+                            '50': '#55FF55'
+                            '75': '#5555FF'
+                            '100': '#FF5555'
+                          style:
+                            top: 10%
+                            left: 25%
+                            width: 120px
+                            height: 90x
+                      columns: 2
+                      square: false
+                      type: grid
+                  type: custom:swipe-card
+                - card:
+                    cards:
+                      - card:
+                          type: grid
+                          square: false
+                          cards:
+                            - card:
+                                aspect_ratio: 112%
+                                entity: device_tracker.note_9_3
+                                image: /local/picture/hodam.jpg
+                                show_name: false
+                                show_state: false
+                                type: picture-entity
+                              style: |
+                                ha-card {
+                                  width: 90px;
+                                  height: 90px;  
+                                  left: 5%;
+                                  top: 10%
+                                }
+                              type: custom:mod-card
+                            - card:
+                                type: entities
+                                entities:
+                                  - entity: sensor.note_9_battery_level_2
+                                  - entity: device_tracker.note_9_3
+                                state_color: true
+                              style: |
+                                ha-card {
+                                  --ha-card-box-shadow: 'none';
+                                  --ha-card-background: "rgba(0, 0, 0, 0)";
+                                  right: 70%
+                                }
+                              type: custom:mod-card
+                            - card:
+                                type: entities
+                                entities:
+                                  - entity: binary_sensor.note_9_is_charging_2
+                                  - entity: sensor.sm_n9600_geocoded_location
+                                state_color: true
+                              style: |
+                                ha-card {
+                                  --ha-card-box-shadow: 'none';
+                                  --ha-card-background: "rgba(0, 0, 0, 0)";
+                                  right: 50%
+                                }
+                              type: custom:mod-card
+                        style: |
+                          ha-card {
+                            width: 1000px;
+                            height: 200px;                          
+                          }
+                        type: custom:mod-card
+                      - card:
+                          type: grid
+                          square: false
+                          cards:
+                            - card:
+                                aspect_ratio: 112%
+                                entity: device_tracker.ktuyen
+                                image: /local/picture/ktuyen1.jpg
+                                show_name: false
+                                show_state: false
+                                type: picture-entity
+                              style: |
+                                ha-card {
+                                  width: 90px;
+                                  height: 90px;  
+                                  left: 5%;
+                                  top: 10%
+                                }
+                              type: custom:mod-card
+                            - card:
+                                type: entities
+                                entities:
+                                  - entity: sensor.sm_g570_battery_level
+                                  - entity: device_tracker.sm_g570
+                                state_color: true
+                              style: |
+                                ha-card {
+                                  --ha-card-box-shadow: 'none';
+                                  --ha-card-background: "rgba(0, 0, 0, 0)";
+                                  right: 70%
+                                }
+                              type: custom:mod-card
+                            - card:
+                                type: entities
+                                entities:
+                                  - entity: binary_sensor.sm_g570_is_charging
+                                  - entity: sensor.sm_g570_geocoded_location
+                                state_color: true
+                              style: |
+                                ha-card {
+                                  --ha-card-box-shadow: 'none';
+                                  --ha-card-background: "rgba(0, 0, 0, 0)";
+                                  right: 50%
+                                }
+                              type: custom:mod-card
+                        style: |
+                          ha-card {
+                            width: 1000px;
+                            height: 130px;                          
+                          }
+                        type: custom:mod-card
+                    parameters:
+                      effect: coverflow
+                      slidesPerView: true
+                      spaceBetween: 2
+                      autoplay:
+                        delay: 6000
+                        disableOnInteraction: false
+                      speed: 3000
+                      slideShadows: false
+                    type: custom:swipe-card
+                  style: |
+                    ha-card {
+                      width: 850px;
+                      height: 200px;                          
+                    }
+                  type: custom:mod-card
+              type: vertical-stack
+            style: |
+              ha-card {
+                --ha-card-box-shadow: 'none';
+                --ha-card-background: "rgba(0, 0, 0, 0)"
+              }
+            type: custom:mod-card
+          - card:
+              cards:
+                - cards:
+                    - card:
+                        type: custom:weather-card
+                        entity: weather.dark_sky
+                        number_of_forecasts: '5'
+                        details: false
+                        current: false
+                        forecast: true
+                        hourly_forecast: true
+                      style: "ha-card {\n  --ha-card-box-shadow: 'none';\n  --ha-card-background: \"rgba(0, 0, 0, 0)\"\t\n}\n"
+                      type: custom:mod-card
+                    - card:
+                        type: custom:weather-card
+                        entity: weather.dark_sky
+                        number_of_forecasts: '5'
+                        details: true
+                        current: false
+                        forecast: false
+                        hourly_forecast: true
+                      style: "ha-card {\n  --ha-card-box-shadow: 'none';\n  --ha-card-background: \"rgba(0, 0, 0, 0)\"\t\n}\n"
+                      type: custom:mod-card
+                  parameters:
+                    effect: coverflow
+                    autoplay:
+                      delay: 1000
+                      disableOnInteraction: false
+                    speed: 3000
+                    slideShadows: false
+                    slidesPerView: true
+                    spaceBetween: 2
+                  type: custom:swipe-card
+                - card:
+                    type: custom:gap-card
+                    height: 65
+                    size: 10
+                  style: "ha-card {\n  --ha-card-box-shadow: 'none';\n  --ha-card-background: \"rgba(0, 0, 0, 0)\"\t\n}\n"
+                  type: custom:mod-card
+                - cards:
+                    - card:
+                        entities:
+                          - color: Orange
+                            entity: sensor.cong_suat_tieu_thu_1
+                            name: Công suất 1
+                          - color: '#1a53ff'
+                            entity: sensor.cong_suat_tieu_thu_2
+                            name: Công suất 2
+                        hours_to_show: 48
+                        line_width: 10
+                        name: Biểu đồ công suất điện
+                        show:
+                          extrema: true
+                          graph: bar
+                        type: custom:mini-graph-card
+                      style: "ha-card {\n  --ha-card-box-shadow: 'none';\n  --ha-card-background: \"rgba(0, 0, 0, 0)\"\t\n}\n"
+                      type: custom:mod-card
+                    - card:
+                        cards:
+                          - card:
+                              entities:
+                                - entity: sensor.cong_suat_tieu_thu_1
+                                  icon: mdi:memory
+                                  max: 4000
+                                  name: Công suất
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: Orange
+                                      from: 0
+                                      to: 500
+                                    - color: Orange
+                                      from: 500
+                                      to: 1500
+                                    - color: Orange
+                                      from: 1500
+                                      to: 3000
+                                - entity: sensor.voltage_1
+                                  icon: mdi:memory
+                                  max: 230
+                                  name: Điện áp
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: Orange
+                                      from: 0
+                                      to: 190
+                                    - color: Orange
+                                      from: 190
+                                      to: 210
+                                    - color: Orange
+                                      from: 210
+                                      to: 230
+                                - entity: sensor.current_1
+                                  icon: mdi:harddisk
+                                  max: 8
+                                  name: Dòng điện
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: Orange
+                                      from: 0
+                                      to: 2
+                                    - color: Orange
+                                      from: 2
+                                      to: 5
+                                    - color: Orange
+                                      from: 5
+                                      to: 8
+                                - entity: sensor.energy_yesterday_1
+                                  icon: mdi:harddisk
+                                  max: 25
+                                  name: Hôm qua
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: Orange
+                                      from: 0
+                                      to: 8
+                                    - color: Orange
+                                      from: 8
+                                      to: 15
+                                    - color: Orange
+                                      from: 15
+                                      to: 25
+                                - entity: sensor.utility_daily_energy_1
+                                  icon: mdi:harddisk
+                                  name: Hôm nay
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: Orange
+                                      from: 0
+                                      to: 8
+                                    - color: Orange
+                                      from: 8
+                                      to: 15
+                                    - color: Orange
+                                      from: 15
+                                      to: 25
+                                - entity: sensor.utility_monthly_energy_1
+                                  icon: mdi:harddisk
+                                  max: 500
+                                  name: Tháng này
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: Orange
+                                      from: 0
+                                      to: 200
+                                    - color: Orange
+                                      from: 200
+                                      to: 300
+                                    - color: Red
+                                      from: 300
+                                      to: 500
+                              type: custom:bar-card
+                            style: |
+                              ha-card {
+                                --ha-card-box-shadow: 'none'
+                              }
+                            type: custom:mod-card
+                          - card:
+                              entities:
+                                - entity: sensor.cong_suat_tieu_thu_2
+                                  icon: mdi:memory
+                                  max: 4000
+                                  name: Công suất
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: '#1a53ff'
+                                      from: 0
+                                      to: 500
+                                    - color: '#1a53ff'
+                                      from: 500
+                                      to: 1000
+                                    - color: '#1a53ff'
+                                      from: 1000
+                                      to: 2000
+                                - entity: sensor.voltage_2
+                                  icon: mdi:memory
+                                  max: 230
+                                  name: Điện áp
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: '#1a53ff'
+                                      from: 0
+                                      to: 190
+                                    - color: '#1a53ff'
+                                      from: 190
+                                      to: 210
+                                    - color: '#1a53ff'
+                                      from: 210
+                                      to: 230
+                                - entity: sensor.current_2
+                                  icon: mdi:harddisk
+                                  max: 8
+                                  name: Dòng điện
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: '#1a53ff'
+                                      from: 0
+                                      to: 2
+                                    - color: '#1a53ff'
+                                      from: 2
+                                      to: 5
+                                    - color: '#1a53ff'
+                                      from: 5
+                                      to: 8
+                                - entity: sensor.energy_yesterday_2
+                                  icon: mdi:harddisk
+                                  max: 25
+                                  name: Hôm qua
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: '#1a53ff'
+                                      from: 0
+                                      to: 8
+                                    - color: '#1a53ff'
+                                      from: 8
+                                      to: 15
+                                    - color: '#1a53ff'
+                                      from: 15
+                                      to: 25
+                                - entity: sensor.utility_daily_energy_2
+                                  icon: mdi:harddisk
+                                  name: Hôm nay
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: '#1a53ff'
+                                      from: 0
+                                      to: 8
+                                    - color: '#1a53ff'
+                                      from: 8
+                                      to: 15
+                                    - color: '#1a53ff'
+                                      from: 15
+                                      to: 25
+                                - entity: sensor.utility_monthly_energy_2
+                                  hours_to_show: 48
+                                  icon: mdi:harddisk
+                                  max: 500
+                                  name: Tháng này
+                                  positions:
+                                    icon: inside
+                                    indicator: inside
+                                    minmax: 'off'
+                                    title: inside
+                                    value: inside
+                                  severity:
+                                    - color: '#1a53ff'
+                                      from: 0
+                                      to: 200
+                                    - color: '#1a53ff'
+                                      from: 200
+                                      to: 300
+                                    - color: '#1a53ff'
+                                      from: 300
+                                      to: 500
+                              type: custom:bar-card
+                            style: |
+                              ha-card {
+                                --ha-card-box-shadow: 'none'
+                              }
+                            type: custom:mod-card
+                        type: horizontal-stack
+                      type: custom:mod-card
+                  parameters:
+                    effect: flip
+                    slidesPerView: true
+                    spaceBetween: 2
+                    autoplay:
+                      delay: 5000
+                      disableOnInteraction: false
+                    speed: 3000
+                    slideShadows: false
+                  type: custom:swipe-card
+                - cards:
+                    - cards:
+                        - type: custom:circle-sensor-card
+                          entity: sensor.hothanhdam_cpu_utilization_total
+                          name: CPU Syno
+                          max: 100
+                          min: 0
+                          fill: '#79E0FC'
+                          stroke_width: 10
+                          stroke_color: '#FC9240'
+                          gradient: true
+                          units: '%'
+                          show_max: false
+                          font_style:
+                            color: '#ffffff'
+                            font-size: 1.2em
+                          style:
+                            top: 5%
+                            left: 20%
+                            width: 120px
+                            height: 90x
+                        - type: custom:circle-sensor-card
+                          entity: sensor.hothanhdam_memory_usage_real
+                          name: RAM Syno
+                          max: 100
+                          min: 0
+                          fill: '#79E0FC'
+                          stroke_width: 10
+                          stroke_color: '#FC9240'
+                          gradient: true
+                          units: '%'
+                          show_max: false
+                          font_style:
+                            color: '#ffffff'
+                            font-size: 1em
+                          style:
+                            top: 10%
+                            left: 25%
+                            width: 120px
+                            height: 90x
+                      columns: 2
+                      square: false
+                      type: grid
+                    - cards:
+                        - type: custom:circle-sensor-card
+                          entity: sensor.processor_use_percent
+                          name: CPU
+                          max: 100
+                          min: 0
+                          stroke_width: 10
+                          stroke_color: '#FF35DB'
+                          gradient: true
+                          units: null
+                          show_max: false
+                          font_style:
+                            color: '#99ff33'
+                            font-size: 1em
+                          style:
+                            top: 5%
+                            left: 20%
+                            width: 120px
+                            height: 90x
+                        - type: custom:circle-sensor-card
+                          entity: sensor.processor_use_percent
+                          name: CPU
+                          max: 100
+                          min: 0
+                          stroke_width: 10
+                          stroke_color: '#FF35DB'
+                          gradient: true
+                          units: null
+                          show_max: false
+                          font_style:
+                            color: red
+                            font-size: 1em
+                          color_stops:
+                            '50': '#55FF55'
+                            '75': '#5555FF'
+                            '100': '#FF5555'
+                          style:
+                            top: 10%
+                            left: 25%
+                            width: 120px
+                            height: 90x
+                      columns: 2
+                      square: false
+                      type: grid
+                  type: custom:swipe-card
+              type: vertical-stack
+            style: |
+              ha-card {
+                --ha-card-box-shadow: 'none';
+                --ha-card-background: "rgba(0, 0, 0, 0)"
+              }
+            type: custom:mod-card
+          - card:
+              type: custom:swipe-card
+              parameters:
+                effect: cube
+                autoHeight: false
+                cubeEffect:
+                  - slideShadows: false
+                loop: false
+                autoplay:
+                  delay: 5000
+                  disableOnInteraction: false
+                speed: 3000
+                slideShadows: false
+              start_card: 1
+              cards:
+                - card:
+                    title: Phòng Khách
+                    entities:
+                      - card:
+                          cards:
+                            - card:
+                                entities:
+                                  - sensor.nhiet_do_trong_nha
+                                line_width: 2
+                                name: Nhiệt độ
+                                show:
+                                  extrema: true
+                                type: custom:mini-graph-card
+                              style: |
+                                ha-card {
+                                  --ha-card-box-shadow: 'none'
+                                }
+                              type: custom:mod-card
+                            - card:
+                                entities:
+                                  - sensor.do_am_trong_nha
+                                line_width: 2
+                                name: Độ ẩm
+                                show:
+                                  extrema: true
+                                type: custom:mini-graph-card
+                              style: |
+                                ha-card {
+                                  --ha-card-box-shadow: 'none'
+                                }
+                              type: custom:mod-card
+                          type: horizontal-stack
+                        type: custom:mod-card
+                      - card:
+                          cards:
+                            - entity: switch.ceiling_light_1
+                              icon: mdi:ceiling-light
+                              name: Trong Nhà
+                              type: custom:button-card
+                            - entity: switch.ceiling_light_2
+                              icon: mdi:ceiling-light
+                              name: Ngoài Hiên
+                              type: custom:button-card
+                            - entity: switch.living_rom_light_1
+                              icon: mdi:lightbulb-on-outline
+                              type: custom:button-card
+                            - entity: switch.living_rom_light_2
+                              icon: mdi:lightbulb-on-outline
+                              type: custom:button-card
+                          type: horizontal-stack
+                        type: custom:mod-card
+                      - card:
+                          cards:
+                            - entity: switch.led_light_1
+                              icon: mdi:track-light
+                              name: Led Light 1
+                              type: custom:button-card
+                            - entity: switch.led_light_2
+                              icon: mdi:coach-lamp
+                              name: Led Light 2
+                              type: custom:button-card
+                            - entity: switch.tuya_3
+                              icon: mdi:spotlight
+                              type: custom:button-card
+                            - entity: switch.tuya_4
+                              icon: mdi:railroad-light
+                              type: custom:button-card
+                          type: horizontal-stack
+                        type: custom:mod-card
+                      - card:
+                          entity: media_player.shield
+                          hide:
+                            volume_stateless: false
+                          name: Shield
+                          theme: dark_mix_2
+                          type: custom:mini-media-player
+                        type: custom:mod-card
+                      - card:
+                          entities:
+                            - entity: input_select.samsung_tv_channel
+                              name: Chọn Kênh
+                            - card:
+                                cards:
+                                  - entity: switch.sam_sung_tv
+                                    icon: mdi:television-classic
+                                    name: TIVI
+                                    styles:
+                                      card:
+                                        - height: 70px
+                                        - font-size: 10px
+                                        - font-weight: bold
+                                    type: custom:button-card
+                                  - entity: switch.android_tv
+                                    icon: mdi:shield-star-outline
+                                    name: Shield TV
+                                    styles:
+                                      card:
+                                        - height: 70px
+                                        - font-size: 10px
+                                        - font-weight: bold
+                                    type: custom:button-card
+                                type: horizontal-stack
+                              type: custom:mod-card
+                            - card:
+                                cards:
+                                  - entity: switch.tv_soure
+                                    icon: mdi:logout-variant
+                                    name: Soure
+                                    styles:
+                                      card:
+                                        - height: 70px
+                                        - font-size: 10px
+                                        - font-weight: bold
+                                    type: custom:button-card
+                                  - entity: switch.mute
+                                    icon: mdi:volume-off
+                                    name: Mute
+                                    styles:
+                                      card:
+                                        - height: 70px
+                                        - font-size: 10px
+                                        - font-weight: bold
+                                    type: custom:button-card
+                                  - entity: switch.volum_up
+                                    icon: mdi:volume-plus
+                                    name: Vol +
+                                    styles:
+                                      card:
+                                        - height: 70px
+                                        - font-size: 10px
+                                        - font-weight: bold
+                                    type: custom:button-card
+                                  - entity: switch.volum_down
+                                    icon: mdi:volume-minus
+                                    name: Vol-
+                                    styles:
+                                      card:
+                                        - height: 70px
+                                        - font-size: 10px
+                                        - font-weight: bold
+                                    type: custom:button-card
+                                type: horizontal-stack
+                              type: custom:mod-card
+                          show_header_toggle: null
+                          type: entities
+                        type: custom:mod-card
+                    type: entities
+                  type: custom:mod-card
+                - card:
+                    title: Phòng Ngủ
+                    entities:
+                      - card:
+                          cards:
+                            - card:
+                                entities:
+                                  - sensor.cambiennhietdo_temperature
+                                hours_to_show: 48
+                                line_width: 2
+                                name: Nhiệt độ
+                                show:
+                                  extrema: true
+                                type: custom:mini-graph-card
+                              style: |
+                                ha-card {
+                                  --ha-card-box-shadow: 'none'
+                                }
+                              type: custom:mod-card
+                            - card:
+                                entities:
+                                  - sensor.cambiennhietdo_humidity
+                                hours_to_show: 48
+                                line_width: 2
+                                name: Độ ẩm
+                                show:
+                                  extrema: true
+                                type: custom:mini-graph-card
+                              style: |
+                                ha-card {
+                                  --ha-card-box-shadow: 'false'
+                                }
+                              type: custom:mod-card
+                          type: horizontal-stack
+                        type: custom:mod-card
+                      - card:
+                          cards:
+                            - entity: switch.computer
+                              icon: mdi:desktop-classic
+                              name: Computer
+                              styles:
+                                card:
+                                  - height: 70px
+                                  - font-size: 10px
+                                  - font-weight: bold
+                              type: custom:button-card
+                            - entity: switch.mp1_sw_12
+                              icon: mdi:monitor
+                              name: Màn Hình
+                              styles:
+                                card:
+                                  - height: 70px
+                                  - font-size: 10px
+                                  - font-weight: bold
+                              type: custom:button-card
+                          type: horizontal-stack
+                        type: custom:mod-card
+                      - card:
+                          entity: media_player.googlehome2040
+                          hide:
+                            volume_stateless: false
+                          name: Google Home Mini
+                          theme: dark_mix_2
+                          type: custom:mini-media-player
+                        type: custom:mod-card
+                      - entity: input_select.aircon_daikin_timer
+                        name: Chọn Giờ Tắt Máy Lạnh ( 1h - 8h )
+                      - card:
+                          entity: climate.aircon
+                          name: Máy Lạnh Phòng Ngủ
+                          type: thermostat
+                        type: custom:mod-card
+                    type: entities
+                  type: custom:mod-card
+            style: |
+              ha-card { 
+                --ha-card-box-shadow: 'false'
+                --ha-card-background: 'rgba(0, 0, 0, 0)'
+              }
+            type: custom:mod-card
+        type: horizontal-stack
+      type: custom:mod-card
+  type: entities
+type: custom:mod-card

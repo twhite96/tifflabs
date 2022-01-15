@@ -8,24 +8,20 @@ from meross_iot.controller.device import BaseDevice
 from meross_iot.controller.mixins.consumption import ConsumptionXMixin
 from meross_iot.controller.mixins.electricity import ElectricityMixin
 from meross_iot.controller.mixins.garage import GarageOpenerMixin
+from meross_iot.controller.mixins.light import LightMixin
 from meross_iot.controller.mixins.toggle import ToggleXMixin, ToggleMixin
 from meross_iot.manager import MerossManager
 from meross_iot.model.enums import OnlineStatus, Namespace
 from meross_iot.model.exception import CommandTimeoutError
 from meross_iot.model.push.generic import GenericPushNotification
 
-from .common import (PLATFORM, MANAGER, calculate_switch_id, log_exception, SENSOR_POLL_INTERVAL_SECONDS)
+from .common import (PLATFORM, MANAGER, calculate_switch_id, log_exception)
 
 # Conditional import for switch device
-try:
-    from homeassistant.components.switch import SwitchEntity
-except ImportError:
-    from homeassistant.components.switch import SwitchDevice as SwitchEntity
+from homeassistant.components.switch import SwitchEntity
 
 
 _LOGGER = logging.getLogger(__name__)
-PARALLEL_UPDATES = 1
-SCAN_INTERVAL = timedelta(seconds=SENSOR_POLL_INTERVAL_SECONDS)
 
 
 class MerossSwitchDevice(ToggleXMixin, BaseDevice):
@@ -101,10 +97,10 @@ class SwitchEntityWrapper(SwitchEntity):
         return self._device.is_on(channel=self._channel_id)
 
     async def async_turn_off(self, **kwargs) -> None:
-        await self._device.async_turn_off(channel=self._channel_id)
+        await self._device.async_turn_off(channel=self._channel_id, skip_rate_limits=True)
 
     async def async_turn_on(self, **kwargs) -> None:
-        await self._device.async_turn_on(channel=self._channel_id)
+        await self._device.async_turn_on(channel=self._channel_id, skip_rate_limits=True)
 
     def turn_on(self, **kwargs: Any) -> None:
         self.hass.async_add_executor_job(self.async_turn_on, **kwargs)
@@ -155,7 +151,11 @@ class SwitchEntityWrapper(SwitchEntity):
     def today_energy_kwh(self) -> Optional[float]:
         if self._daily_consumtpion is not None:
             today = datetime.today()
-            date, total = max(self._daily_consumtpion, key=lambda x: x.get('date'))
+            total = 0
+            daystart = datetime(year=today.year, month=today.month, day=today.day, hour=0, second=0)
+            for x in self._daily_consumtpion:
+              if x['date'] == daystart:
+                total = x['total_consumption_kwh']
             return total
 
 
@@ -165,8 +165,8 @@ async def _add_entities(hass: HomeAssistant, devices: Iterable[BaseDevice], asyn
     # Identify all the devices that expose the Toggle or ToggleX capabilities
     devs = filter(lambda d: isinstance(d, ToggleXMixin) or isinstance(d, ToggleMixin), devices)
 
-    # Exclude garage openers.
-    devs = filter(lambda d: not isinstance(d, GarageOpenerMixin), devs)
+    # Exclude garage openers and lights.
+    devs = filter(lambda d: not (isinstance(d, GarageOpenerMixin) or isinstance(d, LightMixin)), devs)
 
     for d in devs:
         for channel_index, channel in enumerate(d.channels):

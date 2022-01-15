@@ -19,10 +19,11 @@ from homeassistant.components.light import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_ATTRIBUTION
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from wyzeapy import Wyzeapy, BulbService
 from wyzeapy.services.bulb_service import Bulb
 from wyzeapy.types import DeviceTypes
+from .token_manager import token_exception_handler
 
 from .const import DOMAIN, CONF_CLIENT
 
@@ -31,6 +32,7 @@ ATTRIBUTION = "Data provided by Wyze"
 SCAN_INTERVAL = timedelta(seconds=30)
 
 
+@token_exception_handler
 async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry,
                             async_add_entities: Callable[[List[Any], bool], None]) -> None:
     """
@@ -89,45 +91,49 @@ class WyzeLight(LightEntity):
 
     @property
     def should_poll(self) -> bool:
-        return True
+        return False
 
-    @staticmethod
-    def translate(value: float, input_min: float, input_max: float, output_min: float, output_max: float) -> \
-            Optional[float]:
+    def translate_color_temp(self, value: float) -> Optional[float]:
         """
         This function maps an input minimum and maximum to the output minimum and maximum
 
         :param value: The value to be converted
-        :param input_min: The minimum value of the input
-        :param input_max: The maximum value of the input
-        :param output_min: The minimum value of the output
-        :param output_max: The maximum value of the output
         :return: The converted value
         """
 
         if value is None:
             return None
 
-        # Figure out how 'wide' each range is
-        left_span = input_max - input_min
-        right_span = output_max - output_min
+        # under 1000 we can easily assume that the value is in mireds
+        if value < 1000:
+            if value < self.min_mireds:
+                value = self.min_mireds
+            elif value > self.max_mireds:
+                value = self.max_mireds
+            return color_util.color_temperature_mired_to_kelvin(value)
+        if value >= 1000:
+            # use the color bulb range by default as it is wider.
+            temp_max = 6500
+            temp_min = 1800
+            if self._device_type is DeviceTypes.LIGHT:
+                temp_min = 2700
+            if value < temp_min:
+                value = temp_min
+            elif value > temp_max:
+                value = temp_max
+            return color_util.color_temperature_kelvin_to_mired(value)
 
-        # Convert the left range into a 0-1 range (float)
-        value_scaled = float(value - input_min) / float(left_span)
-
-        # Convert the 0-1 range into a value in the right range.
-        return output_min + (value_scaled * right_span)
-
+    @token_exception_handler
     async def async_turn_on(self, **kwargs: Any) -> None:
         if kwargs.get(ATTR_BRIGHTNESS) is not None:
             _LOGGER.debug("Setting brightness")
-            brightness = self.translate(kwargs.get(ATTR_BRIGHTNESS), 1, 255, 1, 100)
+            brightness = round((kwargs.get(ATTR_BRIGHTNESS) / 255) * 100, 1)
 
             loop = asyncio.get_event_loop()
             loop.create_task(self._bulb_service.set_brightness(self._bulb, int(brightness)))
         if kwargs.get(ATTR_COLOR_TEMP) is not None:
             _LOGGER.debug("Setting color temp")
-            color_temp = self.translate(kwargs.get(ATTR_COLOR_TEMP), 500, 140, 1800, 6500)
+            color_temp = self.translate_color_temp(kwargs.get(ATTR_COLOR_TEMP))
 
             loop = asyncio.get_event_loop()
             loop.create_task(self._bulb_service.set_color_temp(self._bulb, int(color_temp)))
@@ -144,13 +150,16 @@ class WyzeLight(LightEntity):
 
         self._bulb.on = True
         self._just_updated = True
+        self.async_schedule_update_ha_state()
 
+    @token_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
         loop = asyncio.get_event_loop()
         loop.create_task(self._bulb_service.turn_off(self._bulb))
 
         self._bulb.on = False
         self._just_updated = True
+        self.async_schedule_update_ha_state()
 
     @property
     def name(self):
@@ -173,13 +182,22 @@ class WyzeLight(LightEntity):
     @property
     def device_state_attributes(self):
         """Return device attributes of the entity."""
-        return {
+        dev_info = {
             ATTR_ATTRIBUTION: ATTRIBUTION,
             "state": self.is_on,
             "available": self.available,
             "device model": self._bulb.product_model,
             "mac": self.unique_id
         }
+
+        if self._bulb.device_params.get("ip"):
+            dev_info["IP"] = str(self._bulb.device_params.get("ip"))
+        if self._bulb.device_params.get("rssi"):
+            dev_info["RSSI"] = str(self._bulb.device_params.get("rssi"))
+        if self._bulb.device_params.get("ssid"):
+            dev_info["SSID"] = str(self._bulb.device_params.get("ssid"))
+
+        return dev_info
 
     @property
     def brightness(self):
@@ -188,12 +206,23 @@ class WyzeLight(LightEntity):
         This method is optional. Removing it indicates to Home Assistant
         that brightness is not supported for this light.
         """
-        return self.translate(self._bulb.brightness, 1, 100, 1, 255)
+        return round(self._bulb.brightness * 2.55, 1)
 
     @property
     def color_temp(self):
         """Return the CT color value in mired."""
-        return self.translate(self._bulb.color_temp, 2700, 6500, 500, 140)
+        return self.translate_color_temp(self._bulb.color_temp)
+
+    # Assuming that mireds follow the 1,000,000/kelvin temperature conversion, these values for min/max *should* work
+    @property
+    def max_mireds(self) -> int:
+        if self._device_type is DeviceTypes.MESH_LIGHT:
+            return 556
+        return 370
+
+    @property
+    def min_mireds(self) -> int:
+        return 154
 
     @property
     def is_on(self):
@@ -206,6 +235,7 @@ class WyzeLight(LightEntity):
             return SUPPORT_BRIGHTNESS | SUPPORT_COLOR_TEMP | SUPPORT_COLOR
         return SUPPORT_BRIGHTNESS | SUPPORT_COLOR_TEMP
 
+    @token_exception_handler
     async def async_update(self):
         """
         This function updates the lock to be up to date with the Wyze Servers
@@ -215,3 +245,19 @@ class WyzeLight(LightEntity):
             self._bulb = await self._bulb_service.update(self._bulb)
         else:
             self._just_updated = False
+
+    @callback
+    def async_update_callback(self, bulb: Bulb):
+        """Update the bulb's state."""
+        self._bulb = bulb
+        self.async_schedule_update_ha_state()
+
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to update events."""
+        self._bulb.callback_function = self.async_update_callback
+        self._bulb_service.register_updater(self._bulb, 30)
+        await self._bulb_service.start_update_manager()
+        return await super().async_added_to_hass()
+
+    async def async_will_remove_from_hass(self) -> None:
+        self._bulb_service.unregister_updater()

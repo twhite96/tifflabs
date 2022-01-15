@@ -10,6 +10,7 @@ from homeassistant.components.alarm_control_panel import DOMAIN as PLATFORM
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     ATTR_CODE,
+    ATTR_NAME,
 )
 from homeassistant.core import HomeAssistant, asyncio
 from homeassistant.helpers import device_registry as dr
@@ -19,6 +20,9 @@ from homeassistant.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
+from homeassistant.helpers.service import (
+    async_register_admin_service,
+)
 from . import const
 from .store import async_get_registry
 from .panel import (
@@ -27,7 +31,11 @@ from .panel import (
 )
 from .card import async_register_card
 from .websockets import async_register_websockets
-from .sensors import SensorHandler
+from .sensors import (
+    SensorHandler,
+    ATTR_GROUP,
+    ATTR_ENTITIES
+)
 from .automations import AutomationHandler
 from .mqtt import MqttHandler
 
@@ -76,6 +84,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     # Websocket support
     await async_register_websockets(hass)
+
+    # Register custom services
+    register_services(hass)
 
     return True
 
@@ -201,12 +212,19 @@ class AlarmoCoordinator(DataUpdateCoordinator):
                 async_dispatcher_send(self.hass, "alarmo_register_master", config["master"])
 
     def async_update_sensor_config(self, entity_id: str, data: dict):
+        group = None
+        if ATTR_GROUP in data:
+            group = data[ATTR_GROUP]
+            del data[ATTR_GROUP]
         if const.ATTR_REMOVE in data:
             self.store.async_delete_sensor(entity_id)
+            self.assign_sensor_to_group(entity_id, None)
         elif self.store.async_get_sensor(entity_id):
             self.store.async_update_sensor(entity_id, data)
+            self.assign_sensor_to_group(entity_id, group)
         else:
             self.store.async_create_sensor(entity_id, data)
+            self.assign_sensor_to_group(entity_id, group)
 
         async_dispatcher_send(self.hass, "alarmo_sensors_updated")
 
@@ -217,6 +235,8 @@ class AlarmoCoordinator(DataUpdateCoordinator):
             return
 
         if ATTR_CODE in data and data[ATTR_CODE]:
+            data[const.ATTR_CODE_FORMAT] = "number" if data[ATTR_CODE].isdigit() else "text"
+            data[const.ATTR_CODE_LENGTH] = len(data[ATTR_CODE])
             hashed = bcrypt.hashpw(
                 data[ATTR_CODE].encode("utf-8"), bcrypt.gensalt(rounds=12)
             )
@@ -246,7 +266,9 @@ class AlarmoCoordinator(DataUpdateCoordinator):
             }
 
         for (user_id, user) in users.items():
-            if not user[ATTR_CODE] and not code:
+            if not user[const.ATTR_ENABLED]:
+                continue
+            elif not user[ATTR_CODE] and not code:
                 return user
             elif user[ATTR_CODE]:
                 hash = base64.b64decode(user[ATTR_CODE])
@@ -358,6 +380,49 @@ class AlarmoCoordinator(DataUpdateCoordinator):
             entity_registry.async_remove(entity.entity_id)
             self.hass.data[const.DOMAIN]["areas"].pop(area_id, None)
 
+    def async_get_sensor_groups(self):
+        """fetch a list of sensor groups (websocket API hook)"""
+        groups = self.store.async_get_sensor_groups()
+        return list(groups.values())
+
+    def async_get_group_for_sensor(self, entity_id: str):
+        groups = self.async_get_sensor_groups()
+        result = next((el for el in groups if entity_id in el[ATTR_ENTITIES]), None)
+        return result["group_id"] if result else None
+
+    def assign_sensor_to_group(self, entity_id: str, group_id: str):
+        old_group = self.async_get_group_for_sensor(entity_id)
+        if old_group and group_id != old_group:
+            # remove sensor from group
+            el = self.store.async_get_sensor_group(old_group)
+            if len(el[ATTR_ENTITIES]) > 2:
+                self.store.async_update_sensor_group(old_group, {
+                    ATTR_ENTITIES: [x for x in el[ATTR_ENTITIES] if x != entity_id]
+                })
+            else:
+                self.store.async_delete_sensor_group(old_group)
+        if group_id:
+            # add sensor to group
+            el = self.store.async_get_sensor_group(group_id)
+            if not el:
+                _LOGGER.error("Failed to assign entity {} to group {}".format(entity_id, group_id))
+                return
+            self.store.async_update_sensor_group(group_id, {
+                ATTR_ENTITIES: el[ATTR_ENTITIES] + [entity_id]
+            })
+
+        async_dispatcher_send(self.hass, "alarmo_sensors_updated")
+
+    def async_update_sensor_group_config(self, group_id: str = None, data: dict = {}):
+        if const.ATTR_REMOVE in data:
+            self.store.async_delete_sensor_group(group_id)
+        elif not group_id:
+            self.store.async_create_sensor_group(data)
+        else:
+            self.store.async_update_sensor_group(group_id, data)
+
+        async_dispatcher_send(self.hass, "alarmo_sensors_updated")
+
     async def async_unload(self):
         """remove all alarmo objects"""
 
@@ -379,3 +444,30 @@ class AlarmoCoordinator(DataUpdateCoordinator):
     async def async_delete_config(self):
         """wipe alarmo storage"""
         await self.store.async_delete()
+
+
+@callback
+def register_services(hass):
+    """Register services used by alarmo component."""
+
+    coordinator = hass.data[const.DOMAIN]["coordinator"]
+
+    async def async_srv_toggle_user(call):
+        """Enable a user by service call"""
+        name = call.data.get(ATTR_NAME)
+        enable = True if call.service == const.SERVICE_ENABLE_USER else False
+        users = coordinator.store.async_get_users()
+        user = next((item for item in list(users.values()) if item[ATTR_NAME] == name), None)
+        if user is None:
+            _LOGGER.warning("Failed to {} user, no match for name '{}'".format("enable" if enable else "disable", name))
+            return
+
+        coordinator.store.async_update_user(user[const.ATTR_USER_ID], {const.ATTR_ENABLED: enable})
+        _LOGGER.debug("User user '{}' was {}".format(name, "enabled" if enable else "disabled"))
+
+    async_register_admin_service(
+        hass, const.DOMAIN, const.SERVICE_ENABLE_USER, async_srv_toggle_user, schema=const.SERVICE_TOGGLE_USER_SCHEMA
+    )
+    async_register_admin_service(
+        hass, const.DOMAIN, const.SERVICE_DISABLE_USER, async_srv_toggle_user, schema=const.SERVICE_TOGGLE_USER_SCHEMA
+    )

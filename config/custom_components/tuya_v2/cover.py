@@ -1,13 +1,12 @@
-#!/usr/bin/env python3
 """Support for Tuya Cover."""
 from __future__ import annotations
 
 import logging
-from typing import Any, List
+from typing import Any
 
+from homeassistant.components.cover import DEVICE_CLASS_CURTAIN
+from homeassistant.components.cover import DOMAIN as DEVICE_DOMAIN
 from homeassistant.components.cover import (
-    DEVICE_CLASS_CURTAIN,
-    DOMAIN as DEVICE_DOMAIN,
     SUPPORT_CLOSE,
     SUPPORT_OPEN,
     SUPPORT_SET_POSITION,
@@ -15,16 +14,17 @@ from homeassistant.components.cover import (
     CoverEntity,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
-from .base import TuyaHaDevice
+from .base import TuyaHaEntity
 from .const import (
     DOMAIN,
     TUYA_DEVICE_MANAGER,
     TUYA_DISCOVERY_NEW,
-    TUYA_HA_TUYA_MAP,
     TUYA_HA_DEVICES,
+    TUYA_HA_TUYA_MAP,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -42,54 +42,57 @@ ATTR_POSITION = "position"
 
 
 async def async_setup_entry(
-    hass: HomeAssistant, _entry: ConfigEntry, async_add_entities
-):
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities
+) -> None:
     """Set up tuya cover dynamically through tuya discovery."""
-    _LOGGER.info("cover init")
+    _LOGGER.debug("cover init")
 
-    hass.data[DOMAIN][TUYA_HA_TUYA_MAP].update({DEVICE_DOMAIN: TUYA_SUPPORT_TYPE})
+    hass.data[DOMAIN][entry.entry_id][TUYA_HA_TUYA_MAP][
+        DEVICE_DOMAIN
+    ] = TUYA_SUPPORT_TYPE
 
-    async def async_discover_device(dev_ids):
+    @callback
+    def async_discover_device(dev_ids):
         """Discover and add a discovered tuya cover."""
-        _LOGGER.info(f"cover add-> {dev_ids}")
+        _LOGGER.debug(f"cover add-> {dev_ids}")
         if not dev_ids:
             return
-        entities = await hass.async_add_executor_job(_setup_entities, hass, dev_ids)
-        hass.data[DOMAIN][TUYA_HA_DEVICES].extend(entities)
+        entities = _setup_entities(hass, entry, dev_ids)
         async_add_entities(entities)
 
-    async_dispatcher_connect(
-        hass, TUYA_DISCOVERY_NEW.format(DEVICE_DOMAIN), async_discover_device
+    entry.async_on_unload(
+        async_dispatcher_connect(
+            hass, TUYA_DISCOVERY_NEW.format(DEVICE_DOMAIN), async_discover_device
+        )
     )
 
-    device_manager = hass.data[DOMAIN][TUYA_DEVICE_MANAGER]
+    device_manager = hass.data[DOMAIN][entry.entry_id][TUYA_DEVICE_MANAGER]
     device_ids = []
     for (device_id, device) in device_manager.device_map.items():
         if device.category in TUYA_SUPPORT_TYPE:
             device_ids.append(device_id)
-    await async_discover_device(device_ids)
+    async_discover_device(device_ids)
 
 
-def _setup_entities(hass, device_ids: List):
+def _setup_entities(
+    hass: HomeAssistant, entry: ConfigEntry, device_ids: list[str]
+) -> list[Entity]:
     """Set up Tuya Cover."""
-    device_manager = hass.data[DOMAIN][TUYA_DEVICE_MANAGER]
-    entities = []
+    device_manager = hass.data[DOMAIN][entry.entry_id][TUYA_DEVICE_MANAGER]
+    entities: list[Entity] = []
     for device_id in device_ids:
         device = device_manager.device_map[device_id]
         if device is None:
             continue
         entities.append(TuyaHaCover(device, device_manager))
+        hass.data[DOMAIN][entry.entry_id][TUYA_HA_DEVICES].add(device_id)
     return entities
 
 
-class TuyaHaCover(TuyaHaDevice, CoverEntity):
+class TuyaHaCover(TuyaHaEntity, CoverEntity):
     """Tuya Switch Device."""
 
-    # property
-    @property
-    def device_class(self) -> str:
-        """Return Entity Properties."""
-        return DEVICE_CLASS_CURTAIN
+    _attr_device_class = DEVICE_CLASS_CURTAIN
 
     @property
     def is_closed(self) -> bool | None:

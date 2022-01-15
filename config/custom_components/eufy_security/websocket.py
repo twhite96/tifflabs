@@ -36,23 +36,12 @@ class EufySecurityWebSocket:
         self.ws: aiohttp.ClientWebSocketResponse = None
         self.loop: asyncio.AbstractEventLoop = asyncio.get_event_loop()
 
-    async def set_ws(self):
-        while True:
-            if self.ws is None or self.ws.closed == True:
-                _LOGGER.debug(f"{DOMAIN} - set_ws - connect")
-                try:
-                    self.ws: aiohttp.ClientWebSocketResponse = (
-                        await self.session.ws_connect(
-                            self.base, autoclose=False, autoping=True, heartbeat=60
-                        )
-                    )
-                    task = self.hass.async_create_task(self.process_messages())
-                    task.add_done_callback(self.on_close)
-                    await self.async_on_open()
-                except:
-                    await asyncio.sleep(5)
-            else:
-                break
+    async def connect(self):
+        _LOGGER.debug(f"{DOMAIN} - set_ws - connect")
+        self.ws: aiohttp.ClientWebSocketResponse = (await self.session.ws_connect(self.base, autoclose=False, autoping=True, heartbeat=60))
+        task = self.loop.create_task(self.process_messages())
+        task.add_done_callback(self.on_close)
+        await self.async_on_open()
 
     async def async_on_open(self) -> None:
         if not self.ws.closed:
@@ -61,22 +50,11 @@ class EufySecurityWebSocket:
 
     async def process_messages(self):
         _LOGGER.debug(f"{DOMAIN} - process_messages started")
-        #counter = 1
         async for msg in self.ws:
             try:
                 await self.on_message(msg)
             except Exception as ex:  # pylint: disable=broad-except
-                _LOGGER.error(
-                    f"{DOMAIN} - Exception - process_messages: %s - traceback: %s - message: %s",
-                    ex,
-                    traceback.format_exc(),
-                    msg,
-                )
-            # if counter % 50 == 0:
-            #     counter = 1
-            #     await asyncio.sleep(1)
-            # else:
-            #     counter = counter + 1
+                _LOGGER.error(f"{DOMAIN} - Exception - process_messages: %s - traceback: %s - message: %s", ex, traceback.format_exc(), msg)
 
     async def on_message(self, message):
         if self.message_callback is not None:
@@ -85,15 +63,11 @@ class EufySecurityWebSocket:
     def on_error(self, error: Text = "Unspecified") -> None:
         _LOGGER.debug(f"{DOMAIN} - WebSocket Error: %s", error)
         if self.error_callback is not None:
-            asyncio.run_coroutine_threadsafe(
-                self.error_callback(error), self.loop
-            ).result()
+            asyncio.run_coroutine_threadsafe(self.error_callback(error), self.loop).result()
 
     def on_close(self, future="") -> None:
         _LOGGER.debug(f"{DOMAIN} - WebSocket Connection Closed. %s", future)
-        _LOGGER.debug(
-            f"{DOMAIN} - WebSocket Connection Closed. %s", self.close_callback
-        )
+        _LOGGER.debug(f"{DOMAIN} - WebSocket Connection Closed. %s", self.close_callback)
         if self.close_callback is not None:
             self.ws = None
             asyncio.run_coroutine_threadsafe(self.close_callback(), self.loop)

@@ -1,7 +1,11 @@
 import logging
 
 import asyncio
+from datetime import datetime
 from enum import Enum
+from queue import Queue
+import time
+from homeassistant.config_entries import ConfigEntry
 
 from homeassistant.const import (
     PERCENTAGE,
@@ -9,6 +13,7 @@ from homeassistant.const import (
     DEVICE_CLASS_SIGNAL_STRENGTH,
 )
 from homeassistant.components.binary_sensor import DEVICE_CLASS_MOTION
+from homeassistant.core import callback
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -16,92 +21,93 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 NAME = "Eufy Security"
 DOMAIN = "eufy_security"
 VERSION = "0.0.1"
+COORDINATOR = "coordinator"
+CAPTCHA_CONFIG = "captcha_config"
 
 # Platforms
 ALARM_CONTROL_PANEL = "alarm_control_panel"
 BINARY_SENSOR = "binary_sensor"
 CAMERA = "camera"
 SENSOR = "sensor"
-PLATFORMS = [BINARY_SENSOR, CAMERA, SENSOR, ALARM_CONTROL_PANEL]
+LOCK = "lock"
+SWITCH = "switch"
+SELECT = "select"
+PLATFORMS = [CAMERA, BINARY_SENSOR, SENSOR, ALARM_CONTROL_PANEL, LOCK, SWITCH, SELECT]
 
 # Configuration and options
-CONF_HOST = "host"
-CONF_PORT = "port"
-CONF_USE_RTSP_SERVER_ADDON = "use_rtsp_server_addon"
+CONF_HOST: str = "host"
+CONF_PORT: str = "port"
+CONF_CAPTCHA: str = "captcha"
+CONF_USE_RTSP_SERVER_ADDON: str = "use_rtsp_server_addon"
+CONF_RTSP_SERVER_ADDRESS: str = "rtsp_server_address"
+CONF_RTSP_SERVER_PORT: str = "rtsp_server_port"
+CONF_FFMPEG_ANALYZE_DURATION: str = "ffmpeg_analyze_duration"
+CONF_SYNC_INTERVAL: str = "sync_interval"
+CONF_AUTO_START_STREAM: str = "auto_start_stream"
+CONF_FIX_BINARY_SENSOR_STATE: str = "fix_binary_sensor_state"
 
-# Update all in every hour
-DEFAULT_SYNC_INTERVAL = 600  # seconds
+DEFAULT_HOST: str = "0.0.0.0"
+DEFAULT_PORT: int = 3000
+DEFAULT_USE_RTSP_SERVER_ADDON: bool = False
+DEFAULT_RTSP_SERVER_PORT: int = 8554
+DEFAULT_SYNC_INTERVAL: int = 600  # seconds
+DEFAULT_FFMPEG_ANALYZE_DURATION: float = 1.2 # microseconds
+DEFAULT_CODEC: str = "h264"
+DEFAULT_AUTO_START_STREAM: bool = True
+DEFAULT_FIX_BINARY_SENSOR_STATE: bool = False
 
-START_LIVESTREAM_AT_INITIALIZE = "start livestream at initialize"
-SET_API_SCHEMA = {
-    "messageId": "set_api_schema",
-    "command": "set_api_schema",
-    "schemaVersion": 3,
-}
+P2P_LIVESTREAMING_STATUS = "p2pLiveStreamingStatus"
+RTSP_LIVESTREAMING_STATUS = "rtspLiveStreamingStatus"
+STREAMING_EVENT_NAMES = [RTSP_LIVESTREAMING_STATUS, P2P_LIVESTREAMING_STATUS]
+LATEST_CODEC = "latest codec"
+SET_API_SCHEMA = {"messageId": "set_api_schema", "command": "set_api_schema", "schemaVersion": 7}
+DRIVER_CONNECT_MESSAGE = {"messageId": "driver_connect", "command": "driver.connect"}
+SET_CAPTCHA_MESSAGE = {"messageId": "driver_set_captcha", "command": "driver.set_captcha", "captchaId": None, "captcha": None}
 START_LISTENING_MESSAGE = {"messageId": "start_listening", "command": "start_listening"}
 POLL_REFRESH_MESSAGE = {"messageId": "poll_refresh", "command": "driver.poll_refresh"}
-GET_LIVESTREAM_STATUS_PLACEHOLDER = "get_livestream_status"
-GET_PROPERTIES_METADATA_MESSAGE = {
-    "messageId": "get_properties_metadata",
-    "command": "{0}.get_properties_metadata",
-    "serialNumber": None,
-}
-GET_PROPERTIES_MESSAGE = {
-    "messageId": "get_properties",
-    "command": "{0}.get_properties",
-    "serialNumber": None,
-}
-GET_LIVESTREAM_STATUS_MESSAGE = {
-    "messageId": GET_LIVESTREAM_STATUS_PLACEHOLDER + ".{serial_no}",
-    "command": "device.is_livestreaming",
-    "serialNumber": None,
-}
-SET_RTSP_STREAM_MESSAGE = {
-    "messageId": "set_rtsp_stream_on",
-    "command": "device.set_rtsp_stream",
-    "serialNumber": None,
-    "value": None,
-}
-SET_LIVESTREAM_MESSAGE = {
-    "messageId": "start_livesteam",
-    "command": "device.{state}_livestream",
-    "serialNumber": None,
-}
-SET_DEVICE_STATE_MESSAGE = {
-    "messageId": "enable_device",
-    "command": "device.enable_device",
-    "serialNumber": None,
-    "value": None
-}
+GET_P2P_LIVESTREAM_STATUS_PLACEHOLDER = "get_p2p_livestream_status"
+GET_RTSP_LIVESTREAM_STATUS_PLACEHOLDER = "get_rtsp_livestream_status"
+GET_PROPERTIES_METADATA_MESSAGE = {"messageId": "get_properties_metadata", "command": "{0}.get_properties_metadata", "serialNumber": None}
+GET_PROPERTIES_MESSAGE = {"messageId": "get_properties", "command": "{0}.get_properties", "serialNumber": None}
+GET_RTSP_LIVESTREAM_STATUS_MESSAGE = {"messageId": "get_rtsp_livestream_status", "command": "device.is_rtsp_livestreaming", "serialNumber": None}
+GET_P2P_LIVESTREAM_STATUS_MESSAGE = {"messageId": "get_p2p_livestream_status", "command": "device.is_livestreaming", "serialNumber": None}
+SET_RTSP_STREAM_MESSAGE = {"messageId": "set_rtsp_stream_on", "command": "device.set_rtsp_stream", "serialNumber": None, "value": None}
+SET_RTSP_LIVESTREAM_MESSAGE = {"messageId": "start_rtsp_livestream", "command": "device.{state}_rtsp_livestream", "serialNumber": None}
+SET_P2P_LIVESTREAM_MESSAGE = {"messageId": "start_livesteam", "command": "device.{state}_livestream", "serialNumber": None}
+SET_DEVICE_STATE_MESSAGE = {"messageId": "enable_device", "command": "device.enable_device", "serialNumber": None, "value": None}
+SET_GUARD_MODE_MESSAGE = {"messageId": "set_guard_mode", "command": "station.set_guard_mode", "serialNumber": None, "mode": None}
+SET_PROPERTY_MESSAGE = {"messageId": "device_set_property", "command": "device.set_property", "serialNumber": None, "name": None, "value": None}
+STATION_TRIGGER_ALARM = {"messageId": "trigger_alarm", "command": "station.trigger_alarm", "serialNumber": None, "seconds": 10}
+STATION_RESET_ALARM = {"messageId": "reset_alarm", "command": "station.reset_alarm", "serialNumber": None}
+SET_LOCK_MESSAGE = {"messageId": "lock_device", "command": "device.lock_device", "serialNumber": None, "value": None}
 
-SET_GUARD_MODE_MESSAGE = {
-    "messageId": "set_guard_mode",
-    "command": "station.set_guard_mode",
-    "serialNumber": None,
-    "mode": None
-}
-
-STATION_TRIGGER_ALARM = {
-    "messageId": "trigger_alarm",
-    "command": "station.trigger_alarm",
-    "serialNumber": None,
-    "seconds": 10
-}
-
-STATION_RESET_ALARM = {
-    "messageId": "reset_alarm",
-    "command": "station.reset_alarm",
-    "serialNumber": None
-}
 
 MESSAGE_IDS_TO_PROCESS = [
     START_LISTENING_MESSAGE["messageId"],
     GET_PROPERTIES_MESSAGE["messageId"],
-    GET_LIVESTREAM_STATUS_MESSAGE["messageId"],
+    GET_PROPERTIES_METADATA_MESSAGE["messageId"],
+    GET_P2P_LIVESTREAM_STATUS_MESSAGE["messageId"],
+    GET_RTSP_LIVESTREAM_STATUS_MESSAGE["messageId"],
+    DRIVER_CONNECT_MESSAGE["messageId"],
+    SET_CAPTCHA_MESSAGE["messageId"]
 ]
 MESSAGE_TYPES_TO_PROCESS = ["result", "event"]
 PROPERTY_CHANGED_PROPERTY_NAME = "event_property_name"
+P2P_LIVESTREAM_STARTED = "livestream started"
+P2P_LIVESTREAM_STOPPED = "livestream stopped"
+RTSP_LIVESTREAM_STARTED = "rtsp livestream started"
+RTSP_LIVESTREAM_STOPPED = "rtsp livestream stopped"
 EVENT_CONFIGURATION: dict = {
+    "connected": {
+        "name": "event",
+        "value": "event",
+        "type": "driver",
+    },
+    "captcha request": {
+        "name": "captcha",
+        "value": "captcha",
+        "type": "captcha",
+    },
     "property changed": {
         "name": PROPERTY_CHANGED_PROPERTY_NAME,
         "value": "value",
@@ -117,25 +123,35 @@ EVENT_CONFIGURATION: dict = {
         "value": "state",
         "type": "state",
     },
-    "got rtsp url": {
-        "name": "rtspUrl",
-        "value": "rtspUrl",
-        "type": "cache",
-    },
-    "livestream started": {
-        "name": "liveStreamingStatus",
+    P2P_LIVESTREAM_STARTED: {
+        "name": P2P_LIVESTREAMING_STATUS,
         "value": "event",
-        "type": "cache",
+        "type": "state",
     },
-    "livestream stopped": {
-        "name": "liveStreamingStatus",
+    P2P_LIVESTREAM_STOPPED: {
+        "name": P2P_LIVESTREAMING_STATUS,
         "value": "event",
-        "type": "cache",
+        "type": "state",
+    },
+    RTSP_LIVESTREAM_STARTED: {
+        "name": RTSP_LIVESTREAMING_STATUS,
+        "value": "event",
+        "type": "state",
+    },
+    RTSP_LIVESTREAM_STOPPED: {
+        "name": RTSP_LIVESTREAMING_STATUS,
+        "value": "event",
+        "type": "state",
     },
     "livestream video data": {
         "name": "video_data",
         "value": "buffer",
         "type": "event",
+    },
+    "alarm event": {
+        "name": "alarmEvent",
+        "value": "alarmEvent",
+        "type": "state",
     },
 }
 
@@ -144,7 +160,6 @@ STATE_ALARM_CUSTOM2 = "custom2"
 STATE_ALARM_CUSTOM3 = "custom3"
 STATE_GUARD_SCHEDULE = "schedule"
 STATE_GUARD_GEO = "geo"
-
 
 class DEVICE_TYPE(Enum):
     STATION = 0
@@ -180,7 +195,6 @@ class DEVICE_TYPE(Enum):
     SOLO_CAMERA_SPOTLIGHT_1080 = 60
     SOLO_CAMERA_SPOTLIGHT_2K = 61
     SOLO_CAMERA_SPOTLIGHT_SOLAR = 62
-
 
 DEVICE_CATEGORY = {
     DEVICE_TYPE.STATION: "STATION",
@@ -218,17 +232,135 @@ DEVICE_CATEGORY = {
     DEVICE_TYPE.SOLO_CAMERA_SPOTLIGHT_SOLAR: "CAMERA",
 }
 
-
-async def wait_for_value(
-    ref_dict: dict, ref_key: str, value, max_counter: int = 50, interval=0.25
-):
+async def wait_for_value(ref_dict: dict, ref_key: str, value, max_counter: int=50, interval=0.25):
     _LOGGER.debug(f"{DOMAIN} - wait start - {ref_key}")
     for counter in range(max_counter):
-        _LOGGER.debug(
-            f"{DOMAIN} - wait - {counter} - {ref_key} {ref_dict.get(ref_key)}"
-        )
+        _LOGGER.debug(f"{DOMAIN} - wait - {counter} - {ref_key} {ref_dict.get(ref_key)}")
         if ref_dict.get(ref_key, value) == value:
             await asyncio.sleep(interval)
         else:
             return True
     return False
+
+def get_child_value(data, key, default_value=None):
+    value = data
+    for x in key.split("."):
+        try:
+            value = value[x]
+        except:
+            try:
+                value = value[int(x)]
+            except:
+                value = default_value
+    return value
+
+class Device:
+    def __init__(self, serial_number: str, state: dict) -> None:
+        self.serial_number: str = serial_number
+        self.state: dict = state
+        self.name: str = state["name"]
+        self.model: str = state["model"]
+        self.hardware_version: str = state["hardwareVersion"]
+        self.software_version: str = state["softwareVersion"]
+
+        self.properties: dict = None
+        self.properties_metadata: dict = None
+        self.type_raw: str = None
+        self.type: str = None
+        self.category: str = None
+
+        self.state[P2P_LIVESTREAMING_STATUS] = False
+        self.state[RTSP_LIVESTREAMING_STATUS] = False
+        self.is_rtsp_streaming: bool = False
+        self.is_p2p_streaming: bool = False
+        self.is_streaming: bool = False
+        self.stream_source_type: str = ""
+        self.stream_source_address: str = ""
+        self.codec: str = DEFAULT_CODEC
+        self.queue: Queue = Queue()
+
+        self.callback = None
+
+    def set_properties(self, properties: dict):
+        self.properties = properties
+        self.type_raw = get_child_value(self.properties, "type.value")
+        type = DEVICE_TYPE(self.type_raw)
+        self.type = str(type)
+        self.category = DEVICE_CATEGORY.get(type, "UNKNOWN")
+
+    def set_properties_metadata(self, properties_metadata: dict):
+        self.properties_metadata = properties_metadata
+
+    def is_camera(self):
+        if self.category in ["CAMERA", "DOORBELL"]:
+            return True
+        return False
+
+    def is_motion_sensor(self):
+        if self.category in ["MOTION_SENSOR"]:
+            return True
+        return False
+
+    def is_lock(self):
+        if self.category in ["LOCK"]:
+            return True
+        return False
+
+    def set_streaming_status(self):
+        if self.state[P2P_LIVESTREAMING_STATUS] == P2P_LIVESTREAM_STARTED:
+            self.is_p2p_streaming = True
+        else:
+            self.is_p2p_streaming = False
+
+        if self.state[RTSP_LIVESTREAMING_STATUS] == RTSP_LIVESTREAM_STARTED:
+            self.is_rtsp_streaming = True
+        else:
+            self.is_rtsp_streaming = False
+
+        if not self.callback is None:
+            self.callback()
+
+    def set_codec(self, codec: str):
+        if codec == "unknown":
+            codec = "h264"
+        if codec == "h265":
+            codec = "hevc"
+        self.codec = codec
+
+    def set_streaming_status_callback(self, callback):
+        self.callback = callback
+
+class EufyConfig:
+    def __init__(self, config_entry: ConfigEntry) -> None:
+        self.host: str = config_entry.data.get(CONF_HOST)
+        self.port: int = config_entry.data.get(CONF_PORT)
+        self.sync_interval: int = config_entry.options.get(CONF_SYNC_INTERVAL, DEFAULT_SYNC_INTERVAL)
+        self.use_rtsp_server_addon: bool = config_entry.options.get(CONF_USE_RTSP_SERVER_ADDON, DEFAULT_USE_RTSP_SERVER_ADDON)
+        self.rtsp_server_address: str = config_entry.options.get(CONF_RTSP_SERVER_ADDRESS, self.host)
+        self.rtsp_server_port: int = config_entry.options.get(CONF_RTSP_SERVER_PORT, DEFAULT_RTSP_SERVER_PORT)
+        self.ffmpeg_analyze_duration: int = config_entry.options.get(CONF_FFMPEG_ANALYZE_DURATION, DEFAULT_FFMPEG_ANALYZE_DURATION)
+        self.auto_start_stream: bool = config_entry.options.get(CONF_AUTO_START_STREAM, DEFAULT_AUTO_START_STREAM)
+        self.fix_binary_sensor_state: bool = config_entry.options.get(CONF_FIX_BINARY_SENSOR_STATE, DEFAULT_FIX_BINARY_SENSOR_STATE)
+
+        _LOGGER.debug(f"{DOMAIN} - config class initialized")
+
+class CaptchaConfig:
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.required = False
+        self.id = None
+        self.image = None
+        self.requested_at = None
+        self.user_input = None
+        self.result = None
+
+    def set(self, id, image):
+        self.required = True
+        self.id = id
+        self.image = image
+        self.requested_at = datetime.now()
+
+    def set_input(self, captcha):
+        self.user_input = captcha

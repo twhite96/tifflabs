@@ -1,7 +1,7 @@
 """The Meross IoT local LAN integration."""
 from typing import Callable, Dict, Optional, Union
 from time import time
-import datetime
+from datetime import datetime, timedelta
 from json import (
     dumps as json_dumps,
     loads as json_loads,
@@ -13,29 +13,30 @@ from homeassistant.components.mqtt.const import MQTT_DISCONNECTED
 from homeassistant.helpers import device_registry
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.event import async_track_point_in_utc_time
 from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
 )
 from homeassistant.exceptions import ConfigEntryNotReady
 
 from . import merossclient
-from .merossclient import KeyType, MerossDeviceDescriptor, MerossHttpClient, const as mc
-
-from logging import WARNING, INFO
-from .helpers import LOGGER, LOGGER_trap
-
-
+from .merossclient import (
+    const as mc, KeyType,
+    MerossDeviceDescriptor, MerossHttpClient,
+    build_default_payload_get,
+)
 from .meross_device import MerossDevice
-from .meross_device_switch import MerossDeviceSwitch
-from .meross_device_bulb import MerossDeviceBulb
-from .meross_device_hub import MerossDeviceHub
-
+from logging import WARNING, INFO
+from .helpers import (
+    LOGGER, LOGGER_trap,
+    mqtt_publish, mqtt_is_connected,
+)
 from .const import (
     DOMAIN, SERVICE_REQUEST,
     CONF_HOST, CONF_PROTOCOL, CONF_OPTION_HTTP, CONF_OPTION_MQTT,
-    CONF_DEVICE_ID, CONF_KEY, CONF_PAYLOAD,
+    CONF_DEVICE_ID, CONF_KEY, CONF_CLOUD_KEY, CONF_PAYLOAD,
     CONF_POLLING_PERIOD_DEFAULT,
-    PARAM_UNAVAILABILITY_TIMEOUT,
+    PARAM_UNAVAILABILITY_TIMEOUT,PARAM_HEARTBEAT_PERIOD,
 )
 
 
@@ -84,6 +85,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     else:
         #device related entry
         LOGGER.debug("async_setup_entry device_id = %s", device_id)
+        cloud_key = entry.data.get(CONF_CLOUD_KEY)
+        if cloud_key is not None:
+            api.cloud_key = cloud_key # last loaded overwrites existing: shouldnt it be the same ?!
         device = api.build_device(device_id, entry)
         device.unsub_entry_update_listener = entry.add_update_listener(device.entry_update_listener)
         device.unsub_updatecoordinator_listener = api.coordinator.async_add_listener(device.updatecoordinator_listener)
@@ -127,25 +131,30 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             if api.unsub_entry_update_listener is not None:
                 api.unsub_entry_update_listener()
                 api.unsub_entry_update_listener = None
-            if api.unsub_updatecoordinator_listener is not None:
-                api.unsub_updatecoordinator_listener()
-                api.unsub_updatecoordinator_listener = None
+            if api.unsub_discovery_callback is not None:
+                api.unsub_discovery_callback()
+                api.unsub_discovery_callback = None
             hass.data.pop(DOMAIN)
 
     return True
 
 
 class MerossApi:
+
+    KEY_STARTTIME = '__starttime'
+    KEY_REQUESTTIME = '__requesttime'
+
     def __init__(self, hass: HomeAssistant):
         self.hass = hass
         self.key = None
+        self.cloud_key = None
         self.devices: Dict[str, MerossDevice] = {}
         self.discovering: Dict[str, dict] = {}
         self.mqtt_subscribing = False # guard for asynchronous mqtt sub registration
         self.unsub_mqtt = None
         self.unsub_mqtt_disconnected = None
         self.unsub_entry_update_listener = None
-        self.unsub_updatecoordinator_listener = None
+        self.unsub_discovery_callback = None
 
         async def async_update_data():
             """
@@ -160,7 +169,7 @@ class MerossApi:
             name=DOMAIN,
             update_method=async_update_data,
             # Polling interval. Will only be polled if there are subscribers.
-            update_interval=datetime.timedelta(seconds=CONF_POLLING_PERIOD_DEFAULT),
+            update_interval=timedelta(seconds=CONF_POLLING_PERIOD_DEFAULT),
         )
 
         @callback
@@ -184,12 +193,12 @@ class MerossApi:
         @callback
         async def mqtt_receive(msg):
             try:
-                device_id = msg.topic.split("/")[2]
                 mqttpayload = json_loads(msg.payload)
                 header = mqttpayload.get(mc.KEY_HEADER)
                 method = header.get(mc.KEY_METHOD)
                 namespace = header.get(mc.KEY_NAMESPACE)
                 payload = mqttpayload.get(mc.KEY_PAYLOAD)
+                device_id = msg.topic.split("/")[2]
 
                 LOGGER.debug("MerossApi: MQTT RECV device_id:(%s) method:(%s) namespace:(%s)", device_id, method, namespace)
 
@@ -223,28 +232,36 @@ class MerossApi:
                     discovered = self.discovering.get(device_id)
                     if discovered == None:
                         # new device discovered: try to determine the capabilities
-                        self.mqtt_publish(device_id, mc.NS_APPLIANCE_SYSTEM_ALL, mc.METHOD_GET, key=replykey)
-                        self.discovering[device_id] = { "__time": time() }
-                        if self.unsub_updatecoordinator_listener is None:
-                            self.unsub_updatecoordinator_listener = self.coordinator.async_add_listener(self.updatecoordinator_listener)
+                        self.mqtt_publish_get(device_id, mc.NS_APPLIANCE_SYSTEM_ALL, replykey)
+                        epoch = time()
+                        self.discovering[device_id] = {
+                            MerossApi.KEY_STARTTIME: epoch,
+                            MerossApi.KEY_REQUESTTIME: epoch
+                            }
+                        if self.unsub_discovery_callback is None:
+                            self.unsub_discovery_callback = async_track_point_in_utc_time(
+                                self.hass,
+                                self.discovery_callback,
+                                datetime.fromtimestamp(epoch + PARAM_UNAVAILABILITY_TIMEOUT + 2)
+                            )
 
                     else:
                         if method == mc.METHOD_GETACK:
                             if namespace == mc.NS_APPLIANCE_SYSTEM_ALL:
                                 discovered[mc.NS_APPLIANCE_SYSTEM_ALL] = payload
-                                self.mqtt_publish(device_id, mc.NS_APPLIANCE_SYSTEM_ABILITY, mc.METHOD_GET, key=replykey)
-                                discovered["__time"] = time()
+                                self.mqtt_publish_get(device_id, mc.NS_APPLIANCE_SYSTEM_ABILITY, replykey)
+                                discovered[MerossApi.KEY_REQUESTTIME] = time()
                                 return
                             elif namespace == mc.NS_APPLIANCE_SYSTEM_ABILITY:
                                 if discovered.get(mc.NS_APPLIANCE_SYSTEM_ALL) is None:
-                                    self.mqtt_publish(device_id, mc.NS_APPLIANCE_SYSTEM_ALL, mc.METHOD_GET, key=replykey)
-                                    discovered["__time"] = time()
+                                    self.mqtt_publish_get(device_id, mc.NS_APPLIANCE_SYSTEM_ALL, replykey)
+                                    discovered[MerossApi.KEY_REQUESTTIME] = time()
                                     return
                                 payload.update(discovered[mc.NS_APPLIANCE_SYSTEM_ALL])
                                 self.discovering.pop(device_id)
-                                if (len(self.discovering) == 0) and self.unsub_updatecoordinator_listener:
-                                    self.unsub_updatecoordinator_listener()
-                                    self.unsub_updatecoordinator_listener = None
+                                if (len(self.discovering) == 0) and self.unsub_discovery_callback:
+                                    self.unsub_discovery_callback()
+                                    self.unsub_discovery_callback = None
                                 await self.hass.config_entries.flow.async_init(
                                     DOMAIN,
                                     context={ "source": SOURCE_DISCOVERY },
@@ -255,15 +272,6 @@ class MerossApi:
                                     },
                                 )
                                 return
-                        #we might get here from spurious PUSH or something sent from the device
-                        #check for timeout and eventually reset the procedure
-                        if (time() - discovered.get("__time", 0)) > PARAM_UNAVAILABILITY_TIMEOUT:
-                            if discovered.get(mc.NS_APPLIANCE_SYSTEM_ALL) is None:
-                                self.mqtt_publish(device_id, mc.NS_APPLIANCE_SYSTEM_ALL, mc.METHOD_GET, key=replykey)
-                            else:
-                                self.mqtt_publish(device_id, mc.NS_APPLIANCE_SYSTEM_ABILITY, mc.METHOD_GET, key=replykey)
-                            discovered["__time"] = time()
-                            return
 
                 else:
                     device.mqtt_receive(namespace, method, payload, header)
@@ -303,10 +311,19 @@ class MerossApi:
         """
         descriptor = MerossDeviceDescriptor(entry.data.get(CONF_PAYLOAD, {}))
         if (mc.KEY_HUB in descriptor.digest):
+            from .meross_device_hub import MerossDeviceHub
             device = MerossDeviceHub(self, descriptor, entry)
         elif (mc.KEY_LIGHT in descriptor.digest):
+            from .meross_device_bulb import MerossDeviceBulb
             device = MerossDeviceBulb(self, descriptor, entry)
+        elif (mc.KEY_GARAGEDOOR in descriptor.digest):
+            from .meross_device_cover import MerossDeviceGarage
+            device = MerossDeviceGarage(self, descriptor, entry)
+        elif (mc.NS_APPLIANCE_ROLLERSHUTTER_STATE in descriptor.ability):
+            from .meross_device_cover import MerossDeviceShutter
+            device = MerossDeviceShutter(self, descriptor, entry)
         else:
+            from .meross_device_switch import MerossDeviceSwitch
             device = MerossDeviceSwitch(self, descriptor, entry)
 
         self.devices[device_id] = device
@@ -333,24 +350,39 @@ class MerossApi:
         device_id: str,
         namespace: str,
         method: str,
-        payload: dict = {},
-        key: KeyType = None
+        payload: dict,
+        key: KeyType = None,
+        messageid: str = None
     ) -> None:
         LOGGER.debug("MerossApi: MQTT SEND device_id:(%s) method:(%s) namespace:(%s)", device_id, method, namespace)
-        self.hass.components.mqtt.async_publish(
+        mqtt_publish(
+            self.hass,
             mc.TOPIC_REQUEST.format(device_id),
             json_dumps(merossclient.build_payload(
-                namespace, method, payload,
-                key, device_id=device_id)),
-            0,
-            False)
+                namespace, method, payload, key,
+                mc.TOPIC_RESPONSE.format(device_id), messageid))
+            )
+
+
+    def mqtt_publish_get(self,
+        device_id: str,
+        namespace: str,
+        key: KeyType = None
+    ) -> None:
+        self.mqtt_publish(
+            device_id,
+            namespace,
+            mc.METHOD_GET,
+            build_default_payload_get(namespace),
+            key
+        )
 
 
     async def async_http_request(self,
         host: str,
         namespace: str,
         method: str,
-        payload: dict = {},
+        payload: dict,
         key: KeyType = None,
         callback_or_device: Union[Callable, MerossDevice] = None # pylint: disable=unsubscriptable-object
     ) -> None:
@@ -360,7 +392,8 @@ class MerossApi:
                 _httpclient = MerossHttpClient(host, key, async_get_clientsession(self.hass), LOGGER)
                 self._httpclient = _httpclient
             else:
-                _httpclient.set_host_key(host, key)
+                _httpclient.host = host
+                _httpclient.key = key
 
             response = await _httpclient.async_request(namespace, method, payload)
             r_header = response[mc.KEY_HEADER]
@@ -374,10 +407,8 @@ class MerossApi:
                     #we're actually only using this for SET->SETACK command confirmation
                     callback_or_device()
 
-        except ClientConnectionError as e:
-            LOGGER.info("MerossApi: client connection error in async_http_request(%s)", str(e))
         except Exception as e:
-            LOGGER.warning("MerossApi: error in async_http_request(%s)", str(e))
+            LOGGER.warning("MerossApi: error in async_http_request(%s)", str(e) or type(e).__name__)
 
 
     def request(self,
@@ -403,7 +434,7 @@ class MerossApi:
                 if device is None:
                     LOGGER.warning("MerossApi: cannot call async_http_request (device_id(%s) not found)", device_id)
                     return
-                host = device.descriptor.innerIp
+                host = device.host
             self.hass.async_create_task(
                 self.async_http_request(host, namespace, method, payload, key, callback_or_device)
             )
@@ -419,7 +450,7 @@ class MerossApi:
         for device in self.devices.values():
             if device.polling_period < polling_period:
                 polling_period = device.polling_period
-        self.coordinator.update_interval = datetime.timedelta(seconds=polling_period)
+        self.coordinator.update_interval = timedelta(seconds=polling_period)
 
 
     @callback
@@ -428,18 +459,37 @@ class MerossApi:
 
 
     @callback
-    def updatecoordinator_listener(self) -> None:
+    def discovery_callback(self, _now: datetime):
         """
-        called by DataUpdateCoordinator when we have pending discoveries
-        this callback gets attached/detached dinamically when we have discoveries pending
+        async task to keep alive the discovery process:
+        activated when any device is initially detected
+        this task is not renewed when the list of devices
+        under 'discovery' is empty or these became stale
         """
-        now = time()
-        for device_id, discovered in self.discovering.items():
-            if (now - discovered.get("__time", 0)) > PARAM_UNAVAILABILITY_TIMEOUT:
-                if discovered.get(mc.NS_APPLIANCE_SYSTEM_ALL) is None:
-                    self.mqtt_publish(device_id, mc.NS_APPLIANCE_SYSTEM_ALL, mc.METHOD_GET, {}, self.key)
-                else:
-                    self.mqtt_publish(device_id, mc.NS_APPLIANCE_SYSTEM_ABILITY, mc.METHOD_GET, {}, self.key)
-                discovered["__time"] = now
+        self.unsub_discovery_callback = None
+        if len(discovering := self.discovering) == 0:
+            return
 
-        return
+        _mqtt_is_connected = mqtt_is_connected(self.hass)
+        epoch = time()
+        for device_id, discovered in discovering.copy().items():
+            if (epoch - discovered.get(MerossApi.KEY_STARTTIME, 0)) > PARAM_HEARTBEAT_PERIOD:
+                # stale entry...remove
+                discovering.pop(device_id)
+                continue
+            if (
+                _mqtt_is_connected and
+                ((epoch - discovered.get(MerossApi.KEY_REQUESTTIME, 0)) > PARAM_UNAVAILABILITY_TIMEOUT)
+            ):
+                if discovered.get(mc.NS_APPLIANCE_SYSTEM_ALL) is None:
+                    self.mqtt_publish_get(device_id, mc.NS_APPLIANCE_SYSTEM_ALL, self.key)
+                else:
+                    self.mqtt_publish_get(device_id, mc.NS_APPLIANCE_SYSTEM_ABILITY, self.key)
+                discovered[MerossApi.KEY_REQUESTTIME] = epoch
+
+        if len(discovering):
+            self.unsub_discovery_callback = async_track_point_in_utc_time(
+                self.hass,
+                self.discovery_callback,
+                datetime.fromtimestamp(epoch + PARAM_UNAVAILABILITY_TIMEOUT + 2)
+            )

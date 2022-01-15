@@ -15,19 +15,13 @@ from meross_iot.model.enums import OnlineStatus, Namespace, ThermostatV3Mode
 from meross_iot.model.exception import CommandTimeoutError
 from meross_iot.model.push.generic import GenericPushNotification
 
-from .common import (PLATFORM, MANAGER, log_exception, RELAXED_SCAN_INTERVAL, calculate_valve_id,
+from .common import (PLATFORM, MANAGER, log_exception, calculate_valve_id,
                      extract_subdevice_notification_data)
 
 # Conditional import for switch device
-try:
-    from homeassistant.components.climate import ClimateEntity
-except ImportError:
-    from homeassistant.components.climate import ClimateDevice as ClimateEntity
-
+from homeassistant.components.climate import ClimateEntity
 
 _LOGGER = logging.getLogger(__name__)
-PARALLEL_UPDATES = 1
-SCAN_INTERVAL = timedelta(seconds=RELAXED_SCAN_INTERVAL)
 
 
 class ValveEntityWrapper(ClimateEntity):
@@ -128,26 +122,26 @@ class ValveEntityWrapper(ClimateEntity):
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         # Turn on the device if not already on
         if hvac_mode == HVAC_MODE_OFF:
-            await self._device.async_turn_off()
+            await self._device.async_turn_off(skip_rate_limits=True)
             return
         elif not self._device.is_on():
-            await self._device.async_turn_on()
+            await self._device.async_turn_on(skip_rate_limits=True)
 
         if hvac_mode == HVAC_MODE_HEAT:
-            await self._device.async_set_mode(ThermostatV3Mode.HEAT)
+            await self._device.async_set_mode(ThermostatV3Mode.HEAT, skip_rate_limits=True)
         elif hvac_mode == HVAC_MODE_AUTO:
-            await self._device.async_set_mode(ThermostatV3Mode.AUTO)
+            await self._device.async_set_mode(ThermostatV3Mode.AUTO, skip_rate_limits=True)
         elif hvac_mode == HVAC_MODE_COOL:
-            await self._device.async_set_mode(ThermostatV3Mode.COOL)
+            await self._device.async_set_mode(ThermostatV3Mode.COOL, skip_rate_limits=True)
         else:
             _LOGGER.warning(f"Unsupported mode for this device ({self.name}): {hvac_mode}")
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:
-        await self._device.async_set_mode(ThermostatV3Mode[preset_mode])
+        await self._device.async_set_mode(ThermostatV3Mode[preset_mode], skip_rate_limits=True)
 
     async def async_set_temperature(self, **kwargs):
         target = kwargs.get('temperature')
-        await self._device.async_set_target_temperature(target)
+        await self._device.async_set_target_temperature(target, skip_rate_limits=True)
 
     # endregion
 
@@ -214,7 +208,9 @@ class ValveEntityWrapper(ClimateEntity):
 
     @property
     def preset_mode(self) -> str:
-        return self._device.mode.name
+        if self._device.mode is not None:
+            return self._device.mode.name
+        return None
 
     @property
     def preset_modes(self) -> List[str]:

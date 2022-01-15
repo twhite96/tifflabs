@@ -1,5 +1,6 @@
 import logging
 import copy
+import re
 
 from homeassistant.core import (
     HomeAssistant,
@@ -20,10 +21,19 @@ from homeassistant.components.notify import ATTR_MESSAGE
 from homeassistant.helpers.service import async_call_from_config
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
+from homeassistant.components.binary_sensor.device_condition import (
+    ENTITY_CONDITIONS,
+)
+
 from . import const
 from .alarm_control_panel import AlarmoBaseEntity
 from .helpers import (
     friendly_name_for_entity_id,
+)
+from .sensors import (
+    STATE_OPEN,
+    STATE_CLOSED,
+    STATE_UNAVAILABLE,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -54,6 +64,10 @@ class AutomationHandler:
         self.hass = hass
         self._config = None
         self._subscriptions = []
+        self._sensorTranslationCache = {}
+        self._alarmTranslationCache = {}
+        self._sensorTranslationLang = None
+        self._alarmTranslationLang = None
 
         def async_update_config():
             """automation config updated, reload the configuration."""
@@ -127,7 +141,7 @@ class AutomationHandler:
             async_dispatcher_connect(self.hass, "alarmo_event", async_handle_event)
         )
 
-    async def __del__(self):
+    def __del__(self):
         """prepare for removal"""
         while len(self._subscriptions):
             self._subscriptions.pop()()
@@ -150,32 +164,41 @@ class AutomationHandler:
                 and ATTR_MESSAGE in action[ATTR_SERVICE_DATA]
             ):
                 data = copy.copy(action[ATTR_SERVICE_DATA])
-                if "{{open_sensors}}" in data[ATTR_MESSAGE]:
+
+                res = re.search(r'{{open_sensors(\|lang=([^}]+))?(\|format=short)?}}', data[ATTR_MESSAGE])
+                if res:
+                    lang = res.group(2) if res.group(2) else "en"
+                    names_only = True if res.group(3) else False
+
                     open_sensors = ""
                     if alarm_entity.open_sensors:
                         parts = []
                         for (entity_id, status) in alarm_entity.open_sensors.items():
-                            name = friendly_name_for_entity_id(entity_id, self.hass)
-                            parts.append("{} is {}".format(name, status))
+                            if names_only:
+                                parts.append(friendly_name_for_entity_id(entity_id, self.hass))
+                            else:
+                                parts.append(await self.async_get_open_sensor_string(entity_id, status, lang))
                         open_sensors = ", ".join(parts)
 
-                    data[ATTR_MESSAGE] = data[ATTR_MESSAGE].replace("{{open_sensors}}", open_sensors)
+                    data[ATTR_MESSAGE] = data[ATTR_MESSAGE].replace(res.group(0), open_sensors)
 
                 if "{{bypassed_sensors}}" in data[ATTR_MESSAGE]:
                     bypassed_sensors = ""
                     if alarm_entity.bypassed_sensors and len(alarm_entity.bypassed_sensors):
                         parts = []
-                        for entity_id in alarm_entity.sensors.bypassed_sensors:
+                        for entity_id in alarm_entity.bypassed_sensors:
                             name = friendly_name_for_entity_id(entity_id, self.hass)
                             parts.append(name)
                         bypassed_sensors = ", ".join(parts)
 
                     data[ATTR_MESSAGE] = data[ATTR_MESSAGE].replace("{{bypassed_sensors}}", bypassed_sensors)
 
-                if "{{arm_mode}}" in data[ATTR_MESSAGE]:
-                    arm_mode = alarm_entity.arm_mode if alarm_entity.arm_mode else ""
-                    arm_mode = " ".join(w.capitalize() for w in arm_mode.split("_"))
-                    data[ATTR_MESSAGE] = data[ATTR_MESSAGE].replace("{{arm_mode}}", arm_mode)
+                res = re.search(r'{{arm_mode(\|lang=([^}]+))?}}', data[ATTR_MESSAGE])
+                if res:
+                    lang = res.group(2) if res.group(2) else "en"
+                    arm_mode = await self.async_get_arm_mode_string(alarm_entity.arm_mode, lang)
+
+                    data[ATTR_MESSAGE] = data[ATTR_MESSAGE].replace(res.group(0), arm_mode)
 
                 if "{{changed_by}}" in data[ATTR_MESSAGE]:
                     changed_by = alarm_entity.changed_by if alarm_entity.changed_by else ""
@@ -198,3 +221,78 @@ class AutomationHandler:
                 result.append(automation_id)
 
         return result
+
+    async def async_get_open_sensor_string(self, entity_id: str, state: str, language: str):
+        """get translation for sensor states"""
+
+        if (
+            self._sensorTranslationCache and
+            self._sensorTranslationLang == language
+        ):
+            translations = self._sensorTranslationCache
+        else:
+            translations = await self.hass.helpers.translation.async_get_translations(
+                language,
+                "device_automation",
+                "binary_sensor"
+            )
+
+            self._sensorTranslationCache = translations
+            self._sensorTranslationLang = language
+
+        entity = self.hass.states.get(entity_id)
+
+        device_type = entity.attributes["device_class"] if entity and "device_class" in entity.attributes else None
+
+        if state == STATE_OPEN:
+            translation_key = "component.binary_sensor.device_automation.condition_type.{}".format(
+                ENTITY_CONDITIONS[device_type][0]["type"]
+            ) if device_type in ENTITY_CONDITIONS else None
+            if translation_key and translation_key in translations:
+                string = translations[translation_key]
+            else:
+                string = "{entity_name} is open"
+        elif state == STATE_CLOSED:
+            translation_key = "component.binary_sensor.device_automation.condition_type.{}".format(
+                ENTITY_CONDITIONS[device_type][1]["type"]
+            ) if device_type in ENTITY_CONDITIONS else None
+            if translation_key and translation_key in translations:
+                string = translations[translation_key]
+            else:
+                string = "{entity_name} is closed"
+
+        elif state == STATE_UNAVAILABLE:
+            string = "{entity_name} is unavailable"
+
+        else:
+            string = "{entity_name} is unknown"
+
+        name = friendly_name_for_entity_id(entity_id, self.hass)
+        string = string.replace("{entity_name}", name)
+
+        return string
+
+    async def async_get_arm_mode_string(self, arm_mode: str, language: str):
+        """get translation for alarm arm mode"""
+        if (
+            self._alarmTranslationCache and
+            self._alarmTranslationLang == language
+        ):
+            translations = self._alarmTranslationCache
+        else:
+            translations = await self.hass.helpers.translation.async_get_translations(
+                language,
+                "state",
+                "alarm_control_panel"
+            )
+
+            self._alarmTranslationCache = translations
+            self._alarmTranslationLang = language
+
+        translation_key = "component.alarm_control_panel.state._.{}".format(arm_mode) if arm_mode else None
+        if translation_key and translation_key in translations:
+            return translations[translation_key]
+        elif arm_mode:
+            return " ".join(w.capitalize() for w in arm_mode.split("_"))
+        else:
+            return ""
