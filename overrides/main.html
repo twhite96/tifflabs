@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{ super() }}
+
+<!-- Giscus -->
+<!-- Replace with generated snippet -->
+{% if not page.is_homepage %}
+<h2 id="__comments">{{ lang.t("meta.comments") }}</h2>
+  <script src="https://giscus.app/client.js"
+      data-repo="twhite96/SuburbanSmarts"
+      data-repo-id="MDEwOlJlcG9zaXRvcnkzNDU0NjQ1MzI="
+      data-category="General"
+      data-category-id="DIC_kwDOFJde1M4B-3dV"
+      data-mapping="pathname"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-theme="light"
+      crossorigin="anonymous"
+      async>
+  </script> 
+
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+{% endif %}
+
+<!-- Reload on palette change -->
+<script>
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object")
+      if (palette.color.scheme === "slate") {
+        var giscus = document.querySelector("script[src*=giscus]")
+        giscus.setAttribute("data-theme", "dark") 
+      }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        location.reload()
+      })
+    })
+  </script>
+{% endblock %}
+
+{% block analytics %}
+  <script async defer data-domain="docs.suburbansmarts.org" src="https://plausible.io/js/plausible.js"></script>
+{% endblock %}

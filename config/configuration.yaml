@@ -1,20 +1,18 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
-
+# Example configuration.yaml entry
+zeroconf:
 # Text to speech
 tts:
   - platform: google_translate
 
-group: !include groups.yaml
+# group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 spotify:
   client_id: !secret spotify_client_id
   client_secret: !secret spotify_client_secret
-media_player:
-  - platform: itunes
-    host: 192.168.1.50
 frontend:
   themes: !include_dir_merge_named themes
 
@@ -23,25 +21,24 @@ sensor:
   - platform: github
     access_token: !secret github_access_token
     repositories:
-      - path: 'twhite96/SuburbanSmarts'
+      - path: "twhite96/SuburbanSmarts"
         name: SuburbanSmarts
-      - path: 'twhite96/js-dev-reads'
+      - path: "twhite96/js-dev-reads"
         name: JS Dev Reads
-      - path: 'twhite96/checkyoself'
+      - path: "twhite96/checkyoself"
         name: Check Yo Self
-      - path: 'twhite96/portfolio-v5'
+      - path: "twhite96/portfolio-v5"
         name: Portfolio
-        
+
 # Custom Themes Input Select
 input_select:
-
   themes:
-    name: 'Themes'
+    name: "Themes"
     icon: fas:paint-roller
     options:
       - Caule Black Rose
       - Caule Black Purple
-      - Caule Black Blue 
+      - Caule Black Blue
       - Caule Black Aqua
       - Caule Black Green
       - Caule Black Yellow
@@ -51,7 +48,7 @@ input_select:
       - Caule Black Gray
       - Caule Dark Rose
       - Caule Dark Purple
-      - Caule Dark Blue 
+      - Caule Dark Blue
       - Caule Dark Aqua
       - Caule Dark Green
       - Caule Dark Yellow
@@ -61,7 +58,7 @@ input_select:
       - Caule Dark Gray
       - Caule Light Rose
       - Caule Light Purple
-      - Caule Light Blue 
+      - Caule Light Blue
       - Caule Light Aqua
       - Caule Light Green
       - Caule Light Yellow
@@ -71,31 +68,35 @@ input_select:
       - Caule Light Gray
       - Caule Black Rose Glass
       - Caule Black Purple Glass
-      - Caule Black Blue Glass 
+      - Caule Black Blue Glass
       - Caule Black Aqua Glass
       - Caule Black Green Glass
       - Caule Black Yellow Glass
       - Caule Black Orange Glass
       - Caule Black Coral Glass
       - Caule Black Pink Glass
-      - Caule Black Gray Glass      
+      - Caule Black Gray Glass
       - Default
 ## iFrames
 
-panel_iframe:
-  plausible_trwblog:
-    title: "T R White Blog"
-    icon: "mdi:react"
-    url: "https://plausible.io/share/tiffanywhite.dev?auth=y4EZgXWzd9aVN_smehW8W&theme=dark&background=%232a2139"
-  plausible_tifftype:
-    title: "...tiffany is typing"
-    icon: "mdi:apple-finder"
-    url: "https://plausible.io/share/tiffanywhite.blog?auth=UR5CojZPoUPQCoGTvJyg2&theme=dark&background=%232a2139"
-  plausible_folio:
-    title: "Portfolio"
-    icon: "mdi:gatsby"
-    url: "https://plausible.io/share/tiffanyrwhite.com?auth=yJCMXvxv0XWkADyHKWVEU&theme=dark&background=%232a2139"
-  plausible_fat2fit:
-    title: "Fat to Fit Dev"
-    icon: "mdi:dumbbell"
-    url: "https://plausible.io/share/fat2fitdev.com?auth=SJnfipWGLBil4ezM2UUSC&theme=dark&background=%232a2139"
+#################################################################
+#                                                               #
+#                        SSL/Server Config                      #
+#                                                               #
+#################################################################
+
+
+
+http:
+  # server_port: 8123
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+
+#################################################################
+#                                                               #
+#                        Groups                                 #
+#                                                               #
+#################################################################
+
+group: !include_dir_merge_named groups
+light: !include light_groups.yaml

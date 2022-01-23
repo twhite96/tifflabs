@@ -48,8 +48,11 @@ site_description: 'Documentation for my over-engineered smart apartment'
 extra_css:
   - stylesheets/extra.css
 markdown_extensions:
-    - codehilite
+    - tables
+    - meta
     - smarty
     - toc:
         permalink: True
+        title: On this page
+        permalink_title: Anchor link to this section for reference
     - sane_lists
