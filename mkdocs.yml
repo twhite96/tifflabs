@@ -17,7 +17,7 @@ nav:
     - Apps: Software/Apps.md
     - Backup: Software/Backup.md
 theme:
-  favicon: images/favicon.png
+  favicon: images/favi.png
   logo: 'logo.svg'
   font:
     text: Fira Code
