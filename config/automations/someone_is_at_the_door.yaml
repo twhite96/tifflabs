@@ -1,0 +1,16 @@
+- id: UnwelcomedGuest
+  alias: Why are you here
+  trigger:
+    platform: state
+    entity_id: binary_sensor.doorbell_ringing_sensor
+    to: Open
+    for:
+      minutes: 10
+  action:
+    service: tts.cloud_say
+    data:
+      entity_id: media_player.family_room_speaker
+      message: the door has been open for 10 minutes
+      options:
+        gender: female
+      language: en-US

@@ -3,7 +3,7 @@ disqus: "overrides/partials/disqus.html"
 ---
 
 <p align="center">
-  <img src="/images/suburban-smarts.png" width="250"/>
+  <img src="/images/ss-docs-header2.png" width="1200"/>
 </p>
 
 <h1 align="center">Suburban Smarts <br />Smart Home Configuration</h1>
@@ -13,7 +13,7 @@ disqus: "overrides/partials/disqus.html"
 <p align="center">Be sure to ⭐ my repo!</p> 
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
-  <img src="https://img.shields.io/badge/HA-Version_6.5-41BDF5?style=for-the-badge&logo=homeassistant">
+  <img src="https://img.shields.io/badge/HA-Version_7.4-41BDF5?style=for-the-badge&logo=homeassistant">
   <img src="https://img.shields.io/maintenance/yes/2022?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SuburbanSmarts?color=%234af2a1&style=for-the-badge">
