@@ -3,56 +3,88 @@ nav:
   - Getting Started: GettingStarted.md
   - Hardware: Hardware/index.md
   - Home Assistant:
-    - Screens: HomeAssistant/Screens/index.md
-    - Custom Components: HomeAssistant/Components.md
-    - Lovelace: HomeAssistant/Lovelace/index.md
-    - Vacuum: HomeAssistant/Vacuum/index.md
-    - Voice Control: HomeAssistant/VoiceControl/index.md
+      - Screens: HomeAssistant/Screens/index.md
+      - Custom Components: HomeAssistant/Components.md
+      - Lovelace: HomeAssistant/Lovelace/index.md
+      - Vacuum: HomeAssistant/Vacuum/index.md
+      - Voice Control: HomeAssistant/VoiceControl/index.md
   - Software:
-    - Overview: Software/Overview.md
-    - Development: Software/Development.md
-    - Upgrading: Software/Upgrading.md 
-    - Ports: Software/Ports.md
-    - Encryption: Software/Encryption.md
-    - Apps: Software/Apps.md
-    - Backup: Software/Backup.md
+      - Overview: Software/Overview.md
+      - Development: Software/Development.md
+      - Upgrading: Software/Upgrading.md
+      - Ports: Software/Ports.md
+      - Encryption: Software/Encryption.md
+      - Apps: Software/Apps.md
+      - Backup: Software/Backup.md
 theme:
   favicon: images/favi.png
-  logo: 'logo.svg'
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - toc.integrate
+  logo: "logo.svg"
   font:
     text: Fira Code
     code: Fira Code
-  name: 'material'
+  name: "material"
   custom_dir: overrides
-  # palette:
-  #   primary: 'Pink'
-  #   accent: 'Pink'
-repo_name: 'twhite96/SuburbanSmarts'
-repo_url: 'https://github.com/twhite96/SuburbanSmarts'
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night 
+        name: Switch to dark mode
+    - scheme: slate 
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+repo_name: "twhite96/SuburbanSmarts"
+repo_url: "https://github.com/twhite96/SuburbanSmarts"
 extra:
-  disqus: 'SuburbanSmarts'
+  disqus: "SuburbanSmarts"
   social:
-    - icon: 'fontawesome/solid/globe'
-      link: 'https://suburbansmarts.org'
-    - icon: 'fontawesome/brands/github'
-      link: 'https://github.com/twhite96/SuburbanSmarts'
-    - icon: 'fontawesome/brands/twitter'
-      link: 'https://twitter.com/SuburbanSmarts'
-    - icon: 'fontawesome/brands/youtube'
-      link: 'https://www.youtube.com/channel/UCANizz_NF-Xr6DrnSLg0Ogg'
-copyright: 'Copyright &copy; 2022 Tiffany White'
-site_author: 'Tiffany White'
+    - icon: "fontawesome/solid/globe"
+      link: "https://suburbansmarts.org"
+    - icon: "fontawesome/brands/github"
+      link: "https://github.com/twhite96/SuburbanSmarts"
+    - icon: "fontawesome/brands/twitter"
+      link: "https://twitter.com/SuburbanSmarts"
+    - icon: "fontawesome/brands/youtube"
+      link: "https://www.youtube.com/channel/UCANizz_NF-Xr6DrnSLg0Ogg"
+copyright: "Copyright &copy; 2022 Tiffany White"
+site_author: "Tiffany White"
 site_name: Suburban Smarts
-site_url: 'https://docs.suburbansmarts.org/'
-site_description: 'Documentation for my over-engineered smart apartment'
+site_url: "https://docs.suburbansmarts.org/"
+site_description: "Documentation for my over-engineered smart apartment"
 extra_css:
   - stylesheets/extra.css
 markdown_extensions:
-    - tables
-    - meta
-    - smarty
-    - toc:
-        permalink: True
-        title: On this page
-        permalink_title: Anchor link to this section for reference
-    - sane_lists
+  - tables
+  - pymdownx.keys
+  - meta
+  - smarty
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.highlight:
+      use_pygments: true
+      auto_title: true
+      linenums_style: pymdownx-inline
+      anchor_linenums: true
+  - pymdownx.superfences
+  - toc:
+      permalink: True
+      title: On this page
+      permalink_title: Anchor link to this section for reference
+  - sane_lists
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

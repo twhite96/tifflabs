@@ -1,9 +1,12 @@
 ---
+hide:
+  - navigation
+  - toc
 disqus: "overrides/partials/disqus.html"
 ---
 
 <p align="center">
-  <img src="/images/ss-docs-header2.png" width="1200"/>
+  <img src="/images/ss-docs-header4.png" width="1200"/>
 </p>
 
 <h1 align="center">Suburban Smarts <br />Smart Home Configuration</h1>
