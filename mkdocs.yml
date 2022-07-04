@@ -8,6 +8,7 @@ nav:
       - Lovelace: HomeAssistant/Lovelace/index.md
       - Vacuum: HomeAssistant/Vacuum/index.md
       - Voice Control: HomeAssistant/VoiceControl/index.md
+      - AppDaemon: HomeAssistant/AppDaemon/index.md
   - Software:
       - Overview: Software/Overview.md
       - Development: Software/Development.md
