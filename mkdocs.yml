@@ -38,7 +38,7 @@ theme:
       toggle:
         icon: material/weather-night 
         name: Switch to dark mode
-    - scheme: default 
+    - scheme: slate 
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
