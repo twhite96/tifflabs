@@ -4,7 +4,7 @@ nav:
   - Hardware: Hardware/index.md
   - Home Assistant:
       - Screens: HomeAssistant/Screens/index.md
-      - Custom Components: HomeAssistant/Components.md
+      - Custom Components: HomeAssistant/Custom Components/index.md
       - Lovelace: HomeAssistant/Lovelace/index.md
       - Vacuum: HomeAssistant/Vacuum/index.md
       - Voice Control: HomeAssistant/VoiceControl/index.md

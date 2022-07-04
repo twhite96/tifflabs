@@ -1,3 +1,7 @@
+---
+disqus: 'overrides/partials/disqus.html'
+---
+
 The custom components I am using are mainly from HACs or custom GitHub repos imported into HACs.
 
 Looking forward to editing and creating my own.
