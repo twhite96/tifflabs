@@ -25,7 +25,7 @@
   </a>
 </p>
 <p align="center">
-  <img src="/images/ss-uptime-white.png" width="125"/>
+  <img src="/images/ss-docs.png" width="125"/>
 </p>
 
 This project has moved over to my documentation site, https://docs.suburbansmarts.org. Check them out for more information.
