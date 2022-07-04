@@ -33,7 +33,7 @@ disqus: "overrides/partials/disqus.html"
 </p>
 
 <p align="center">
-  <img src="images/SuburbanSmarts-Page-1.svg" />
+  <img src="images/SuburbanSmarts-Page.svg" />
 </p>
 <p align="center"><strong>You can find a larger picture of this diagram at <a href="images/diagram.png">at this link</a>. You can also get the XML file <a href="images/SuburbanSmarts.drawio.xml" download="suburban-smarts-diagram">over here.</a></strong></p>
 <br />
