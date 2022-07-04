@@ -1,29 +1,24 @@
 #!/usr/bin/python3
 
 """Platform for switch integration."""
-import configparser
-from datetime import timedelta
 import logging
-
+from datetime import timedelta
 # Import the device class from the component that you want to support
-import os
 from typing import Any, Callable, List, Union
-
-from wyzeapy import CameraService, SwitchService, Wyzeapy
-from wyzeapy.services.camera_service import Camera
-from wyzeapy.services.switch_service import Switch
-from wyzeapy.types import Device, Event
 
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.dispatcher import async_dispatcher_send
+from homeassistant.helpers.dispatcher import async_dispatcher_send, async_dispatcher_connect
+from wyzeapy import CameraService, SwitchService, Wyzeapy
+from wyzeapy.services.camera_service import Camera
+from wyzeapy.services.switch_service import Switch
+from wyzeapy.types import Device, Event
 
-from .const import CAMERA_UPDATED, CONF_CLIENT, DOMAIN
-from .token_manager import token_exception_handler
-
+from .const import CAMERA_UPDATED
 from .const import DOMAIN, CONF_CLIENT, WYZE_CAMERA_EVENT, WYZE_NOTIFICATION_TOGGLE
+from .token_manager import token_exception_handler
 
 _LOGGER = logging.getLogger(__name__)
 ATTRIBUTION = "Data provided by Wyze"
@@ -50,7 +45,11 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry,
 
     switches: List[SwitchEntity] = [WyzeSwitch(switch_service, switch) for switch in
                                     await switch_service.get_switches()]
-    switches.extend([WyzeSwitch(camera_service, switch) for switch in await camera_service.get_cameras()])
+
+    camera_switches = await camera_service.get_cameras()
+    for switch in camera_switches:
+        switches.extend([WyzeSwitch(camera_service, switch)])
+        switches.extend([WyzeCameraNotificationSwitch(camera_service, switch)])
 
     switches.append(WyzeNotifications(client))
 
@@ -118,7 +117,7 @@ class WyzeNotifications(SwitchEntity):
         return self._uid
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device attributes of the entity."""
         return {
             ATTR_ATTRIBUTION: ATTRIBUTION,
@@ -146,7 +145,7 @@ class WyzeSwitch(SwitchEntity):
     _on: bool
     _available: bool
     _just_updated = False
-    _old_event_ts: int = 0 # preload with 0 so that we know when it's been updated
+    _old_event_ts: int = 0  # preload with 0 so that we know when it's been updated
 
     def __init__(self, service: Union[CameraService, SwitchService], device: Device):
         """Initialize a Wyze Bulb."""
@@ -164,7 +163,7 @@ class WyzeSwitch(SwitchEntity):
             "identifiers": {
                 (DOMAIN, self._device.mac)
             },
-            "name": self.name,
+            "name": self._device.nickname,
             "manufacturer": "WyzeLabs",
             "model": self._device.product_model
         }
@@ -192,7 +191,10 @@ class WyzeSwitch(SwitchEntity):
     @property
     def name(self):
         """Return the display name of this switch."""
-        return self._device.nickname
+        if type(self._device) is Camera:
+            return f"{self._device.nickname} Power"
+        else:
+            return self._device.nickname
 
     @property
     def available(self):
@@ -209,7 +211,7 @@ class WyzeSwitch(SwitchEntity):
         return "{}-switch".format(self._device.mac)
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device attributes of the entity."""
         dev_info = {
             ATTR_ATTRIBUTION: ATTRIBUTION,
@@ -221,6 +223,7 @@ class WyzeSwitch(SwitchEntity):
 
         if self._device.device_params.get("electricity"):
             dev_info["Battery"] = str(self._device.device_params.get("electricity") + "%")
+        # noinspection DuplicatedCode
         if self._device.device_params.get("ip"):
             dev_info["IP"] = str(self._device.device_params.get("ip"))
         if self._device.device_params.get("rssi"):
@@ -255,7 +258,8 @@ class WyzeSwitch(SwitchEntity):
         if isinstance(switch, Camera):
             if self._old_event_ts > 0 and self._old_event_ts != switch.last_event_ts and switch.last_event is not None:
                 event: Event = switch.last_event
-                # The screenshot/video urls are not always in the same positions in the lists, so we have to loop through them
+                # The screenshot/video urls are not always in the same positions in the lists, so we have to loop
+                # through them
                 _screenshot_url = None
                 _video_url = None
                 _ai_tag_list = []
@@ -284,4 +288,82 @@ class WyzeSwitch(SwitchEntity):
         return await super().async_added_to_hass()
 
     async def async_will_remove_from_hass(self) -> None:
-        self._service.unregister_updater()
+        self._service.unregister_updater(self._device)
+
+
+class WyzeCameraNotificationSwitch(SwitchEntity):
+    """Representation of a Wyze Camera Notification Switch."""
+
+    _available: bool
+
+    def __init__(self, service: CameraService, device: Device):
+        """Initialize a Wyze Notification Switch."""
+        self._service = service
+        self._device = Camera(device.raw_dict)
+
+    @property
+    def device_info(self):
+        """Return the device info."""
+        return {
+            "identifiers": {
+                (DOMAIN, self._device.mac)
+            },
+            "name": self._device.nickname,
+            "manufacturer": "WyzeLabs",
+            "model": self._device.product_model
+        }
+
+    @property
+    def should_poll(self) -> bool:
+        """No polling needed."""
+        return False
+
+    async def async_turn_on(self, **kwargs: Any) -> None:
+        """Turn on the switch."""
+        await self._service.turn_on_notifications(self._device)
+
+        self._device.notify = True
+        self.async_schedule_update_ha_state()
+
+    async def async_turn_off(self, **kwargs: Any) -> None:
+        """Turn off the switch."""
+        await self._service.turn_off_notifications(self._device)
+
+        self._device.notify = False
+        self.async_schedule_update_ha_state()
+
+    @property
+    def name(self):
+        """Return the display name of this switch."""
+        return f"{self._device.nickname} Notifications"
+
+    @property
+    def available(self):
+        """Return the connection status of this switch."""
+        return self._device.available
+
+    @property
+    def is_on(self):
+        """Return true if switch is on."""
+        return self._device.notify
+
+    @property
+    def unique_id(self):
+        """Add a unique ID to the switch."""
+        return "{}-notification_switch".format(self._device.mac)
+
+    @callback
+    def handle_camera_update(self, camera: Camera) -> None:
+        """Update the switch whenever there is an update."""
+        self._device = camera
+        self.async_write_ha_state()
+
+    async def async_added_to_hass(self) -> None:
+        """Listen for camera updates."""
+        self.async_on_remove(
+            async_dispatcher_connect(
+                self.hass,
+                f"{CAMERA_UPDATED}-{self._device.mac}",
+                self.handle_camera_update,
+            )
+        )

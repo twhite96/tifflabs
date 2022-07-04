@@ -18,6 +18,7 @@ from homeassistant.const import (
     STATE_ALARM_ARMED_HOME,
     STATE_ALARM_ARMED_NIGHT,
     STATE_ALARM_ARMED_CUSTOM_BYPASS,
+    STATE_ALARM_ARMED_VACATION,
     STATE_ALARM_DISARMED,
     STATE_ALARM_TRIGGERED,
     STATE_ALARM_PENDING,
@@ -26,8 +27,7 @@ from homeassistant.const import (
 )
 
 from homeassistant.components.alarm_control_panel import (
-    FORMAT_NUMBER as CODE_FORMAT_NUMBER,
-    FORMAT_TEXT as CODE_FORMAT_TEXT,
+    CodeFormat,
     ATTR_CODE_ARM_REQUIRED,
 )
 from homeassistant.components.websocket_api import (decorators, async_register_command)
@@ -44,6 +44,8 @@ from homeassistant.components.mqtt import (
     CONF_STATE_TOPIC,
     CONF_COMMAND_TOPIC,
 )
+
+import homeassistant.util.dt as dt_util
 
 from .mqtt import (
     CONF_EVENT_TOPIC,
@@ -104,7 +106,7 @@ class AlarmoConfigView(HomeAssistantView):
                 vol.Optional(ATTR_CODE_ARM_REQUIRED): cv.boolean,
                 vol.Optional(const.ATTR_CODE_DISARM_REQUIRED): cv.boolean,
                 vol.Optional(ATTR_CODE_FORMAT): vol.In(
-                    [CODE_FORMAT_NUMBER, CODE_FORMAT_TEXT]
+                    [CodeFormat.NUMBER, CodeFormat.TEXT]
                 ),
                 vol.Optional(const.ATTR_TRIGGER_TIME): cv.positive_int,
                 vol.Optional(const.ATTR_DISARM_AFTER_TRIGGER): cv.boolean,
@@ -117,6 +119,7 @@ class AlarmoConfigView(HomeAssistantView):
                         vol.Optional(STATE_ALARM_ARMED_AWAY): cv.string,
                         vol.Optional(STATE_ALARM_ARMED_NIGHT): cv.string,
                         vol.Optional(STATE_ALARM_ARMED_CUSTOM_BYPASS): cv.string,
+                        vol.Optional(STATE_ALARM_ARMED_VACATION): cv.string,
                         vol.Optional(STATE_ALARM_PENDING): cv.string,
                         vol.Optional(STATE_ALARM_ARMING): cv.string,
                         vol.Optional(STATE_ALARM_DISARMING): cv.string,
@@ -128,6 +131,7 @@ class AlarmoConfigView(HomeAssistantView):
                         vol.Optional(const.COMMAND_ARM_HOME): cv.string,
                         vol.Optional(const.COMMAND_ARM_NIGHT): cv.string,
                         vol.Optional(const.COMMAND_ARM_CUSTOM_BYPASS): cv.string,
+                        vol.Optional(const.COMMAND_ARM_VACATION): cv.string,
                         vol.Optional(const.COMMAND_DISARM): cv.string,
                     }),
                     vol.Required(const.ATTR_REQUIRE_CODE): cv.boolean,
@@ -155,6 +159,13 @@ class AlarmoAreaView(HomeAssistantView):
     url = "/api/alarmo/area"
     name = "api:alarmo:area"
 
+    mode_schema = vol.Schema({
+        vol.Required(const.ATTR_ENABLED): cv.boolean,
+        vol.Required(const.ATTR_EXIT_TIME): cv.positive_int,
+        vol.Required(const.ATTR_ENTRY_TIME): cv.positive_int,
+        vol.Optional(const.ATTR_TRIGGER_TIME): cv.positive_int,
+    })
+
     @RequestDataValidator(
         vol.Schema(
             {
@@ -162,30 +173,11 @@ class AlarmoAreaView(HomeAssistantView):
                 vol.Optional(ATTR_NAME): cv.string,
                 vol.Optional(const.ATTR_REMOVE): cv.boolean,
                 vol.Optional(const.ATTR_MODES): vol.Schema({
-                    vol.Required(STATE_ALARM_ARMED_AWAY): vol.Schema({
-                        vol.Required(const.ATTR_ENABLED): cv.boolean,
-                        vol.Required(const.ATTR_EXIT_TIME): cv.positive_int,
-                        vol.Required(const.ATTR_ENTRY_TIME): cv.positive_int,
-                        vol.Optional(const.ATTR_TRIGGER_TIME): cv.positive_int,
-                    }),
-                    vol.Required(STATE_ALARM_ARMED_HOME): vol.Schema({
-                        vol.Required(const.ATTR_ENABLED): cv.boolean,
-                        vol.Required(const.ATTR_EXIT_TIME): cv.positive_int,
-                        vol.Required(const.ATTR_ENTRY_TIME): cv.positive_int,
-                        vol.Optional(const.ATTR_TRIGGER_TIME): cv.positive_int,
-                    }),
-                    vol.Required(STATE_ALARM_ARMED_NIGHT): vol.Schema({
-                        vol.Required(const.ATTR_ENABLED): cv.boolean,
-                        vol.Required(const.ATTR_EXIT_TIME): cv.positive_int,
-                        vol.Required(const.ATTR_ENTRY_TIME): cv.positive_int,
-                        vol.Optional(const.ATTR_TRIGGER_TIME): cv.positive_int,
-                    }),
-                    vol.Required(STATE_ALARM_ARMED_CUSTOM_BYPASS): vol.Schema({
-                        vol.Required(const.ATTR_ENABLED): cv.boolean,
-                        vol.Required(const.ATTR_EXIT_TIME): cv.positive_int,
-                        vol.Required(const.ATTR_ENTRY_TIME): cv.positive_int,
-                        vol.Optional(const.ATTR_TRIGGER_TIME): cv.positive_int,
-                    })
+                    vol.Optional(STATE_ALARM_ARMED_AWAY): mode_schema,
+                    vol.Optional(STATE_ALARM_ARMED_HOME): mode_schema,
+                    vol.Optional(STATE_ALARM_ARMED_NIGHT): mode_schema,
+                    vol.Optional(STATE_ALARM_ARMED_CUSTOM_BYPASS): mode_schema,
+                    vol.Optional(STATE_ALARM_ARMED_VACATION): mode_schema
                 })
             }
         )
@@ -214,7 +206,6 @@ class AlarmoSensorView(HomeAssistantView):
         vol.Schema(
             {
                 vol.Required(ATTR_ENTITY_ID): cv.entity_id,
-                vol.Optional(ATTR_NAME): cv.string,
                 vol.Optional(const.ATTR_REMOVE): cv.boolean,
                 vol.Optional(const.ATTR_TYPE): vol.In(SENSOR_TYPES),
                 vol.Optional(const.ATTR_MODES): vol.All(
@@ -458,6 +449,21 @@ def websocket_get_sensor_groups(hass, connection, msg):
     connection.send_result(msg["id"], groups)
 
 
+@callback
+def websocket_get_countdown(hass, connection, msg):
+    """Publish countdown time for alarm entity."""
+    entity_id = msg["entity_id"]
+    item = next((entity for entity in hass.data[const.DOMAIN]["areas"].values() if entity.entity_id == entity_id), None)
+    if hass.data[const.DOMAIN]["master"] and not item and hass.data[const.DOMAIN]["master"].entity_id == entity_id:
+        item = hass.data[const.DOMAIN]["master"]
+
+    data = {
+        "delay": item.delay if item else 0,
+        "remaining": round((item.expiration - dt_util.utcnow()).total_seconds(),2) if item and item.expiration else 0
+    }
+    connection.send_result(msg["id"], data)
+
+
 async def async_register_websockets(hass):
 
     hass.http.register_view(AlarmoConfigView)
@@ -526,5 +532,16 @@ async def async_register_websockets(hass):
         websocket_get_sensor_groups,
         websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
             {vol.Required("type"): "alarmo/sensor_groups"}
+        ),
+    )
+    async_register_command(
+        hass,
+        "alarmo/countdown",
+        websocket_get_countdown,
+        websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
+            {
+                vol.Required("type"): "alarmo/countdown",
+                vol.Required("entity_id"): cv.entity_id
+            }
         ),
     )

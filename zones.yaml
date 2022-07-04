@@ -1,0 +1,16 @@
+# Example configuration.yaml entry
+# - name: School  #   latitude: 32.8773367
+  #   longitude: -117.2494053
+  #   radius: 250
+  #   icon: mdi:school
+
+  # - name: Work
+  #   latitude: 32.8753367
+  #   longitude: -117.2474053
+
+  # This will override the default home zone
+  - name: Home
+    # latitude:
+    # longitude:
+    radius: 100
+    icon: phu:rooms-attic

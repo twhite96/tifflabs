@@ -14,7 +14,6 @@ CONF_DEVICE_ID = hac.CONF_DEVICE_ID
 CONF_KEY = 'key'
 CONF_CLOUD_KEY = 'cloud_key' # device key eventually retrieved from Meross account
 CONF_PAYLOAD = hac.CONF_PAYLOAD
-CONF_DEVICE_TYPE = "device_type"
 CONF_HOST = hac.CONF_HOST
 
 CONF_PROTOCOL = hac.CONF_PROTOCOL # protocol used to communicate with device
@@ -32,7 +31,8 @@ CONF_POLLING_PERIOD_MIN = 5
 CONF_POLLING_PERIOD_DEFAULT = 30
 
 CONF_TRACE = 'trace' # create a file with device info and communication tracing (only CONF_TRACE_TIMEOUT seconds then shut off)
-CONF_TRACE_TIMEOUT = 600 # when starting a trace stop it and close the file after .. secs
+CONF_TRACE_TIMEOUT = 'trace_timeout'
+CONF_TRACE_TIMEOUT_DEFAULT = 600 # when starting a trace stop it and close the file after .. secs
 CONF_TRACE_MAXSIZE = 65536 # or when MAXSIZE exceeded
 CONF_TRACE_DIRECTORY = 'traces' # folder where to store traces
 CONF_TRACE_FILENAME = '{}-{}.csv' # filename format: device_type-device_id.csv
@@ -45,6 +45,7 @@ CONF_TIMESTAMP = mc.KEY_TIMESTAMP # this is a 'fake' conf param we'll add to con
 PARAM_UNAVAILABILITY_TIMEOUT = 20  # number of seconds since last inquiry to consider the device unavailable
 PARAM_HEARTBEAT_PERIOD = 295 # whatever the connection state periodically inquire the device is there
 PARAM_ENERGY_UPDATE_PERIOD = 55 # read energy consumption only every ... second
+PARAM_SIGNAL_UPDATE_PERIOD = 295 # read energy consumption only every ... second
 PARAM_HUBBATTERY_UPDATE_PERIOD = 3595 # read battery levels only every ... second
 PARAM_HUBSENSOR_UPDATE_PERIOD = 55
 PARAM_TIMEZONE_CHECK_PERIOD = 604800 # 1 week before retrying timezone updates

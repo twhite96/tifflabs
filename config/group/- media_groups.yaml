@@ -1,0 +1,18 @@
+- platform: group
+  name: OfficePods
+  entities:
+    - media_player.officepod_l
+    - media_player.officepod_r
+- platform: group
+  name: BedPods
+  entities:
+    - media_player.bedpod_l
+    - media_player.bedpod_r
+- platform: group
+  name: Whole Home Music
+  entities:
+    - media_player.bedpod_r
+    - media_player.bedpod_l
+    - media_player.officepod_l
+    - media_player.officepod_r
+    - media_player.family_room

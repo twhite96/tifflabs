@@ -1,7 +1,7 @@
 :root {
-    --md-primary-fg-color: #ff0011;
-    --md-primary-fg-color--light: #ECB7B7;
-    --md-primary-fg-color--dark: #90030C;
+    --md-primary-fg-color: #ff0000 !important;
+    --md-primary-fg-color--light: #ECB7B6 !important;
+    --md-primary-fg-color--dark: #90030C !important;
 }
 
 figcaption {

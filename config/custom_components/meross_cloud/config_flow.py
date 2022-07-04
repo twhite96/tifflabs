@@ -1,31 +1,48 @@
+import asyncio
 import logging
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List, Tuple
 from urllib.error import HTTPError
 
 import voluptuous as vol
 from aiohttp import ClientConnectorSSLError, ClientConnectorError
+from zeroconf import ServiceStateChange, Zeroconf
+from zeroconf.asyncio import AsyncServiceBrowser, AsyncServiceInfo
+
 from homeassistant import config_entries
-from homeassistant.config_entries import ConfigEntry, OptionsFlow
-from homeassistant.const import CONF_PASSWORD, CONF_USERNAME, CONF_HOST, CONF_PORT
+from homeassistant.config_entries import ConfigEntry, OptionsFlow, ConfigError
+from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
-from homeassistant.helpers.typing import DiscoveryInfoType
+from homeassistant.helpers.selector import SelectSelector, SelectSelectorConfig, SelectSelectorMode
 from meross_iot.http_api import MerossHttpClient
 from meross_iot.model.credentials import MerossCloudCreds
 from meross_iot.model.http.exception import UnauthorizedException, BadLoginException
 from requests.exceptions import ConnectTimeout
-import re
+from homeassistant.components import zeroconf
 
-from .common import PLATFORM, CONF_STORED_CREDS, CONF_HTTP_ENDPOINT, CONF_MQTT_SKIP_CERT_VALIDATION, \
-    CONF_OPT_ENABLE_RATE_LIMITS, CONF_OPT_GLOBAL_RATE_LIMIT_MAX_TOKENS, CONF_OPT_GLOBAL_RATE_LIMIT_PER_SECOND, \
-    CONF_OPT_DEVICE_RATE_LIMIT_MAX_TOKENS, CONF_OPT_DEVICE_RATE_LIMIT_PER_SECOND, CONF_OPT_DEVICE_MAX_COMMAND_QUEUE
+
+from .common import DOMAIN, CONF_STORED_CREDS, CONF_WORKING_MODE, CONF_WORKING_MODE_LOCAL_MODE, \
+    CONF_WORKING_MODE_CLOUD_MODE, \
+    CONF_HTTP_ENDPOINT, CONF_MQTT_SKIP_CERT_VALIDATION, CONF_OPT_CUSTOM_USER_AGENT, HTTP_API_RE, MEROSS_CLOUD_API_URL, \
+    MEROSS_LOCAL_API_URL, MEROSS_LOCAL_MDNS_SERVICE_TYPES, MEROSS_LOCAL_MDNS_MQTT_SERVICE_TYPE, \
+    MEROSS_LOCAL_MDNS_API_SERVICE_TYPE, CONF_OVERRIDE_MQTT_ENDPOINT, MULTIPLE_APIS_FOUND, MULTIPLE_BROKERS_FOUND, UNKNOWN_ERROR, \
+    DIFFERENT_HOSTS_FOR_BROKER_AND_API
 
 _LOGGER = logging.getLogger(__name__)
 PARALLEL_UPDATES = 1
-HTTP_API_RE = re.compile("(http:\/\/|https:\/\/)?([^:]+)(:([0-9]+))?")
 
 
-class MerossFlowHandler(config_entries.ConfigFlow, domain=PLATFORM):
+class ConfigUiException(Exception):
+    def __init__(self, error_code = UNKNOWN_ERROR, *args: object) -> None:
+        super().__init__(*args)
+        self._code = error_code
+
+    @property
+    def code(self):
+        return self._code
+
+
+class MerossFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle Meross config flow."""
 
     VERSION = 1
@@ -33,31 +50,43 @@ class MerossFlowHandler(config_entries.ConfigFlow, domain=PLATFORM):
 
     def __init__(self) -> None:
         """Initialize flow."""
-        self._http_api: str = "https://iot.meross.com"
+        self._http_api: Optional[str] = None
         self._username: Optional[str] = None
         self._password: Optional[str] = None
+        self._skip_cert_validation: Optional[bool] = None
+        self._discovered_services: List[AsyncServiceInfo] = []
 
     def _build_setup_schema(
-        self,
-        http_endpoint: str = None,
-        username: str = None,
-        password: str = None,
-        skip_cert_validation: bool = True
+            self,
+            http_endpoint: str = None,
+            username: str = None,
+            password: str = None,
+            override_mqtt_endpoint: str = None,
+            skip_cert_validation: bool = None,
+            local_mode: bool = False
     ) -> vol.Schema:
         http_endpoint_default = http_endpoint if http_endpoint is not None else self._http_api
         username_default = username if username is not None else self._username
         password_default = password if password is not None else self._password
-        return vol.Schema(
-            {
+        skip_cert_validation_default = skip_cert_validation if skip_cert_validation is not None else self._skip_cert_validation
+
+        if local_mode:
+            schema = vol.Schema({
+                vol.Required(CONF_HTTP_ENDPOINT, default=http_endpoint_default): str,
+                vol.Required(CONF_OVERRIDE_MQTT_ENDPOINT, default=override_mqtt_endpoint): str,
+                vol.Required(CONF_USERNAME, default=username_default): str,
+                vol.Required(CONF_PASSWORD, default=password_default): str,
+                vol.Required(CONF_MQTT_SKIP_CERT_VALIDATION, default=skip_cert_validation_default): bool,
+            })
+        else:
+            schema = vol.Schema({
                 vol.Required(CONF_HTTP_ENDPOINT, default=http_endpoint_default): str,
                 vol.Required(CONF_USERNAME, default=username_default): str,
                 vol.Required(CONF_PASSWORD, default=password_default): str,
-                vol.Required(CONF_MQTT_SKIP_CERT_VALIDATION,
-                             msg="Set this flag if using you local MQTT broker",
-                             default=skip_cert_validation,
-                             description="When set, Meross Manager skips MQTT certificate validation."): bool,
-            }
-        )
+                vol.Required(CONF_MQTT_SKIP_CERT_VALIDATION, default=skip_cert_validation_default): bool,
+            })
+
+        return schema
 
     async def async_step_reauth(self, user_input=None):
         """Perform reauth upon an API authentication error."""
@@ -72,55 +101,136 @@ class MerossFlowHandler(config_entries.ConfigFlow, domain=PLATFORM):
             )
         return await self.async_step_user()
 
-    async def async_step_zeroconf(self, discovery_info: DiscoveryInfoType) -> FlowResult:
-        """Handle zeroconf discovery."""
-        _LOGGER.info("Discovery info: %s", discovery_info)
-        # Returns something like the following
-        # {'host': '192.168.2.115', 'port': 2002, 'hostname': 'Meross Local Broker.local.', 'type': '_meross-api._tcp.local.', 'name': 'HTTP Local Broker._m...tcp.local.', 'properties': {'_raw': {}}}
-        api_host = discovery_info[CONF_HOST]
-        api_port = discovery_info[CONF_PORT]
-        api_url = f"http://{api_host}:{api_port}"
-        
-        # Check if already configured
-        await self.async_set_unique_id(api_url)
-        self._abort_if_unique_id_configured(
-            updates={CONF_HTTP_ENDPOINT: api_url}
-        )
+    async def _resolve_service(self, zeroconf: Zeroconf, service_type: str, name: str):
+        _LOGGER.debug("MDNS resolving service type: %s, name: %s", service_type, name)
+        info = AsyncServiceInfo(service_type, name)
+        await info.async_request(zeroconf, 3000)
+        if info:
+            self._discovered_services.append(info)
 
-        for entry in self._async_current_entries():            
-            # Is this address or IP address already configured?
-            if CONF_HTTP_ENDPOINT in entry.data and entry.data[CONF_HTTP_ENDPOINT]==api_url:    
-                return self.async_abort(reason="already_configured")
+    def _async_on_service_state_change(self, zeroconf: Zeroconf, service_type: str, name: str, state_change: ServiceStateChange) -> None:
+        _LOGGER.debug("MDNS discovery state: %s, service type: %s, name: %s", str(state_change), service_type, name)
+        if state_change is not ServiceStateChange.Added:
+            return
+        # Resolve the service on a different async task
+        asyncio.ensure_future(self._resolve_service(zeroconf, service_type, name))
+
+    async def _discover_services(self) -> Tuple[Optional[str], Optional[str]]:
+        self._discovered_services.clear()
+        aiozc = await zeroconf.async_get_async_instance(self.hass)
+        #browser = AsyncServiceBrowser(aiozc.zeroconf, MEROSS_LOCAL_MDNS_SERVICE_TYPES, handlers=[self._async_on_service_state_change])
+        browser = AsyncServiceBrowser(aiozc.zeroconf, [ "_meross-api._tcp.local.","_meross-mqtt._tcp.local."], handlers=[self._async_on_service_state_change])
+        # Wait a bit to collect MDNS responses and then stop the browser
+        await asyncio.sleep(10)
+        await browser.async_cancel()
+        api_endpoint_info = None
+        mqtt_endpoint_info = None
+
+        mqtt_count = 0
+        api_count = 0
+        _LOGGER.info("Found %d mdns services.", len(self._discovered_services))
+        for info in self._discovered_services:
+            if info.type == MEROSS_LOCAL_MDNS_API_SERVICE_TYPE:
+                api_count += 1
+                api_endpoint_info = info
+                _LOGGER.info("Found [%d] Local Meross API service listening on %s:%d", api_count, api_endpoint_info.server, api_endpoint_info.port)
+            elif info.type == MEROSS_LOCAL_MDNS_MQTT_SERVICE_TYPE:
+                mqtt_count += 1
+                mqtt_endpoint_info = info
+                _LOGGER.info("Found [%d] Local Meross MQTT service listening on %s:%d", mqtt_count, api_endpoint_info.server, api_endpoint_info.port)
+
+        if mqtt_count < 1 or api_count <1:
+            _LOGGER.info("The API/MQTT discovery was unable to find any relevant service.")
+            return None, None
+
+        if mqtt_count > 1:
+            raise ConfigUiException(MULTIPLE_BROKERS_FOUND)
         
-        self._http_api = api_url
-        return await self.async_step_user()
+        if api_count > 1:
+            raise ConfigUiException(MULTIPLE_APIS_FOUND)
+
+        if api_endpoint_info.server != mqtt_endpoint_info.server:
+            raise ConfigUiException(DIFFERENT_HOSTS_FOR_BROKER_AND_API)
+
+        api_endpoint = f"http://{api_endpoint_info.server[:-1]}:{api_endpoint_info.port}"
+        mqtt_endpoint = f"{mqtt_endpoint_info.server[:-1]}:{mqtt_endpoint_info.port}"
+        return api_endpoint, mqtt_endpoint
 
     async def async_step_user(self, user_input=None) -> Dict[str, Any]:
-        """Handle a flow initialized by the user interface"""
-        _LOGGER.debug("Starting ASYNC_STEP_USER")
+        """Choose mode step handler"""
+        _LOGGER.debug("Starting STEP_USER")
         if not user_input:
-            _LOGGER.debug("Empty user_input, showing default prefilled form")
+            _LOGGER.debug("Empty user_input, showing mode selection form")
             return self.async_show_form(
                 step_id="user",
+                data_schema=vol.Schema({vol.Required(CONF_WORKING_MODE, default=CONF_WORKING_MODE_CLOUD_MODE): SelectSelector(SelectSelectorConfig(
+                    options=[
+                        {"value": CONF_WORKING_MODE_CLOUD_MODE, "label": "Connect to Meross Official Cloud (requires internet)"},
+                        {"value": CONF_WORKING_MODE_LOCAL_MODE, "label": "Connect to LAN-only broker (requires Meross Local Addon)"}],
+                    mode=SelectSelectorMode.LIST,
+                ))}),
+                errors={})
+
+        mode = user_input.get(CONF_WORKING_MODE)
+        if mode == CONF_WORKING_MODE_CLOUD_MODE:
+            self._http_api = MEROSS_CLOUD_API_URL
+            self._skip_cert_validation = False
+            return self.async_show_form(
+                step_id="configure_manager",
                 data_schema=self._build_setup_schema(),
                 errors={},
             )
-        
+        elif mode == CONF_WORKING_MODE_LOCAL_MODE:
+            self._http_api = MEROSS_LOCAL_API_URL
+            self._skip_cert_validation = True
+
+            # Look for local brokers via zeroconf
+            api = None
+            mqtt = None
+            try:
+                api, mqtt = await self._discover_services()
+            except ConfigUiException as e:
+                return self.async_show_form(
+                step_id="configure_manager",
+                data_schema=self._build_setup_schema(http_endpoint=api, override_mqtt_endpoint=mqtt, local_mode=True),
+                errors={"base": e.code},
+            )
+
+            return self.async_show_form(
+                step_id="configure_manager",
+                data_schema=self._build_setup_schema(http_endpoint=api, override_mqtt_endpoint=mqtt, local_mode=True),
+                errors={},
+            )
+        else:
+            raise ConfigError("Invalid selection")
+
+    async def async_step_configure_manager(self, user_input=None) -> Dict[str, Any]:
+        """Handle a flow initialized by the user interface"""
+        _LOGGER.debug("Starting CONFIGURE_MANAGER")
+        if not user_input:
+            _LOGGER.debug("Empty user_input, showing default prefilled form")
+            return self.async_show_form(
+                step_id="configure_manager",
+                data_schema=self._build_setup_schema(),
+                errors={},
+            )
+
         _LOGGER.debug("UserInput was provided: form data will be populated with that")
         http_api_endpoint = user_input.get(CONF_HTTP_ENDPOINT)
         username = user_input.get(CONF_USERNAME)
         password = user_input.get(CONF_PASSWORD)
+        mqtt_host = user_input.get(CONF_OVERRIDE_MQTT_ENDPOINT)
         skip_cert_validation = user_input.get(CONF_MQTT_SKIP_CERT_VALIDATION)
 
         # Check if we have everything we need
         if username is None or password is None or http_api_endpoint is None:
             return self.async_show_form(
-                step_id="user",
+                step_id="configure_manager",
                 data_schema=self._build_setup_schema(
                     http_endpoint=http_api_endpoint),
                 errors={"base": "missing_credentials"},
             )
-        
+
         # Check the base-url is valid
         match = HTTP_API_RE.fullmatch(http_api_endpoint)
 
@@ -133,7 +243,7 @@ class MerossFlowHandler(config_entries.ConfigFlow, domain=PLATFORM):
         if match is None:
             _LOGGER.error("Invalid Meross HTTTP API endpoint: %s", http_api_endpoint)
             return self.async_show_form(
-                step_id="user",
+                step_id="configure_manager",
                 data_schema=data_schema,
                 errors={"base": "invalid_http_endpoint"}
             )
@@ -154,21 +264,21 @@ class MerossFlowHandler(config_entries.ConfigFlow, domain=PLATFORM):
         except (BadLoginException, UnauthorizedException) as ex:
             _LOGGER.error("Unable to connect to Meross HTTP api: %s", str(ex))
             return self.async_show_form(
-                step_id="user",
+                step_id="configure_manager",
                 data_schema=data_schema,
                 errors={"base": "invalid_credentials"}
             )
         except (UnauthorizedException, ConnectTimeout, HTTPError) as ex:
             _LOGGER.error("Unable to connect to Meross HTTP api: %s", str(ex))
             return self.async_show_form(
-                step_id="user",
+                step_id="configure_manager",
                 data_schema=data_schema,
                 errors={"base": "connection_error"}
             )
         except ClientConnectorSSLError as ex:
             _LOGGER.error("Unable to connect to Meross HTTP api: %s", str(ex))
             return self.async_show_form(
-                step_id="user",
+                step_id="configure_manager",
                 data_schema=data_schema,
                 errors={"base": "api_invalid_ssl_code"}
             )
@@ -176,45 +286,52 @@ class MerossFlowHandler(config_entries.ConfigFlow, domain=PLATFORM):
             _LOGGER.error("Connection ERROR to HTTP api: %s", str(ex))
             if isinstance(ex.os_error, ConnectionRefusedError):
                 return self.async_show_form(
-                    step_id="user",
+                    step_id="configure_manager",
                     data_schema=data_schema,
                     errors={"base": "api_connection_refused"}
                 )
             else:
                 return self.async_show_form(
-                    step_id="user",
+                    step_id="configure_manager",
                     data_schema=data_schema,
                     errors={"base": "client_connection_error"}
                 )
         except Exception as ex:
             _LOGGER.exception("Unable to connect to Meross HTTP api, ex: %s", str(ex))
             return self.async_show_form(
-                step_id="user",
+                step_id="configure_manager",
                 data_schema=data_schema,
                 errors={"base": "unknown_error"}
             )
 
         # TODO: Test MQTT connection?
-
-        await self.async_set_unique_id(http_api_endpoint)
-        self._abort_if_unique_id_configured()
-
-        return self.async_create_entry(
-            title=user_input[CONF_HTTP_ENDPOINT],
-            data={
-                CONF_USERNAME: username,
-                CONF_PASSWORD: password,
-                CONF_HTTP_ENDPOINT: http_api_endpoint,
-                CONF_STORED_CREDS: {
-                    "token": creds.token,
-                    "key": creds.key,
-                    "user_id": creds.user_id,
-                    "user_email": creds.user_email,
-                    "issued_on": creds.issued_on.isoformat(),
-                },
-                CONF_MQTT_SKIP_CERT_VALIDATION: skip_cert_validation
+        data = {
+            CONF_USERNAME: username,
+            CONF_PASSWORD: password,
+            CONF_HTTP_ENDPOINT: http_api_endpoint,
+            CONF_OVERRIDE_MQTT_ENDPOINT: mqtt_host,
+            CONF_STORED_CREDS: {
+                "token": creds.token,
+                "key": creds.key,
+                "user_id": creds.user_id,
+                "user_email": creds.user_email,
+                "issued_on": creds.issued_on.isoformat(),
             },
-        )
+            CONF_MQTT_SKIP_CERT_VALIDATION: skip_cert_validation
+        }
+        entry = await self.async_set_unique_id(http_api_endpoint)
+
+        # If this is a re-auth for an existing entry, just update the entry configuration.
+        if entry is not None:
+            self._abort_if_unique_id_configured(updates=data, reload_on_update=True)  # No more needed
+            await self.hass.config_entries.async_reload(entry.entry_id)
+
+        # Otherwise create a new entry from scratch
+        else:
+            return self.async_create_entry(
+                title=user_input[CONF_HTTP_ENDPOINT],
+                data=data
+            )
 
     @staticmethod
     @callback
@@ -223,7 +340,7 @@ class MerossFlowHandler(config_entries.ConfigFlow, domain=PLATFORM):
 
     @staticmethod
     async def _test_authorization(
-        api_base_url: str, username: str, password: str
+            api_base_url: str, username: str, password: str
     ) -> MerossCloudCreds:
         client = await MerossHttpClient.async_from_user_password(
             api_base_url=api_base_url, email=username, password=password
@@ -256,58 +373,29 @@ class MerossOptionsFlowHandler(config_entries.OptionsFlow):
                 title="",
                 data={k: v for k, v in user_input.items() if v not in (None, "")},
             )
-        
+
+        saved_options = {}
         if self.config_entry is not None:
             saved_options = self.config_entry.options
 
         if saved_options == {}:
-            data_schema = self._build_options_schema()    
+            data_schema = self._build_options_schema()
         else:
             data_schema = self._build_options_schema(
-                enable_rate_limits=saved_options.get(CONF_OPT_ENABLE_RATE_LIMITS),
-                global_rate_limit_burst=saved_options.get(CONF_OPT_GLOBAL_RATE_LIMIT_MAX_TOKENS),
-                global_rate_limit_rate=saved_options.get(CONF_OPT_GLOBAL_RATE_LIMIT_PER_SECOND),
-                device_rate_limit_burst=saved_options.get(CONF_OPT_DEVICE_RATE_LIMIT_MAX_TOKENS),
-                device_rate_limit_rate=saved_options.get(CONF_OPT_DEVICE_RATE_LIMIT_PER_SECOND),
-                device_max_command_queue=saved_options.get(CONF_OPT_DEVICE_MAX_COMMAND_QUEUE)
+                custom_user_agent=saved_options.get(CONF_OPT_CUSTOM_USER_AGENT),
             )
 
         return self.async_show_form(
             step_id="init",
             data_schema=data_schema
-            )
+        )
 
     def _build_options_schema(self,
-                              enable_rate_limits: bool = False,
-                              global_rate_limit_burst: int = 10,
-                              global_rate_limit_rate: int = 4,
-                              device_rate_limit_burst: int = 3,
-                              device_rate_limit_rate: int = 2,
-                              device_max_command_queue: int = 5
+                              custom_user_agent: str = None,
                               ) -> vol.Schema:
         return vol.Schema({
-            vol.Required(CONF_OPT_ENABLE_RATE_LIMITS,
-                         msg="Set this flag to enable API rate limits",
-                         default=enable_rate_limits,
-                         description="When set, API rate limits are enabled."): bool,
-            vol.Required(CONF_OPT_GLOBAL_RATE_LIMIT_MAX_TOKENS,
-                         msg="Limits the global API calls burst to at most # calls",
-                         default=global_rate_limit_burst,
-                         description="Maximum global API call burst limit"): int,
-            vol.Required(CONF_OPT_GLOBAL_RATE_LIMIT_PER_SECOND,
-                         msg="Limits the global API calls to at most # calls/second",
-                         default=global_rate_limit_rate,
-                         description="Maximum global API calls rate limit"): int,
-            vol.Required(CONF_OPT_DEVICE_RATE_LIMIT_MAX_TOKENS,
-                         msg="Limits maximum burst rate for single device API calls",
-                         default=device_rate_limit_burst,
-                         description="Maximum per-device API calls burst limit"): int,
-            vol.Required(CONF_OPT_DEVICE_RATE_LIMIT_PER_SECOND,
-                         msg="Limits single device API calls to at most # calls/second",
-                         default=device_rate_limit_rate,
-                         description="Maximum per-device API calls rate limit"): int,
-            vol.Required(CONF_OPT_DEVICE_MAX_COMMAND_QUEUE,
-                         msg="Maximum per-device command queue",
-                         default=device_max_command_queue,
-                         description="Maximum per-device command queue"): int
+            vol.Optional(CONF_OPT_CUSTOM_USER_AGENT,
+                         msg="Specify a custom user agent to be used when polling Meross HTTP API",
+                         default=custom_user_agent,
+                         description="Custom user-agent header to use when polling Meross HTTP API."): str
         })

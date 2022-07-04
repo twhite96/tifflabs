@@ -15,13 +15,16 @@
     },
     "step": {
       "user": {
+        "title": "Seleziona il broker",
+        "data": {}
+      },
+      "configure_manager": {
         "data": {
           "password": "Password",
           "username": "Indirizzo Email",
           "http_api_endpoint": "Endpoint HTTP",
-          "mqtt_hostname": "Hostname Server MQTT",
-          "mqtt_port": "Porta Server MQTT",
-          "skip_mqtt_cert_validation": "Skip MQTT certificate validation checks"
+          "override_mqtt_endpoint": "Indirizzo MQTT (host:port)",
+          "skip_mqtt_cert_validation": "Salta la validazione SSL per MQTT"
         },
         "title": "Inserisci le credenziali del tuo account Meross"
       },
@@ -33,19 +36,14 @@
     "title": "Meross"
   },
   "options": {
-        "error": {},
-        "step": {
-            "init": {
-                "data": {
-                    "enable_rate_limits": "Abilita il limitatore dei comandi MQTT",
-                    "global_rate_limit_max_tokens": "Limite burst rate globale",
-                    "global_rate_limit_per_second": "Limite di comandi al secondo globale",
-                    "device_rate_limit_max_tokens": "Limite burst rate per singolo dispositivo",
-                    "device_rate_limit_per_second": "Limite di comandi al secondo per singolo dispositivo",
-                    "device_max_command_queue": "Massimo numero di comandi in coda per singolo dispositivo"
-                },
-                "title": "Configure Manager"
-            }
-        }
+    "error": {},
+    "step": {
+      "init": {
+        "data": {
+          "custom_user_agent": "Header User-Agent personalizzato"
+        },
+        "title": "Opzioni Meross Cloud"
+      }
     }
+  }
 }

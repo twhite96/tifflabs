@@ -1,50 +1,50 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
-
+# Example configuration.yaml entry
+zeroconf:
 # Text to speech
 tts:
   - platform: google_translate
+    cache: true
+    cache_dir: /tmp/tts
+    time_memory: 300
+    base_url: http://192.168.0.10:8123
+    service_name: google_say
 
-group: !include groups.yaml
+# group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-customize: !include includes/customize.yaml
-packages: !include_dir_named packages
-spotify:
-  client_id: !secret spotify_client_id
-  client_secret: !secret spotify_client_secret
-media_player:
-  - platform: itunes
-    host: 192.168.1.50
+zone: !include zones.yaml
+# spotify:
+  #client_id: !secret spotify_client_id
+  #client_secret: !secret spotify_client_secret
 frontend:
   themes: !include_dir_merge_named themes
-frontend.set_theme: synthwave.yaml
 
 # GitHub Integration
 sensor:
   - platform: github
     access_token: !secret github_access_token
     repositories:
-      - path: 'twhite96/TW-HomeAssistant-Config'
-        name: TW HA Config
-      - path: 'twhite96/js-dev-reads'
+      - path: "twhite96/SuburbanSmarts"
+        name: SuburbanSmarts
+      - path: "twhite96/js-dev-reads"
         name: JS Dev Reads
-      - path: 'twhite/checkyoself'
+      - path: "twhite96/checkyoself"
         name: Check Yo Self
-      - path: 'twhite/portfolio-v5'
+      - path: "twhite96/portfolio-v5"
         name: Portfolio
-        
+
 # Custom Themes Input Select
 input_select:
-
   themes:
-    name: 'Themes'
+    name: "Themes"
     icon: fas:paint-roller
     options:
       - Caule Black Rose
       - Caule Black Purple
-      - Caule Black Blue 
+      - Caule Black Blue
       - Caule Black Aqua
       - Caule Black Green
       - Caule Black Yellow
@@ -54,7 +54,7 @@ input_select:
       - Caule Black Gray
       - Caule Dark Rose
       - Caule Dark Purple
-      - Caule Dark Blue 
+      - Caule Dark Blue
       - Caule Dark Aqua
       - Caule Dark Green
       - Caule Dark Yellow
@@ -64,7 +64,7 @@ input_select:
       - Caule Dark Gray
       - Caule Light Rose
       - Caule Light Purple
-      - Caule Light Blue 
+      - Caule Light Blue
       - Caule Light Aqua
       - Caule Light Green
       - Caule Light Yellow
@@ -74,17 +74,43 @@ input_select:
       - Caule Light Gray
       - Caule Black Rose Glass
       - Caule Black Purple Glass
-      - Caule Black Blue Glass 
+      - Caule Black Blue Glass
       - Caule Black Aqua Glass
       - Caule Black Green Glass
       - Caule Black Yellow Glass
       - Caule Black Orange Glass
       - Caule Black Coral Glass
       - Caule Black Pink Glass
-      - Caule Black Gray Glass      
+      - Caule Black Gray Glass
       - Default
-# Nanoleaf Lights
-light:
-  - platform: nanoleaf
-    host: 192.168.1.110
-    token: !secret nanoleaf_token
+## iFrames
+
+#################################################################
+#                                                               #
+#                        SSL/Server Config                      #
+#                                                               #
+#################################################################
+
+
+
+http:
+  # server_port: 8123
+  # ssl_certificate: /ssl/fullchain.pem
+  # ssl_key: /ssl/privkey.pem
+
+#################################################################
+#                                                               #
+#                        Groups                                 #
+#                                                               #
+#################################################################
+
+group: !include_dir_merge_named groups
+light: !include light_groups.yaml
+
+# Example configuration.yaml entry
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+  # "Project ID" in the Device Access Console (not Cloud Project ID!)
+  project_id: !secret nest_project_id
+  subscriber_id: !secret nest_subscriber_id

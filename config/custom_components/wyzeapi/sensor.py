@@ -22,6 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 ATTRIBUTION = "Data provided by Wyze"
 CAMERAS_WITH_BATTERIES = ["WVOD1"]
 
+
 @token_exception_handler
 async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry,
                             async_add_entities: Callable[[List[Any], bool], None]) -> None:
@@ -53,23 +54,37 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry,
 
     async_add_entities(sensors, True)
 
+
 class WyzeLockBatterySensor(SensorEntity):
     """Representation of a Wyze Lock or Lock Keypad Battery"""
+
+    @property
+    def enabled(self):
+        return self._enabled
+
     LOCK_BATTERY = "lock_battery"
     KEYPAD_BATTERY = "keypad_battery"
 
     _attr_device_class = DEVICE_CLASS_BATTERY
     _attr_native_unit_of_measurement = PERCENTAGE
 
-    # make the battery unavailable by default, this will be toggled after the first upate from the battery entity that has battery data.
-    _available = False
+    
 
     def __init__(self, lock, battery_type):
+        self._enabled = None
         self._lock = lock
         self._battery_type = battery_type
+        # make the battery unavailable by default, this will be toggled after the first update from the battery entity that
+        # has battery data.
+        self._available = False
 
     @callback
     def handle_lock_update(self, lock: Lock) -> None:
+        """
+            Helper function to
+            Enable lock when Keypad has battery and
+            Make it avaliable when either the lock battery or keypad battery exists
+        """
         self._lock = lock
         if self._lock.raw_dict.get("power") and self._battery_type == self.LOCK_BATTERY:
             self._available = True
@@ -124,7 +139,7 @@ class WyzeLockBatterySensor(SensorEntity):
         }
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device attributes of the entity."""
         return {
             ATTR_ATTRIBUTION: ATTRIBUTION,
@@ -137,9 +152,14 @@ class WyzeLockBatterySensor(SensorEntity):
         """Return the state of the device."""
         if self._battery_type == self.LOCK_BATTERY:
             return str(self._lock.raw_dict.get("power"))
-        elif (self._battery_type == self.KEYPAD_BATTERY):
+        elif self._battery_type == self.KEYPAD_BATTERY:
             return str(self._lock.raw_dict.get("keypad", {}).get("power"))
         return 0
+
+    @enabled.setter
+    def enabled(self, value):
+        self._enabled = value
+
 
 class WyzeCameraBatterySensor(SensorEntity):
     """Representation of a Wyze Camera Battery"""
@@ -186,7 +206,7 @@ class WyzeCameraBatterySensor(SensorEntity):
         }
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device attributes of the entity."""
         return {
             ATTR_ATTRIBUTION: ATTRIBUTION,

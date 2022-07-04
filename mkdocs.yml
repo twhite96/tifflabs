@@ -31,14 +31,14 @@ theme:
   font:
     text: Fira Code
     code: Fira Code
-  name: "material"
+  name: material
   custom_dir: overrides
   palette:
-    - scheme: default
+    - scheme: red
       toggle:
         icon: material/weather-night 
         name: Switch to dark mode
-    - scheme: slate 
+    - scheme: default 
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
@@ -87,4 +87,4 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+          format: python/name:pymdownx.superfences.fence_code_format

@@ -146,7 +146,9 @@ class TimerHandler:
             if (timestamp - now).total_seconds() < 0:
                 self._timer = None
                 _LOGGER.debug(
-                    "Timer of {} is not set because it is in the past".format(self.id)
+                    "Timer of {} is not set because it is in the past ({})".format(
+                        self.id, timestamp
+                    )
                 )
             else:
                 self._timer = async_track_point_in_time(
@@ -198,9 +200,10 @@ class TimerHandler:
                     return
                 # we are re-scheduling an existing timer
                 delta = (ts - self._next_trigger).total_seconds()
-                if abs(delta) >= 60 and abs(delta) < 50000:
+                if abs(delta) >= 60 and abs(delta) < 2000:
                     # only reschedule if the difference is at least a minute
                     # only reschedule if this doesnt cause the timer to shift to another day (+/- 24 hrs delta)
+                    # only reschedule if this doesnt cause the timer to shift to another hour (due to DST change)
                     await self.async_start_timer()
 
             self._sun_tracker = async_track_state_change(
@@ -229,7 +232,7 @@ class TimerHandler:
                 return
 
             @callback
-            async def async_workday_updated(entity, old_state, new_state):
+            async def async_workday_updated():
                 """the workday sensor was updated"""
                 [current_slot, timestamp_end] = self.current_timeslot()
                 [next_slot, timestamp_next] = self.next_timeslot()
@@ -246,8 +249,8 @@ class TimerHandler:
                         # only reschedule if the difference is at least a minute
                         await self.async_start_timer()
 
-            self._workday_tracker = async_track_state_change(
-                self.hass, const.WORKDAY_ENTITY, async_workday_updated
+            self._workday_tracker = async_dispatcher_connect(
+                self.hass, const.EVENT_WORKDAY_SENSOR_UPDATED, async_workday_updated
             )
         else:
             # clear existing tracker
@@ -312,7 +315,11 @@ class TimerHandler:
         return day in self._weekdays
 
     def calculate_timestamp(
-        self, time_str, now: datetime.datetime = None, iteration: int = 0
+        self,
+        time_str,
+        now: datetime.datetime = None,
+        iteration: int = 0,
+        reverse_direction: bool = False,
     ) -> datetime.datetime:
         """calculate the next occurence of a time string"""
         if time_str is None:
@@ -387,21 +394,26 @@ class TimerHandler:
                 time_delta = datetime.timedelta(
                     days=days_until_date(self._end_date, ts)
                 )
+                reverse_direction = True
 
             else:
                 # date restrictions are met
                 return ts
+        elif reverse_direction:
+            time_delta = datetime.timedelta(days=-1)
 
         # calculate next timestamp
         next_day = dt_util.find_next_time_expression_time(
             now + time_delta, [0], [0], [0]
         )
-        if iteration > 7:
+        if iteration > 15:
             _LOGGER.warning(
                 "failed to calculate next timeslot for schedule {}".format(self.id)
             )
             return None
-        return self.calculate_timestamp(time_str, next_day, iteration + 1)
+        return self.calculate_timestamp(
+            time_str, next_day, iteration + 1, reverse_direction
+        )
 
     def next_timeslot(self):
         """calculate the closest timeslot from now"""

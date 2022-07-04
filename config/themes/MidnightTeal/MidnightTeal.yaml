@@ -1,0 +1,95 @@
+Midnight Teal:
+  ### Main Interface Colors ###
+  accent-color: "#00aec9"
+#
+  ### Text ###
+  primary-text-color: "#FFFFFF"
+  disabled-text-color: "#1a383d"
+  paper-input-container-color: "#D4F2F7"
+#
+  ### Sidebar Menu ###
+  sidebar-icon-color: "#3E9296"
+  sidebar-text-color: "#ffffff"
+  sidebar-selected-text-color: "#ffffff"
+#
+  ### States and Badges ###
+  state-icon-active-color: "#FBCD41"
+  state-icon-unavailable-color: var(--disabled-text-color)
+#
+  ### Sliders ###
+  slider-knob-color: "#007AFF"
+  slider-knob-start-color: var(--slider-knob-color)
+  slider-pin-color: var(--slider-knob-color)
+  slider-active-color: var(--slider-knob-color)
+  slider-secondary-color: var(--light-primary-color)
+#
+  ### Labels ###
+  label-badge-background-color: "#1E2747"
+  label-badge-text-color: "#FFFFFF"
+  label-badge-red: "#D7432C"
+#
+  ### Cards ###
+  masonry-view-card-margin: 6px
+  mdc-listbox-background-color: var(--primary-background-color)
+#
+  ### Table row ###
+  table-row-background-color: var(--primary-background-color)
+  table-row-alternative-background-color: var(--secondary-background-color)
+  data-table-background-color: var(--primary-background-color)
+#
+  ### Dropdowns ###
+  material-background-color: var(--secondary-background-color)
+  material-secondary-background-color: var(--primary-background-color)
+#
+  ### HACS ###
+  hacs-chip-background-color: var(--primary-color)
+#
+  ### Pre/Code ###
+  markdown-code-background-color: "#000000"
+#
+  ### Dialog ###
+  dialog-background-color: "#C83C26"
+  mdc-theme-surface: "#2F626A"
+  more-info-header-background: var(--app-header-background-color)
+#
+  ### Dark/Light Theme ###
+  modes:
+    dark:
+      ### Main Interface Colors ###
+      primary-color: "#26abc0"
+      primary-background-color: "#062129"
+      secondary-background-color: "#03161c"
+      secondary-text-color: "#68e1f2"
+      app-header-background-color: "#1c8290"
+#
+      ### Cards ###
+      ha-card-background: "#0d3f46"
+      ha-card-border-radius: 4px
+      state-icon-color: "#00b3cf"
+      code-editor-background-color: "#020b0d"
+      ha-card-box-shadow: 3px 3px 2px rgba(1,8,11,0.4)
+#
+      ### Sidebar Menu ###
+      sidebar-icon-color: "#3E9296"
+      sidebar-selected-icon-color: "#963e89"
+      sidebar-background-color: "#000000"
+#
+    light:
+      ### Main Interface Colors ###
+      primary-color: "#197280"
+      primary-background-color: "#80c0c0"
+      secondary-background-color: "#56abab"
+      secondary-text-color: "#ddeeee"
+      app-header-background-color: "#4f9e9e"
+#
+      ### Cards ###
+      ha-card-background: "#64b2b2"
+      ha-card-border-radius: 9px
+      state-icon-color: "#FFFFFF"
+      code-editor-background-color: "#222222"
+      ha-card-box-shadow: 0px 0px 2px rgba(0,0,0,0.2)
+# 
+      ### Sidebar Menu ###
+      sidebar-icon-color: "#64b2b2"
+      sidebar-selected-icon-color: "#b264aa"
+      sidebar-background-color: "#1e3939" 

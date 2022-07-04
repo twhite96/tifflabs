@@ -16,7 +16,7 @@ disqus: "overrides/partials/disqus.html"
 <p align="center">Be sure to ⭐ my repo!</p> 
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
-  <img src="https://img.shields.io/badge/HA-Version_7.4-41BDF5?style=for-the-badge&logo=homeassistant">
+  <img src="https://img.shields.io/badge/HA-Version_8.2-41BDF5?style=for-the-badge&logo=homeassistant">
   <img src="https://img.shields.io/maintenance/yes/2022?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SuburbanSmarts?color=%234af2a1&style=for-the-badge">
@@ -29,16 +29,7 @@ disqus: "overrides/partials/disqus.html"
 </p>
 
 <p align="center">
-  <img src="/images/suburban-smarts.png" width="125"/>
+  <img src="images/SuburbanSmarts-Page-1.svg" />
 </p>
-
-
-
-
-| Components - Standard | Components - Custom | Network Devices | Automations | Scripts |
-| --------------------- | ------------------- | --------------- | ----------- | ------- |
-| A1                    | B1                  | C1              |             |         |
-| A2                    | B2                  | C2              |             |         |
-| A3                    | B3                  | C3              |             |         |
-
+<p align="center"><strong>You can find a larger picture of this diagram at <a href="images/diagram.png">at this link</a>. You can also get the XML file <a href="images/SuburbanSmarts.drawio.xml" download="suburban-smarts-diagram">over here.</a></strong></p>
 <br />

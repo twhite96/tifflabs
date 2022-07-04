@@ -12,6 +12,7 @@ from homeassistant.const import (
     STATE_ALARM_ARMED_HOME,
     STATE_ALARM_ARMED_NIGHT,
     STATE_ALARM_ARMED_CUSTOM_BYPASS,
+    STATE_ALARM_ARMED_VACATION
 )
 
 from homeassistant.components.alarm_control_panel import (
@@ -30,7 +31,7 @@ _LOGGER = logging.getLogger(__name__)
 
 DATA_REGISTRY = f"{DOMAIN}_storage"
 STORAGE_KEY = f"{DOMAIN}.storage"
-STORAGE_VERSION = 4
+STORAGE_VERSION = 5
 SAVE_DELAY = 10
 
 
@@ -75,7 +76,8 @@ class AreaEntry:
         STATE_ALARM_ARMED_AWAY: ModeEntry(),
         STATE_ALARM_ARMED_HOME: ModeEntry(),
         STATE_ALARM_ARMED_NIGHT: ModeEntry(),
-        STATE_ALARM_ARMED_CUSTOM_BYPASS: ModeEntry()
+        STATE_ALARM_ARMED_CUSTOM_BYPASS: ModeEntry(),
+        STATE_ALARM_ARMED_VACATION: ModeEntry()
     })
 
 
@@ -96,7 +98,6 @@ class SensorEntry:
     """Sensor storage Entry."""
 
     entity_id = attr.ib(type=str, default=None)
-    name = attr.ib(type=str, default="")
     type = attr.ib(type=str, default=SENSOR_TYPE_OTHER)
     modes = attr.ib(type=list, default=[])
     use_exit_delay = attr.ib(type=bool, default=True)
@@ -250,13 +251,21 @@ class MigratableStore(Store):
             data["sensors"] = [
                 attr.asdict(SensorEntry(
                     **{
-                        **omit(sensor, ["immediate"]),
+                        **omit(sensor, ["immediate", "name"]),
                         "use_exit_delay": not sensor["immediate"] and not sensor["always_on"],
                         "use_entry_delay": not sensor["immediate"] and not sensor["always_on"],
                         "auto_bypass_modes": sensor["modes"]
                         if "auto_bypass" in sensor and sensor["auto_bypass"]
                         else [],
                     }
+                ))
+                for sensor in data["sensors"]
+            ]
+
+        if old_version <= 4:
+            data["sensors"] = [
+                attr.asdict(SensorEntry(
+                    **omit(sensor, ["name"]),
                 ))
                 for sensor in data["sensors"]
             ]
@@ -365,12 +374,6 @@ class AlarmoStorage:
                         enabled=True,
                         trigger_time=1800
                     )
-                ),
-                STATE_ALARM_ARMED_NIGHT: attr.asdict(
-                    ModeEntry()
-                ),
-                STATE_ALARM_ARMED_CUSTOM_BYPASS: attr.asdict(
-                    ModeEntry()
                 )
             }
         })

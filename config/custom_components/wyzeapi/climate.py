@@ -284,7 +284,7 @@ class WyzeThermostat(ClimateEntity):
         return self._thermostat.available
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device attributes of the entity."""
         return {
             ATTR_ATTRIBUTION: ATTRIBUTION,
@@ -321,4 +321,4 @@ class WyzeThermostat(ClimateEntity):
         return await super().async_added_to_hass()
 
     async def async_will_remove_from_hass(self) -> None:
-        self._thermostat_service.unregister_updater()
+        self._thermostat_service.unregister_updater(self._thermostat)
