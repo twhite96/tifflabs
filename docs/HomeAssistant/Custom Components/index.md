@@ -13,4 +13,6 @@ Here are the security/surveillance custom components I am using. I haven't edite
 
 I have several Eufy cams, one in my office, a regular 2K cam, a 2K Pan & Tilt in my living room, and a Battery Doorbell outside.
 
-I love in an apartment so it is imperative that I have a wireless doorbell.
+I pipe in all my cameras into the webRTC and Simple RSTP add-ons and have created a pseudo CCTV dashboard until I move my HA installation to my NUC where I can use Motioneyes and Frigate.
+
+![](../../images/HA-Dashboard-Screenshots/CleanShot%202022-07-04%20at%2016.23.38%402x.png)
