@@ -50,7 +50,7 @@ disqus: "overrides/partials/disqus.html"
 
 
 <!-- prettier-ignore -->
-!!!attention "Beware of changes"
+!!!danger "Beware of changes"
     I constantly improve my home. It evolves as I add new devices and services. It's changing as my daily routines are changing.
 
     Please, keep in mind **this documentation might be outdated** in covering some details. However, I'll try my best to keep this updated.
