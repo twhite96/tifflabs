@@ -66,11 +66,8 @@ disqus: "overrides/partials/disqus.html"
   <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?style=for-the-badge">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/twhite96/SuburbanSmarts?color=%23fa476f&style=for-the-badge">
   <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/twhite96/SuburbanSmarts/ci?color=%2377ee9f&style=for-the-badge">
-<a href="https://twitter.com/SuburbanSmarts> 
+<a href="https://twitter.com/SuburbanSmarts"> 
   <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/SuburbanSmarts?color=%23ff0000&logoColor=%23ffffff&style=for-the-badge"></a>
-  <!-- <a href="https://www.facebook.com/SuburbanSmarts">
-    <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white">
-  </a> -->
   <img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m789189727-a36056ec240ae744a06b8a8e?color=%2377ee9f&style=for-the-badge">
   <img alt="Uptime Robot ratio (30 days)" src="https://img.shields.io/uptimerobot/ratio/m789189727-a36056ec240ae744a06b8a8e?color=%2377ee9f&style=for-the-badge">
   </img>
