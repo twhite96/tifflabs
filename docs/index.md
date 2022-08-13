@@ -56,7 +56,7 @@ disqus: "overrides/partials/disqus.html"
     Please, keep in mind **this documentation might be outdated** in covering some details. However, I'll try my best to keep this updated.
 
 ## All the badges
-<p>
+<p align="center">
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/HA-Version_8.4-41BDF5?style=for-the-badge&logo=homeassistant">
   <img src="https://img.shields.io/maintenance/yes/2022?color=%234af2a1&style=for-the-badge">
