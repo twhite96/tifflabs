@@ -1,22 +1,40 @@
+# nav:
+#   - Home: index.md
+#   - Getting Started: GettingStarted.md
+#   - Hardware: Hardware/index.md
+#   - Home Assistant:
+#       - Screens: HomeAssistant/Screens/index.md
+#       - Custom Components: HomeAssistant/Custom Components/index.md
+#       - Lovelace: HomeAssistant/Lovelace/index.md
+#       - Vacuum: HomeAssistant/Vacuum/index.md
+#       - Voice Control: HomeAssistant/VoiceControl/index.md
+#       - AppDaemon: HomeAssistant/AppDaemon/index.md
+#       - Packages: HomeAssistant/Packages/index.md
+#   - Software:
+#       - Overview: Software/Overview.md
+#       - Encryption: Software/Encryption.md
+#       - Apps: Software/Apps.md
+#       - Backup: Software/Backup.md
 nav:
   - Home: index.md
-  - Getting Started: GettingStarted.md
-  - Hardware: Hardware/index.md
-  - Home Assistant:
-      - Screens: HomeAssistant/Screens/index.md
-      - Custom Components: HomeAssistant/Custom Components/index.md
-      - Lovelace: HomeAssistant/Lovelace/index.md
-      - Vacuum: HomeAssistant/Vacuum/index.md
-      - Voice Control: HomeAssistant/VoiceControl/index.md
-      - AppDaemon: HomeAssistant/AppDaemon/index.md
+  - Hardware: hardware.md
   - Software:
-      - Overview: Software/Overview.md
-      - Development: Software/Development.md
-      - Upgrading: Software/Upgrading.md
-      - Ports: Software/Ports.md
-      - Encryption: Software/Encryption.md
-      - Apps: Software/Apps.md
-      - Backup: Software/Backup.md
+      - System Overview: Software/system.md
+      - Getting Started: Software/getting-started.md
+      - Docker Containers: Software/docker.md
+      - External Access: Software/external-access.md
+      - Ad-Blocking: Software/ad-blocking.md
+      - Ports: Software/ports.md
+  - Home Assistant:
+      - Introduction: HomeAssistant/introduction.md
+      - Installed Addons: HomeAssistant/addons.md
+      - Dashboards: HomeAssistant/dashboards.md
+      - Custom Extensions: HomeAssistant/custom-extensions.md
+      - Vacuum Setup: HomeAssistant/vacuum-setup.md
+      - Speech: HomeAssistant/speech.md
+      - Health Checks: HomeAssistant/health-checks.md
+  - Topology: topology.md
+  - Resources: resources.md
 theme:
   favicon: images/favi.png
   features:
@@ -26,6 +44,7 @@ theme:
     - navigation.sections
     - navigation.indexes
     - navigation.top
+    - navigation.tabs.sticky
     - toc.follow
     - toc.integrate
   logo: "logo.svg"
@@ -35,16 +54,24 @@ theme:
   name: material
   custom_dir: overrides
   palette:
-    - scheme: red
+    # Light mode
+    - media: '(prefers-color-scheme: light)'
+      scheme: default
+      primary: red
+      accent: red
       toggle:
-        icon: material/weather-night 
+        icon: material/weather-night
         name: Switch to dark mode
-    - scheme: slate 
+    # Dark mode
+    - media: '(prefers-color-scheme: dark)'
+      scheme: slate
+      primary: red
+      accent: red
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
-repo_name: "twhite96/SuburbanSmarts"
-repo_url: "https://github.com/twhite96/SuburbanSmarts"
+repo_url: https://github.com/twhite96/SuburbanSmarts
+repo_name: twhite96/SuburbanSmarts
 extra:
   disqus: "SuburbanSmarts"
   social:
@@ -64,26 +91,20 @@ site_description: "Documentation for my over-engineered smart apartment"
 extra_css:
   - stylesheets/extra.css
 markdown_extensions:
-  - tables
-  - pymdownx.keys
-  - meta
-  - smarty
-  - pymdownx.caret
-  - pymdownx.mark
-  - pymdownx.tilde
+  - admonition
+  - attr_list
   - pymdownx.highlight:
       use_pygments: true
-      auto_title: true
-      linenums_style: pymdownx-inline
       anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
   - pymdownx.superfences
-  - toc:
-      permalink: True
-      title: On this page
-      permalink_title: Anchor link to this section for reference
-  - sane_lists
   - pymdownx.tabbed:
       alternate_style: true
+  - markdown.extensions.toc:
+      anchorlink: true
+      permalink: true
+      permalink_title: On this page
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid

@@ -1,0 +1,68 @@
+automation:
+  - id: "Github stars"
+    alias: "Notify when Github star is received"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.maxwroc_battery_state_card_stars
+          - sensor.maxwroc_github_flexi_card_stars
+          - sensor.maxwroc_urleditorpro_stars
+          - sensor.maxwroc_hideseek_mod_stars
+          - sensor.maxwroc_homeassistant_stars
+          - sensor.maxwroc_sonj_review_stars
+          - sensor.maxwroc_vanilla_pattern_lock_stars
+    mode: restart # start a new run after stopping previous run
+    action:
+      - service: script.github_pushover
+        data:
+          type: "Stars"
+          friendly_name: "{{ trigger.to_state.attributes.friendly_name }}"
+          from: "{{ trigger.from_state.state }}"
+          to: "{{ trigger.to_state.state }}"
+
+  - id: "Github issues"
+    alias: "Notify when Github issue is created"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.maxwroc_battery_state_card_issues
+          - sensor.maxwroc_github_flexi_card_issues
+          - sensor.maxwroc_urleditorpro_issues
+          - sensor.maxwroc_hideseek_mod_issues
+          - sensor.maxwroc_homeassistant_issues
+          - sensor.maxwroc_sonj_review_issues
+          - sensor.maxwroc_vanilla_pattern_lock_issues
+    mode: restart # start a new run after stopping previous run
+    action:
+      - service: script.github_pushover
+        data:
+          type: "Issues"
+          friendly_name: "{{ trigger.to_state.attributes.friendly_name }}"
+          from: "{{ trigger.from_state.state }}"
+          to: "{{ trigger.to_state.state }}"
+
+script:
+  github_pushover:
+    alias: Github Pushover notifications
+    description: Sends Pushover notifications when called by automation
+    sequence:
+      - choose:
+          - conditions: >
+              {{ from != 'unavailable' and
+                 to != 'unavailable' }}
+            sequence:
+              - variables:
+                  # removing the " Issues" part
+                  repo_path: "{{ friendly_name | regex_replace(find=' .*', replace='', ignorecase=False) }}"
+                  repo_name: "{{ repo_path | regex_replace(find='maxwroc/', replace='', ignorecase=False) }}"
+              - service: notify.pushover_git
+                data:
+                  message: "{{ type }} changed for {{ repo_name }}: {{ from }} => {{ to }}"
+                  title: "Github"
+                  data:
+                    priority: -1
+                    url: "https://github.com/{{ repo_path }}/issues"
+                    # -2 to generate no notification/alert
+                    # -1 to always send as a quiet notification
+                    #  1 to display as high-priority and bypass the user's quiet hours
+                    #  2 to also require confirmation from the user

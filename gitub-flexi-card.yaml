@@ -1,0 +1,25 @@
+type: 'custom:github-flexi-card'
+title: Github projects
+entities:
+  - entity: sensor.twhite96_fails
+    url: "{latest_release_url}" # url taken from attribute
+    attributes:
+      - name: stars
+        url: true # default url to /stargazers
+      - name: issues
+        url: "https://github.com/twhite96/fails/issues"
+      - name: forks
+      - name: pull_requests
+        url: "{latest_pull_request_url}" # url taken from attribute
+  - entity: sensor.twhite96_suburbansmarts
+    url: true # default url - repo homepage
+    attributes:
+      - views
+      - stars
+      - forks
+  - entity: ensor.twhite96_suburbansmarts_discussions
+    name: 'Discussions'
+    attributes:
+      - views
+      - stars
+      - issues
