@@ -80,8 +80,6 @@ disqus: "overrides/partials/disqus.html"
 
 The best way to discover new ideas and inspire is by [reading the code][github-url], copying-pasting parts of my configuration and adjusting it to your needs.
 
-I've also curated a list of [my favorite Home Assistant configs][favorite-homeassistant-configs] on GitHub for extra inspiration.
-
 Read this documentation to see the bigger picture:
 
 [Hardware](./hardware){: .md-button }
@@ -100,9 +98,7 @@ I write this documentation for two main reasons:
 
 ## Limitations
 
-I'm renting my apartment. My landlord handles fixing stuff in my home, covering all the expenses. The only downside is that I can't change anything in my home.
-
-I can't disassemble anything and use custom switches or sockets. It means I can change only easily accessible parts, like bulbs.
+I'm renting my townhouse. My landlord handles fixing stuff in my home, covering all the expenses. The only downside is that I can only change certain things in my home such as lighting, CCTV, and garage door automations. YMMV.
 
 ## Future Plans
 
@@ -116,6 +112,4 @@ I have a [public Notion board][notion-board] with ideas and tasks for my smart h
 [github-url]: https://github.com/twhite96/SuburbanSmarts
 [denys-docs-url]: https://denysdovhan.com/smart-home
 [macburys-docs]: https://macbury.github.io/SmartHouse/
-[favorite-homeassistant-configs]: https://github.com/stars/twhite96/lists/home-assistant-configs
-
 

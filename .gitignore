@@ -6,3 +6,4 @@ docs/images/.DS_Store
 ./build.sh
 
 site/build.sh
+docker-compose.yml

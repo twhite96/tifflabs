@@ -1,0 +1,12 @@
+jose:
+  icon:
+  mac: 'mac-address'
+  name: jose
+  picture:
+  track: true
+rick:
+  name: rick
+  mac:
+  icon:
+  picture:
+  track: true

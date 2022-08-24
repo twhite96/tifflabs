@@ -12,6 +12,7 @@ On this page, I'm trying to collect useful resources I used to improve my home:
 - [MacBury Smart House](https://macbury.github.io/SmartHouse) my first attempt at these docs were heavily inspired by him.
 - [Denys Dovhan Smart Home](https://denysdovhan.com/smart-home) the iteration you see now is mostly an amalgamation of MacBury and Denys smart home configs. MacBury's was too complex for my setup but this config strikes a healthy balance between the two.
 - [Kinga Castle Smart Home Configuration](https://github.com/JamesMcCarthy79/Home-Assistant-Config) my first ever exposure to a Home Assistant dashboard and config.
+- I've also curated a list of [my favorite Home Assistant configs](https://github.com/stars/twhite96/lists/home-assistant-configs) on GitHub for extra inspiration.
 
 ## Articles
 
