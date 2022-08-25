@@ -11,11 +11,23 @@ As you know, Home Assistant is a *rabbit hole*, a *time sink*. So I've added mor
 
 ### Security
 
-![MotionEye](../images/HA-Dashboard-Screenshots/motion-eye.png){: loading=lazy }
+![MotionEye](../images/Lovelace-Screenshots/motion-eye.png){: loading=lazy }
+*MotionEye for CCTV*
 
-![Live Footage](../images/HA-Dashboard-Screenshots/eufy-live.png){: loading=lazy }
 
+![Live Footage](../images/Lovelace-Screenshots/eufy.png){: loading=lazy }
+*Live cams from eufy*
 ### System Status
 
-![Stats](../images/HA-Dashboard-Screenshots/stats.png){: loading=lazy }
-![More StatsStats](../images/HA-Dashboard-Screenshots/more-stats.png){: loading=lazy }
+![Stats](../images/Lovelace-Screenshots/stats.png){: loading=lazy }
+<!-- ![More StatsStats](../images/Lovelace-Screenshots/more-stats.png){: loading=lazy } -->
+
+### Master Bath
+![Bathroom](../images/Lovelace-Screenshots/master-bathroom.png){: loading=lazy }
+
+### Porch
+![Porch](../images/Lovelace-Screenshots/porch.png){: loading=lazy }
+
+
+### Media
+![Porch](../images/Lovelace-Screenshots/media.png){: loading=lazy }

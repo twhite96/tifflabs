@@ -20,21 +20,21 @@ disqus: "overrides/partials/disqus.html"
 
 === "Living Room"
 
-    ![Living Room](./images/HA-Dashboard-Screenshots/living-room-new.png){: loading=lazy }
+    ![Living Room](./images/Lovelace-Screenshots/living-room.png){: loading=lazy }
 
 === "Bedroom"
 
-    ![Bedroom](./images/HA-Dashboard-Screenshots/bedroom-new.png){: loading=lazy }
+    ![Bedroom](./images/Lovelace-Screenshots/bedroom.png){: loading=lazy }
 
 
 === "Kitchen"
 
-    ![Kitchen](./images/HA-Dashboard-Screenshots/kitchen.png){: loading=lazy }
+    ![Kitchen](./images/Lovelace-Screenshots/kitchen.png){: loading=lazy }
 
 
 === "Office"
 
-    ![Office](./images/HA-Dashboard-Screenshots/office.png){: loading=lazy }
+    ![Office](./images/Lovelace-Screenshots/office2.png){: loading=lazy }
 
 
 === "Home Network Topology"
@@ -44,7 +44,7 @@ disqus: "overrides/partials/disqus.html"
 
 === "Home Alarm System"
 
-    ![Front Porch](./images/HA-Dashboard-Screenshots/security-front.png){: loading=lazy }
+    ![Front Porch](./images/Lovelace-Screenshots/security2.png){: loading=lazy }
     
 
 
@@ -58,7 +58,7 @@ disqus: "overrides/partials/disqus.html"
 ## All the badges
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
-  <img src="https://img.shields.io/badge/HA-Version_8.4-41BDF5?style=for-the-badge&logo=homeassistant">
+  <img src="https://img.shields.io/badge/HA-Version_8.5-41BDF5?style=for-the-badge&logo=homeassistant">
   <img src="https://img.shields.io/maintenance/yes/2022?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SuburbanSmarts?color=%234af2a1&style=for-the-badge">
