@@ -19,8 +19,8 @@ nav:
   - Home: index.md
   - Hardware: hardware.md
   - Software:
-      - System Overview: Software/system.md
       - Getting Started: Software/getting-started.md
+      - System Overview: Software/system.md
       - Docker Containers: Software/docker.md
       - External Access: Software/external-access.md
       - Ad-Blocking: Software/ad-blocking.md
@@ -46,7 +46,9 @@ theme:
     - navigation.top
     - navigation.tabs.sticky
     - toc.follow
-    - toc.integrate
+    - search.highlight
+    - search.share
+    - search.suggest
   logo: "logo.svg"
   font:
     text: Fira Code
@@ -101,10 +103,6 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
-  - markdown.extensions.toc:
-      anchorlink: true
-      permalink: true
-      permalink_title: On this page
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid

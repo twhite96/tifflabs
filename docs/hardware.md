@@ -22,9 +22,37 @@ It's super late so I'll get this up and running and report back on [my blog](htt
 
 I've since moved onto a NUC but I am thinking of using this as an IR relay or something.
 
-# ZigBee
+## ZigBee
 
-## Philips Hue
+### Philips Hue
 
 
-## Xiaomi
+### Xiaomi
+
+
+
+### Aqara
+
+
+
+### ConBee II
+
+
+
+### Govee
+
+
+
+## Z-Wave
+
+
+
+
+
+## WiFi
+
+
+
+
+
+
