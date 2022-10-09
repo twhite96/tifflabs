@@ -19,8 +19,7 @@ nav:
   - Home: index.md
   - Hardware: hardware.md
   - Software:
-      - Getting Started: Software/getting-started.md
-      - System Overview: Software/system.md
+      - System Overview: Software/system-overview.md
       - Docker Containers: Software/docker.md
       - External Access: Software/external-access.md
       - Ad-Blocking: Software/ad-blocking.md
