@@ -10,7 +10,7 @@
 
   # This will override the default home zone
   - name: Home
-    latitude: 40.2689513
-    longitude: -76.7598261
+    # latitude:
+    # longitude:
     radius: 100
     icon: phu:rooms-attic

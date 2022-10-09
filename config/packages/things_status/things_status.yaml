@@ -1,0 +1,66 @@
+homeassistant:
+  customize:
+
+#################################################################
+#                                                               #
+#                           Group                               #
+#                                                               #
+#################################################################
+
+group:
+  cameras:
+    name: Cameras
+    view: no
+    entities:
+      - binary_sensor.lounge_camera
+      - binary_sensor.bedroom_camera
+      #- binary_sensor.jackson_camera
+      #- binary_sensor.hudson_camera
+      #- binary_sensor.staircase_camera
+      
+  # ir blasters:
+  #   name: IR Blasters
+  #   view: no
+  #   entities:
+  #     - binary_sensor.ir_blaster_downstairs
+  #     - binary_sensor.ir_blaster_upstairs
+  #     - binary_sensor.ir_blaster_patio
+#################################################################
+#                                                               #
+#                       Device Tracker                          #
+#                                                               #
+#################################################################
+
+device_tracker:
+
+####################################################
+#                                                  #
+#               Device Track - BLE                #
+#                                                  #
+####################################################
+
+  - platform: bluetooth_le_tracker
+    consider_home: 60
+    new_device_defaults:
+      track_new_devices: true
+
+####################################################
+#                                                  #
+#               Device Track - iphone                #
+#                                                  #
+####################################################
+
+  - platform: iphonedetect
+    consider_home: 60
+    new_device_defaults:
+      track_new_devices: true
+    hosts:
+      rick: 192.168.68.84
+
+binary_sensor:
+
+####################################################
+#                                                  #
+#            Binary Sensor - Template              #
+#                                                  #
+####################################################

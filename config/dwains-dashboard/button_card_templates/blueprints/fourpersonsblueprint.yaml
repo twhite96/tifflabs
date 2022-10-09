@@ -1,0 +1,21 @@
+button_card_templates_persons_heading:
+  show_icon: false
+  styles:
+    card:
+    - box-shadow: none
+    - padding: 6px 0 0 0
+    - background: transparent
+    - width: 90px
+    name:
+    - font-weight: bold
+    - justify-self: start
+    - font-size: 16px
+    - padding-left: 1px
+button_card_templates_persons_space:
+  show_icon: false
+  styles:
+    card:
+    - box-shadow: none
+    - padding: 6px 0 0 0
+    - background: transparent
+    - height: 59px

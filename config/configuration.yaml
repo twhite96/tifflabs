@@ -8,82 +8,28 @@ tts:
     cache: true
     cache_dir: /tmp/tts
     time_memory: 300
-    base_url: http://192.168.0.10:8123
+    #base_url: http://192.168.0.10:8123
     service_name: google_say
 
-# group: !include groups.yaml
+# YAML configs
+# homeassistant:
+#   packages: !include_dir_merge_named packages/
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 zone: !include zones.yaml
-# spotify:
-  #client_id: !secret spotify_client_id
-  #client_secret: !secret spotify_client_secret
+sensor: !include_dir_merge_named sensors
+switch: !include_dir_merge_named switches
+
+
+
+# sensors: !include sensors.yaml
 frontend:
   themes: !include_dir_merge_named themes
+  # covers: !include_dir_merge_named covers
+  extra_module_url:
+  - /local/community/custom-brand-icons/custom-brand-icons.js
 
-# GitHub Integration
-sensor:
-  - platform: github
-    access_token: !secret github_access_token
-    repositories:
-      - path: "twhite96/SuburbanSmarts"
-        name: SuburbanSmarts
-      - path: "twhite96/js-dev-reads"
-        name: JS Dev Reads
-      - path: "twhite96/checkyoself"
-        name: Check Yo Self
-      - path: "twhite96/portfolio-v5"
-        name: Portfolio
-
-# Custom Themes Input Select
-input_select:
-  themes:
-    name: "Themes"
-    icon: fas:paint-roller
-    options:
-      - Caule Black Rose
-      - Caule Black Purple
-      - Caule Black Blue
-      - Caule Black Aqua
-      - Caule Black Green
-      - Caule Black Yellow
-      - Caule Black Orange
-      - Caule Black Coral
-      - Caule Black Pink
-      - Caule Black Gray
-      - Caule Dark Rose
-      - Caule Dark Purple
-      - Caule Dark Blue
-      - Caule Dark Aqua
-      - Caule Dark Green
-      - Caule Dark Yellow
-      - Caule Dark Orange
-      - Caule Dark Coral
-      - Caule Dark Pink
-      - Caule Dark Gray
-      - Caule Light Rose
-      - Caule Light Purple
-      - Caule Light Blue
-      - Caule Light Aqua
-      - Caule Light Green
-      - Caule Light Yellow
-      - Caule Light Orange
-      - Caule Light Coral
-      - Caule Light Pink
-      - Caule Light Gray
-      - Caule Black Rose Glass
-      - Caule Black Purple Glass
-      - Caule Black Blue Glass
-      - Caule Black Aqua Glass
-      - Caule Black Green Glass
-      - Caule Black Yellow Glass
-      - Caule Black Orange Glass
-      - Caule Black Coral Glass
-      - Caule Black Pink Glass
-      - Caule Black Gray Glass
-      - Default
-## iFrames
 
 #################################################################
 #                                                               #
@@ -97,6 +43,12 @@ http:
   # server_port: 8123
   # ssl_certificate: /ssl/fullchain.pem
   # ssl_key: /ssl/privkey.pem
+  ip_ban_enabled: false
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+    - ::1
+  login_attempts_threshold: 5
 
 #################################################################
 #                                                               #
@@ -114,3 +66,34 @@ nest:
   # "Project ID" in the Device Access Console (not Cloud Project ID!)
   project_id: !secret nest_project_id
   subscriber_id: !secret nest_subscriber_id
+
+
+# Nintendo Wishlist
+nintendo_wishlist:
+  country: US
+  wishlist:
+    - "STAR WARS™: Knights of the Old Republic™"
+    - "ASSASSIN’S CREED® THE EZIO COLLECTION"
+    - "The Elder Scrolls V: Skyrim"
+    - "Assassins Creed: The Rebel Collection"
+    - "The Legend of Zelda: Tears of the Kingdom"
+  scan_interval:
+    days: 0
+    hours: 0
+    minutes: 3
+    seconds: 30
+    milliseconds: 0
+
+# Prescence detection
+device_tracker:
+  - platform: iphonedetect
+    consider_home: 60
+    new_device_defaults:
+      track_new_devices: true
+    hosts:
+      rick: 192.168.68.84
+  - platform: bluetooth_le_tracker
+    consider_home: 60
+    new_device_defaults:
+      track_new_devices: true
+

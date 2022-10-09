@@ -89,6 +89,7 @@ copyright: "Copyright &copy; 2022 Tiffany White"
 site_author: "Tiffany White"
 site_name: Suburban Smarts
 site_url: "https://docs.suburbansmarts.org/"
+dev_addr: "0.0.0.0:8000"
 site_description: "Documentation for my over-engineered smart apartment"
 extra_css:
   - stylesheets/extra.css

@@ -58,7 +58,7 @@ disqus: "overrides/partials/disqus.html"
 ## All the badges
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
-  <img src="https://img.shields.io/badge/HA-Version_8.5-41BDF5?style=for-the-badge&logo=homeassistant">
+  <img src="https://img.shields.io/badge/HA-Version_9.1-41BDF5?style=for-the-badge&logo=homeassistant">
   <img src="https://img.shields.io/maintenance/yes/2022?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SuburbanSmarts?color=%234af2a1&style=for-the-badge">
@@ -106,13 +106,13 @@ I'm renting my townhouse. My landlord handles fixing stuff in my home, covering 
 
 ## Future Plans
 
-I have a [public Notion board][notion-board] with ideas and tasks for my smart home. You can follow and comment my plans there.
+I have a [public Trello board][trello-board] with ideas and tasks for my smart home. You can follow and comment my plans there.
 
-[See future plans][notion-board]{: .md-button }
+[See future plans][trello-board]{: .md-button }
 
 <!-- References -->
 
-[notion-board]: https://www.notion.so/tiffanywhite/01507ea26b0a433d8f6c010e07a9eede?v=59ac97c69a7a41d1b82bc3a08fa9a1dd
+[trello-board]: https://trello.com/invite/b/O5jEn6qf/17dd900fce709264388231e9bd3b943d/suburban-smarts-smart-home-ideas
 [github-url]: https://github.com/twhite96/SuburbanSmarts
 [denys-docs-url]: https://denysdovhan.com/smart-home
 [macburys-docs]: https://macbury.github.io/SmartHouse/

@@ -247,3 +247,34 @@
       target: media_player.nesthubmaxbad9
       message-single: <person> Door is open. Please check to see who is there.
       message-multiple: <persons> please see who is at the door.
+- id: '00008'
+  alias: Porch on if cloudy
+  description: 'Is it cloudy or rainy? Turn on the porch light'
+  trigger:
+  - platform: state
+    entity_id: weather.openweathermap
+    to:
+      - "hail"
+      - "lightning"
+      - "cloudy"
+      - "lightning-rainy"
+      - "pouring"
+      - "rainy"
+      - "snowy"
+      - "snowy-rainy"
+  condition: []
+  action:
+  - service: light.turn_on
+    target:
+        entity_id: light.porch
+    data:
+        brightness: 255
+        kelvin: 2700
+- id: '0009'
+  trigger:
+    platform: sun
+    event: sunrise
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.porch

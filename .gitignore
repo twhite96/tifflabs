@@ -8,4 +8,5 @@ docs/images/.DS_Store
 site/build.sh
 docker-compose.yml
 secrets.yaml
+zones.yaml
 .env
