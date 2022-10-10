@@ -39,3 +39,16 @@ small.caption-text {
   background-color: hsla(356, 96%, 29%, 60);
   color: white;
 }
+
+.md-typeset .admonition, .md-typeset details {
+  background-color: var(--md-admonition-bg-color);
+  border-left: 0.2rem solid #ff0000 !important;
+  border-radius: 0.2rem;
+  box-shadow: var(--md-shadow-z1);
+  color: var(--md-admonition-fg-color);
+  display: flow-root;
+  font-size: .64rem;
+  margin: 1.5625em 0;
+  padding: 0 0.6rem;
+  page-break-inside: avoid;
+}
