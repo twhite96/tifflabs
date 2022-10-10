@@ -42,6 +42,7 @@ small.caption-text {
 
 .md-typeset .admonition, .md-typeset details {
   background-color: var(--md-admonition-bg-color);
+  border: 0px !important;
   border-left: 0.2rem solid #ff0000 !important;
   border-radius: 0.2rem;
   box-shadow: var(--md-shadow-z1);
