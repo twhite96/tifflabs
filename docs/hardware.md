@@ -70,7 +70,7 @@ disqus: 'overrides/partials/disqus.html'
 
 ## Networking
 
-!!!info "Info"
+!!!note "Note"
     This home networking stuff is still in progress.
 
 
@@ -94,7 +94,7 @@ So far I've got mesh wifi 6 networking setup around the house.
 
 ## Storage and Containers
 
-!!!info "Info"
+!!!note "Note"
     I'm using a Synology 920+.
 
     I've archived some images and videos on it but I've also got Docker containers as well as VMM running Home Assistant.
