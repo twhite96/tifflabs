@@ -129,7 +129,7 @@ Below you will find a list of my devices connected to the local network. Most of
 | Device                                     | HA Integration                | Has Add-on |
 | ------------------------------------------ | ----------------------------- | ---------- |
 | [Apple TV 4K](apple-tv)                    | [Apple TV](ha-apple-tv)       | No         |
-| [Kasa Smart Smart Plugs](kasa-smart-plugs)  | [TP-Link Kasa](kasa-smart)    | No         |
+| [Kasa Smart Smart Plugs](kasa-smart-plugs) | [TP-Link Kasa](kasa-smart)    | No         |
 | [LG 55" OLED TV](tv)                       | [LG webOS](ha-lg-webos)       | No         |
 | [Philips Hue Ambient](philips-hue-ambient) | [Philips Hue](ha-philips-hue) | No         |
 
