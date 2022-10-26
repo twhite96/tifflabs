@@ -75,6 +75,7 @@ disqus: "overrides/partials/disqus.html"
   <img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m789189727-a36056ec240ae744a06b8a8e?color=%2377ee9f&style=for-the-badge">
   <img alt="Uptime Robot ratio (30 days)" src="https://img.shields.io/uptimerobot/ratio/m789189727-a36056ec240ae744a06b8a8e?color=%2377ee9f&style=for-the-badge">
   </img>
+  <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/twhite96/SuburbanSmarts?color=%234fbad6&style=for-the-badge">
   <a href="https://www.buymeacoffee.com/tiffanywhitedev">
     <img src="https://img.shields.io/badge/Buy_Me_A_Coffee-gray?style=for-the-badge&logo=buy-me-a-coffee&logoColor=fdd937" />
   </a>
