@@ -61,6 +61,8 @@ theme:
     - toc.follow
     - search.highlight
     - search.share
+    - header.autohide
+    - announce.dismiss
     - search.suggest
   logo: "logo.svg"
   font:

@@ -17,7 +17,10 @@ figcaption {
   --md-primary-fg-color--dark: #90030C;
   --md-primary-bg-color: #fff;
   --md-primary-bg-color--light: hsla(0,0%,100%,.7);
+  --md-primary-bn-color: #330306;
 }
+
+
 
 
 small.caption-text {
@@ -44,4 +47,13 @@ small.caption-text {
 .md-typeset details {
   border-width: 0;
   border-left-width: 4px;
+}
+
+.md-banner {
+  background-color: var(--md-primary-bn-color);
+  overflow: auto;
+}
+
+.md-banner.md-typeset a {
+  color: var(--md-primary-bg-color);
 }

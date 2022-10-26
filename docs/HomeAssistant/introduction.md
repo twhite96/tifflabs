@@ -9,9 +9,11 @@ If you really don't want to click around, here ya go.
 !!!warning "Under construction"
     This is still a work in progress. Check back later.
 
-[Add-ons](./addons.md){: .md-button }
+[Add-ons](addons.md){: .md-button }
 [Custom extensions](custom-extensions.md){: .md-button }
-<!-- [Home Assistant](./HomeAssistant/introduction){: .md-button } -->
 [Dashboards](dashboards.md){: .md-button }
+[Health Checks](health-checks.md){: .md-button }
+[Speech](speech.md){: .md-button }
+[Vacuum Setup](vacuum-setup.md){: .md-button }
 <!-- [Topology](./topology){: .md-button} -->
 

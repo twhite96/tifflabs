@@ -128,12 +128,15 @@ Below you will find a list of my devices connected to the local network. Most of
 !!!warning "Under construction"
     These tables are still in progress!
 
-| Device                                     | HA Integration                | Has Add-on |
-| ------------------------------------------ | ----------------------------- | ---------- |
-| [Apple TV 4K](apple-tv)                    | [Apple TV](ha-apple-tv)       | No         |
-| [Kasa Smart Smart Plugs](kasa-smart-plugs) | [TP-Link Kasa](kasa-smart)    | No         |
-| [LG 55" OLED TV](tv)                       | [LG webOS](ha-lg-webos)       | No         |
-| [Philips Hue Ambient](philips-hue-ambient) | [Philips Hue](ha-philips-hue) | No         |
+| Device                                        | HA Integration                | Has Add-on |
+| --------------------------------------------- | ----------------------------- | ---------- |
+| [Apple TV 4K](apple-tv)                       | [Apple TV](ha-apple-tv)       | No         |
+| [Kasa Smart Smart Plugs](kasa-smart-plugs)    | [TP-Link Kasa](kasa-smart)    | No         |
+| [LG 55" OLED TV](tv)                          | [LG webOS](ha-lg-webos)       | No         |
+| [Philips Hue Ambient](philips-hue-ambient)    | [Philips Hue](ha-philips-hue) | No         |
+| [Philips Recessed Bulb](philips-hue-recessed) | [Philips Hue](ha-philips-hue) | No         |
+| [Philips Hue White Bulbs](philips-hue-white)  | [Philips Hue](ha-philips-hue) | No         |
+
 
 
 [apple-tv]: https://www.apple.com/apple-tv-4k/
@@ -173,7 +176,9 @@ My Zigbee devices are connected to Home Assistant via [ConBee II](https://www.am
 
 ## ZWave
 
-I am using the [Aeotec Z-Stick Gen5 Z-Wave Hub](https://www.amazon.com/gp/product/B00X0AWA6E/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8) to allow me to connect some of my ZWave devices, like my Ring Alarm Keypad Gen 2, to Home Assistant with the [Z Wave JS](https://www.home-assistant.io/integrations/zwave_js/) integration
+I am using the [Aeotec Z-Stick Gen5 Z-Wave Hub](https://www.amazon.com/gp/product/B00X0AWA6E/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8) to allow me to connect some of my ZWave devices, like my Ring Alarm Keypad Gen 2, to Home Assistant with the [Z Wave JS](https://www.home-assistant.io/integrations/zwave_js/) integration.
+
+
 <!-- ### Devices
 
 | Device                                                         | Quantity | Notes                                            |
