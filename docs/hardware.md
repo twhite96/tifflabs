@@ -4,7 +4,6 @@ disqus: 'overrides/partials/disqus.html'
 
 # Hardware
 
-## Home Server
 
 !!!info "Info"
     You can get most of the main hardware cheaply; my NUC cost 
@@ -12,6 +11,7 @@ disqus: 'overrides/partials/disqus.html'
 
 === "Home Server Hardware"
      Here is a photo of the main device running Home Assistant proper, an Intel NUC. 
+     
      <br />
      <br /> 
     ![Rack](./images/nuc-0.webp){: loading=lazy }<br />
@@ -31,7 +31,7 @@ disqus: 'overrides/partials/disqus.html'
     ![Rack](./images/nuc.webp){: loading=lazy }<br />
 
 === "Switches"
-    Using TP-Link switches and UniFi Dream Machine Pro to manage my home network. I need an AP just haven't bought one yet. Then I can manage the wifi in the UniFi Network App.<br />
+
     <br />
     <br />
     ![TP-Link](./images/tp-link-1.webp){: loading=lazy }<br />
@@ -51,7 +51,7 @@ disqus: 'overrides/partials/disqus.html'
     <br />
     <br />
 
-
+    Using TP-Link switches and UniFi Dream Machine Pro to manage my home network. I need an AP just haven't bought one yet. Then I can manage the wifi in the UniFi Network App.<br />
 
 === "Power"
 
@@ -68,13 +68,8 @@ disqus: 'overrides/partials/disqus.html'
     ![Cyberpower](./images/first-rack-cyberpower-open.webp){: loading=lazy }<br />
 
 
-## Networking
 
-!!!note "Note"
-    This home networking stuff is still in progress.
-
-
-So far I've got mesh wifi 6 networking setup around the house.
+    So far I've got mesh wifi 6 networking setup around the house.
 
 === "WiFi"
 
@@ -92,10 +87,6 @@ So far I've got mesh wifi 6 networking setup around the house.
     <br />
     <br />
 
-## Storage and Containers
-
-!!!note "Note"
-    I'm using a Synology 920+.
 
     I've archived some images and videos on it but I've also got Docker containers as well as VMM running Home Assistant.
 
