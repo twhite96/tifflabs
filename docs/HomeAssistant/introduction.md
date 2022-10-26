@@ -6,7 +6,7 @@ Here you'll find my dashboards, add-ons, custom extensions and more.
 
 If you really don't want to click around, here ya go.
 
-!!!danger "Beware of changes"
+!!!warning "Under construction"
     This is still a work in progress. Check back later.
 
 [Add-ons](./addons.md){: .md-button }

@@ -125,6 +125,8 @@ I've since moved onto a NUC but I am thinking of using this as an IR relay or so
 
 Below you will find a list of my devices connected to the local network. Most of them, except for Apple TV, have static IP addresses.
 
+!!!warning "Under construction"
+    These tables are still in progress!
 
 | Device                                     | HA Integration                | Has Add-on |
 | ------------------------------------------ | ----------------------------- | ---------- |
