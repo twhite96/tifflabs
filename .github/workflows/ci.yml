@@ -16,7 +16,7 @@ jobs:
          owner: tiff
          repo: SuburbanSmarts
          github_token: ${{ secrets.DEPLOY_LATER }}
-         workflow_name: calibreapp-image-actions.yml
+         workflow_file_name: calibreapp-image-actions.yml
          trigger_workflow: true
          wait_workflow: true
      - run: pip install mkdocs-material
