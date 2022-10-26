@@ -28,6 +28,7 @@ On this page, I'm trying to collect useful resources I used to improve my home:
 - [DrZzs YouTube Channel](https://www.youtube.com/channel/UC7G4tLa4Kt6A9e3hJ-HO8ng) about almost every possible smart-home related stuff. His hovering talking head might look a bit weird and even creepy, but the content itself is very useful.
 - [Grayson Adams](https://www.youtube.com/channel/UCOvOYHQOgKg5m0uGmbweZBw) about devices overview, basic Home Assistant setup.
 - [DB Tech](https://www.youtube.com/c/DBTechYT) generally about server administration. Mostly about Docker, Portainer, self-hosted services, OpenMediaVault, and Raspberry Pi. Very high-quality videos.
+- [Smart Home Solver](https://www.youtube.com/c/SmartHomeSolver) Beginner friendly and my favorite for Home Assistant and dad jokes.
 
 ## YouTube Videos
 

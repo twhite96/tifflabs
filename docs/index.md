@@ -106,13 +106,13 @@ I'm renting my townhouse. My landlord handles fixing stuff in my home, covering 
 
 ## Future Plans
 
-I have a [public Trello board][trello-board] with ideas and tasks for my smart home. You can follow and comment my plans there.
+I have a [public Notion board][notion] with ideas and tasks for my smart home. You can follow and comment my plans there.
 
-[See future plans][trello-board]{: .md-button }
+[See future plans][notion]{: .md-button }
 
 <!-- References -->
 
-[trello-board]: https://trello.com/invite/b/O5jEn6qf/17dd900fce709264388231e9bd3b943d/suburban-smarts-smart-home-ideas
+[notion]: https://tiffanywhite.notion.site/01507ea26b0a433d8f6c010e07a9eede?v=59ac97c69a7a41d1b82bc3a08fa9a1dd
 [github-url]: https://github.com/twhite96/SuburbanSmarts
 [denys-docs-url]: https://denysdovhan.com/smart-home
 [macburys-docs]: https://macbury.github.io/SmartHouse/

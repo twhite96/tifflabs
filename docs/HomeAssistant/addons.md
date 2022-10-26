@@ -5,4 +5,15 @@
 
 ## Installed and active
 
-[AirSonos](https://github.com/hassio-addons/addon-airsonos)
+
+| Installed            | Active |
+| -------------------- | ------ |
+| [AirSonos](airsonos) | Yes    |
+| A2                   | B2     |
+| A3                   | B3     |
+
+
+
+
+
+[airsonos]: https://github.com/hassio-addons/addon-airsonos
