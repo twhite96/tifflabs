@@ -3,21 +3,43 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 jobs:
+  build:
+    name: calibreapp/image-actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Compress Images
+        id: calibre
+        uses: calibreapp/image-actions@main
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: true
+      - name: Get specific changed files
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v23.1
+        with:
+          files: |
+            **.svg
+            **.png
+            **.jpeg
+            **.webp
+          files_ignore: |
+            **.yml
+            **.md
+      - name: Run step if only the files listed above change
+        if: steps.changed-files-specific.outputs.only_changed == 'true'
+        run: |
+          echo "Only files listed above have changed."
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     steps:
      - uses: actions/checkout@v2
      - uses: actions/setup-python@v2
        with:
          python-version: 3.x
-     - uses: convictional/trigger-workflow-and-wait@v1.6.4
-       with:
-         owner: tiff
-         repo: SuburbanSmarts
-         github_token: ${{ secrets.DEPLOY_LATER }}
-         workflow_file_name: calibreapp-image-actions.yml
-         trigger_workflow: true
-         wait_workflow: true
      - run: pip install mkdocs-material
      - run: mkdocs gh-deploy --force
