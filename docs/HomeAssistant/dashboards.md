@@ -55,7 +55,7 @@ As you know, Home Assistant is a *rabbit hole*, a *time sink*. So I've added mor
     ![Analytics](../images/HA-Dashboard-Screenshots/analytics.webp){: loading=lazy }
     I use <a href="https://plausible.io">Plausible Analytics</a> on all my websites instead of Google Analytics. You pay a nominal yearly fee for it, and you can host all your websites on the platform. The dashboard is simple and that's really all I need for such small sites.
 
-=== "Desktop View of My Wall Kiosk"
+=== "Wall Kiosk"
 
-    ![Kiosk](../images/HA-Dashboard-Screenshots/wall-kiosk-desktop.webp){: loading=lazy }
+    ![Kiosk](../images/HA-Dashboard-Screenshots/ipad-wall-kiosk.webp){: loading=lazy }
     This kiosk is in progress, but I'm going to mount it in the hallway so that when I walk in, I can monitor the cameras throughout the house and disarm the alarm. When I leave I can also start/stop a vacuum session as well. 

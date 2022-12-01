@@ -10,3 +10,9 @@ docker-compose.yml
 secrets.yaml
 zones.yaml
 .env
+
+mii_tokens.md
+
+requirements.txt
+
+token_extractor.py
