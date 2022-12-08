@@ -9,7 +9,7 @@
 <p align="center">Be sure to ⭐, 👀, and 🍴 my repo. Thanks!</p> 
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
-  <img src="https://img.shields.io/badge/HA-Version_10.5-41BDF5?style=for-the-badge&logo=homeassistant">
+  <img src="https://img.shields.io/badge/HA-Version_12.0-41BDF5?style=for-the-badge&logo=homeassistant">
   <img src="https://img.shields.io/maintenance/yes/2022?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SuburbanSmarts?color=%234af2a1&style=for-the-badge">
@@ -33,4 +33,4 @@
 </p>
 This project has moved over to my documentation site, https://docs.suburbansmarts.org. Check them out for more information.
 
-For general updates, you can check out the Suburban Smarts blog, https://suburbansmarts.org.
+For general updates, you can check out the Suburban Smarts blog, https://suburbansmarts.org, and more stuff at https://links.suburbansmarts.org/.
