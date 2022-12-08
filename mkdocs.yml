@@ -23,7 +23,7 @@ nav:
       - Docker Containers: Software/docker.md
       - External Access: Software/external-access.md
       - Ad-Blocking: Software/ad-blocking.md
-      - Ports: Software/ports.md
+      # - Ports: Software/ports.md
   - Home Assistant:
       - Introduction: HomeAssistant/introduction.md
       - Installed Addons: HomeAssistant/addons.md
@@ -32,7 +32,7 @@ nav:
       - Vacuum Setup: HomeAssistant/vacuum-setup.md
       - Speech: HomeAssistant/speech.md
       - Health Checks: HomeAssistant/health-checks.md
-  - Topology: topology.md
+  # - Topology: topology.md
   - Resources: resources.md
 theme:
   # icon:
