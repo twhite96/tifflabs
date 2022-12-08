@@ -11,7 +11,7 @@ As you know, Home Assistant is a *rabbit hole*, a *time sink*. So I've added mor
 
 === "Home"
 
-    ![Home](../images/HA-Dashboard-Screenshots/home.webp){: loading=lazy }
+    ![Home](../images/HA-Dashboard-Screenshots/living-room.webp){: loading=lazy }
     The Living room part of my Home dashboard.
 
 === "CCTV"
@@ -28,11 +28,6 @@ As you know, Home Assistant is a *rabbit hole*, a *time sink*. So I've added mor
     Random stats about my Home Assistant instance and automations. I soon plan on setting up InfluxDB, Glances, and Grafana but that is for another time.
 
 
-=== "GitHub Stats"
-
-    ![GitHub Stats](../images/HA-Dashboard-Screenshots/github.webp){: loading=lazy }
-    This dashboard is just a way for me to keep track on my personal projects and projects I either want to or have contributed to.
-
 === "Media"
 
     ![Media](../images/HA-Dashboard-Screenshots/media.webp){: loading=lazy }
@@ -42,7 +37,7 @@ As you know, Home Assistant is a *rabbit hole*, a *time sink*. So I've added mor
 
 === "Cat Watch"
 
-    ![Cat watch](../images/HA-Dashboard-Screenshots/gigi-dash.webp){: loading=lazy }
+    ![Cat watch](../images/HA-Dashboard-Screenshots/cat-monitor.webp){: loading=lazy }
     The old girl loves to explore but there is no way for her to safely hide when someone comes in. I use this to let me know where she is at all times. I love that middle-aged cat and am hoping to ride off into the sunset with her. I don't want her to get out as she's skittish and would never make it.
 
 === "Energy Usage"
@@ -50,12 +45,7 @@ As you know, Home Assistant is a *rabbit hole*, a *time sink*. So I've added mor
     ![Energy](../images/HA-Dashboard-Screenshots/energy.webp){: loading=lazy }
     Seeing as I am only a renter of this townhouse, I can't really put any devices on the meter to monitor my energy usage but what I <em>can</em> do is use smart plugs and devices that natively monitor energy usage.
 
-=== "Analytics"
-
-    ![Analytics](../images/HA-Dashboard-Screenshots/analytics.webp){: loading=lazy }
-    I use <a href="https://plausible.io">Plausible Analytics</a> on all my websites instead of Google Analytics. You pay a nominal yearly fee for it, and you can host all your websites on the platform. The dashboard is simple and that's really all I need for such small sites.
-
 === "Wall Kiosk"
 
-    ![Kiosk](../images/HA-Dashboard-Screenshots/ipad-wall-kiosk.webp){: loading=lazy }
+    ![Kiosk](../images/HA-Dashboard-Screenshots/wall-kiosk.webp){: loading=lazy }
     This kiosk is in progress, but I'm going to mount it in the hallway so that when I walk in, I can monitor the cameras throughout the house and disarm the alarm. When I leave I can also start/stop a vacuum session as well. 

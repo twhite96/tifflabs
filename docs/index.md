@@ -20,21 +20,21 @@ disqus: "overrides/partials/disqus.html"
 
 === "Living Room"
 
-    ![Living Room](./images/Lovelace-Screenshots/new-living-room-2.png){: loading=lazy }
+    ![Living Room](./images/HA-Dashboard-Screenshots/living-room.webp){: loading=lazy }
 
 === "Bedroom"
 
-    ![Bedroom](./images/Lovelace-Screenshots/new-bedroom-2.png){: loading=lazy }
+    ![Bedroom](./images/HA-Dashboard-Screenshots/bedroom.webp){: loading=lazy }
 
 
 === "Kitchen"
 
-    ![Kitchen](./images/Lovelace-Screenshots/new-kitchen-2.png){: loading=lazy }
+    ![Kitchen](./images/HA-Dashboard-Screenshots/kitchen.webp){: loading=lazy }
 
 
 === "Office"
 
-    ![Office](./images/Lovelace-Screenshots/new-office-2.png){: loading=lazy }
+    ![Office](./images/HA-Dashboard-Screenshots/office.webp){: loading=lazy }
 
 
 === "Home Network Topology"
@@ -44,7 +44,7 @@ disqus: "overrides/partials/disqus.html"
 
 === "Home Alarm System"
 
-    ![Front Porch](./images/Lovelace-Screenshots/new-security-2.png){: loading=lazy }
+    ![Front Porch](./images/HA-Dashboard-Screenshots/security.webp){: loading=lazy }
     
 
 

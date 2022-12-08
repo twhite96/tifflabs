@@ -16,3 +16,5 @@ mii_tokens.md
 requirements.txt
 
 token_extractor.py
+
+.vscode/settings.json
