@@ -43,6 +43,11 @@ small.caption-text {
   color: white;
 }
 
+.md-typeset .admonition {
+  /* border: none; */
+  box-shadow: 0px 7px 54px 5px rgba(0,0,0,0.1);
+}
+
 .md-typeset .admonition,
 .md-typeset details {
   border-width: 0;
