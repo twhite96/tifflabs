@@ -16,7 +16,7 @@
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/twhite96/SuburbanSmarts?color=%23ff000f&style=for-the-badge">
   <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?style=for-the-badge">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/twhite96/SuburbanSmarts?color=%23fa476f&style=for-the-badge">
-  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/twhite96/SuburbanSmarts/ci.yml?color=%2377ee9f&style=for-the-badge">
+  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/twhite96/SuburbanSmarts/ci.yml?branch=gh-pages?color=%2377ee9f&style=for-the-badge">
   <a href="https://twitter.com/SuburbanSmarts"> 
     <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/SuburbanSmarts?color=%23ff0000&logoColor=%23ffffff&style=for-the-badge">
   </a>
