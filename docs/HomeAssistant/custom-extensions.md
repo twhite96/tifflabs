@@ -15,6 +15,9 @@
 
 ![](https://res.cloudinary.com/to-the-crazy-ones/image/upload/c_scale,w_319/v1671581296/purifier_mnfomz.gif)
 
+!!!warning "Warning"
+    This table is still a WIP!
+
 
  **Integrations**                                  | **Active**                                                                                    
 ---------------------------------------------------|-----------------------------------------------------------------------------------------------
