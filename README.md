@@ -8,7 +8,7 @@
   I live in <img src="images/us.png"/>, and therefore my links are for where I purchased from. There may be better (and most likely cheaper) sites in your local regions.</p>
 <p align="center">Be sure to ⭐, 👀, and 🍴 my repo. Thanks!</p> 
 <p>
-  <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
+  <img<img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/HA-Version_12.0-41BDF5?style=for-the-badge&logo=homeassistant">
   <img src="https://img.shields.io/maintenance/yes/2022?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
@@ -16,8 +16,9 @@
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/twhite96/SuburbanSmarts?color=%23ff000f&style=for-the-badge">
   <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?style=for-the-badge">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/twhite96/SuburbanSmarts?color=%23fa476f&style=for-the-badge">
-  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/twhite96/SuburbanSmarts/ci.yml?branch=main&color=4AF2A1&style=for-the-badge">
-    <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/SuburbanSmarts?color=%23ff0000&logoColor=%23ffffff&style=for-the-badge">
+  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/twhite96/SuburbanSmarts/ci.yml?branch=main&color=4AF2A1&style=for-the-badge"  >
+  <a href="https://twitter.com/SuburbanSmarts">
+    <img alt="Twitter Follow" src="https://img.shields.io/badge/follow-%40SuburbanSmarts-ff0000?logo=twitter&logoColor=ffffff&style=for-the-badge">
   </a>
   <a href="https://www.facebook.com/SuburbanSmarts"> 
     <img alt="Like SS on Facebook" src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white">
