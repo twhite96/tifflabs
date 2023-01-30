@@ -62,7 +62,7 @@ theme:
     - search.highlight
     - search.share
     - header.autohide
-    - announce.dismiss
+    # - announce.dismiss
     - search.suggest
   logo: "logo.svg"
   font:
