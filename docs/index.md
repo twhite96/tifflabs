@@ -66,8 +66,8 @@ disqus: "overrides/partials/disqus.html"
   <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?style=for-the-badge">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/twhite96/SuburbanSmarts?color=%23fa476f&style=for-the-badge">
   <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/twhite96/SuburbanSmarts/ci.yml?branch=main&color=4AF2A1&style=for-the-badge"  >
-  <a href="https://twitter.com/SuburbanSmarts">
-    <img alt="Twitter Follow" src="https://img.shields.io/badge/follow-%40SuburbanSmarts-ff0000?logo=twitter&logoColor=ffffff&style=for-the-badge">
+  <a href="https://fosstodon.org/@SuburbanSmarts">
+    <img alt="Mastodon Follow" src="https://img.shields.io/mastodon/follow/109760135606717491?color=%23ff0000&domain=https%3A%2F%2Ffosstodon.org&logo=mastodon&logoColor=%23ff0000&style=for-the-badge">
   </a>
   <a href="https://www.facebook.com/SuburbanSmarts"> 
     <img alt="Like SS on Facebook" src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white">
