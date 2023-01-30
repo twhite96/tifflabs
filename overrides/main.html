@@ -3,6 +3,7 @@
 {% block content %}
 {{ super() }}
 
+  <a rel="me" style="display: none;" href="https://fosstodon.org/@suburbansmarts">Mastodon</a>
 <!-- Giscus -->
 <!-- Replace with generated snippet -->
 {% if not page.is_homepage %}
@@ -54,8 +55,4 @@
 
 {% block analytics %}
   <script async defer data-domain="docs.suburbansmarts.org" src="https://plausible.io/js/plausible.js"></script>
-{% endblock %}
-
-{% block extrahead %}
-  <a rel="me" style="display: none;" href="https://fosstodon.org/@suburbansmarts">Mastodon</a>
 {% endblock %}
