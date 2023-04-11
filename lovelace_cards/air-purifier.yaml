@@ -1,0 +1,36 @@
+type: custom:purifier-card
+entity: fan.living_room_purifier
+stats:
+  - attribute: sensor.living_room_purifier_filter_life_remaining
+    unit: '%'
+    subtitle: Filter Remaining
+  - attribute: motor_speed
+    unit: RPM
+    subtitle: Motor Speed
+  - entity_id: sensor.purifier_filter_life
+    value_template: '{{ (value | float(0) / 3600) | round(1) }}'
+    unit: hours
+    subtitle: Filter Life
+shortcuts:
+  - name: Silent
+    icon: mdi:weather-night
+    preset_mode: Silent
+  - name: 25%
+    icon: mdi:circle-slice-2
+    percentage: 25
+  - name: 50%
+    icon: mdi:circle-slice-4
+    percentage: 50
+  - name: 75%
+    icon: mdi:circle-slice-6
+    percentage: 75
+  - name: 100%
+    icon: mdi:circle-slice-8
+    percentage: 100
+  - name: Auto
+    icon: mdi:brightness-auto
+    preset_mode: Auto
+show_name: true
+show_state: true
+show_toolbar: true
+compact_view: false

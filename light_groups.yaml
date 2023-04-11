@@ -1,0 +1,26 @@
+- platform: group
+  name: Living room lights
+  entities:
+    - light.couch_lamp
+    - light.patio_door_lamp
+    - light.living_room_strip
+- platform: group
+  name: Office lights
+  entities:
+    - light.desk_strip
+    - light.monitor_bars
+    - light.office_shelf_1
+    - light.office_shelf_2
+    - light.office_main
+    - light.desk_lamp
+- platform: group
+  name: Bedroom lights
+  entities:
+    - light.bed_tv_strip
+    - light.bedroom_light
+    - light.glass_lamp
+- platform: group
+  name: Kitchen lights
+  entities:
+    - light.light_2
+    - light.kitchen_overhead

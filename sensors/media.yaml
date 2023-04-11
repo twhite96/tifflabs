@@ -1,0 +1,15 @@
+- platform: plex_recently_added
+  name: Recently Added TV  # will create sensor.recently_added_tv
+  token: !secret plex_token
+  ip_address: !secret plex_host
+  section_types:
+    - other videos
+- platform: spotcast
+  sp_dc: !secret sp_dc
+  sp_key: !secret sp_key
+  country: US #optional, added in 3.6.24
+
+- platform: sonos
+  media_player:
+    hosts:
+      - 192.168.68.201

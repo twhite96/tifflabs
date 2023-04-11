@@ -23,3 +23,8 @@ disqus: 'overrides/partials/disqus.html'
 ## Duplicati
 
 ![](/images/duplicati.webp)
+
+
+!!!note Update
+    I am running a small server farm in my house, and in an effort to redesign my dashboards, I wanted to run another version of Home Assistant on a headless server running in Docker. This meant that I had to learn more about HA Supervised. Since digging into how that works, I am debating whether I should move my whole system to a Docker install running HA Supervised.    
+

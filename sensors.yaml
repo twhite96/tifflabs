@@ -1,0 +1,13 @@
+# Example configuration.yaml entry
+# binary_sensor:
+#   - platform: ping
+#     host: 192.168.68.84
+
+# sensor:
+#   platform: plex_recently_added
+#   name: Recently Added TV  # will create sensor.recently_added_tv
+#   token: !secret plex_token
+#   host: !secret plex_host
+#   port: 32400
+#   section_types:
+#     - other videos

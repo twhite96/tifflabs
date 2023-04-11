@@ -1,0 +1,561 @@
+- id: '1632293006780'
+  alias: Done Work
+  description: ''
+  trigger:
+  - device_id: 8917568565f71c0086aa5ba970fb74e5
+    domain: hue
+    platform: device
+    type: initial_press
+    subtype: 4
+    unique_id: e77e08a0-19d4-4cde-bf98-b609425895ee
+  condition: []
+  action:
+  - scene: scene.night_night
+  mode: single
+- id: '1632293365579'
+  alias: Start Work
+  description: ''
+  trigger:
+  - device_id: 8917568565f71c0086aa5ba970fb74e5
+    domain: hue
+    platform: device
+    type: initial_press
+    subtype: 1
+    unique_id: 8ffc1b33-6789-4407-ad8c-0a24596967ad
+  condition: []
+  action:
+  - scene: scene.get_ta_work
+  mode: single
+- id: '1634509305214'
+  alias: Office lights activate
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: cf5ec4ba963a9edc92a39be28d5a3651
+    entity_id: binary_sensor.office_motion_sensor_motion
+    domain: binary_sensor
+    id: '0001'
+  condition:
+  - condition: trigger
+    id: '0001'
+  - condition: time
+    after: '12:00:00'
+  - condition: and
+    conditions:
+    - type: is_illuminance
+      condition: device
+      device_id: cf5ec4ba963a9edc92a39be28d5a3651
+      entity_id: sensor.office_motion_sensor_light_level
+      domain: sensor
+      below: 5
+      above: 0
+  action:
+  - scene: scene.entering_office
+  mode: single
+- id: '1640714626821'
+  alias: Turn on living room lights
+  description: Turn on living room lights with the dimmer switch
+  trigger:
+  - device_id: e014e823f9e88d4078774a98b28f6927
+    domain: hue
+    platform: device
+    type: initial_press
+    subtype: 1
+    unique_id: 18bc2c7f-1d67-4a36-b653-b99e344cd139
+    id: '0004'
+  - device_id: e014e823f9e88d4078774a98b28f6927
+    domain: hue
+    platform: device
+    type: initial_press
+    subtype: 2
+    unique_id: cabb1d33-92e0-415e-817d-eb34fe30653a
+    enabled: false
+  condition: []
+  action:
+  - scene: scene.turn_on_living_room_lights_2
+  - service: scene.turn_on
+    target:
+      entity_id: scene.warm_the_living_room_lights
+    metadata: {}
+    enabled: false
+  mode: single
+- id: '1640714857315'
+  alias: Turn off living room lights at bedtime
+  description: ''
+  trigger:
+  - device_id: e014e823f9e88d4078774a98b28f6927
+    domain: hue
+    platform: device
+    type: initial_press
+    subtype: 4
+    unique_id: 10c7381f-280d-4822-80bb-20aaf30ddefb
+    id: '0004'
+  condition: []
+  action:
+  - scene: scene.turn_off_living_room_lights_at_night
+  mode: single
+- id: '1640727292742'
+  alias: Master Bathroom motion
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.master_bath_sensor_motion
+      light_target:
+        area_id: master_bathroom
+      no_motion_wait: 325
+- id: '1640727604990'
+  alias: Test
+  description: ''
+  use_blueprint:
+    path: freakshock88/motion_illuminance_activated_entity.yaml
+    input:
+      motion_sensor: automation.master_bathroom_motion
+      target_entity: light.master_bathroom
+      illuminance_sensor: sensor.master_bath_sensor_light_level
+- id: '1641424296962'
+  alias: Evening porch light on
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: '0'
+  condition: []
+  action:
+  - service: light.turn_on
+    data:
+      transition: 5
+      brightness_pct: 95
+      kelvin: 3000
+    target:
+      device_id: ca2d8c992dcd7ebd45110aec8813a2fa
+  mode: single
+- id: '1641428035171'
+  alias: Kitchen lights on
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.master_bath_sensor_motion
+      light_target:
+        entity_id:
+        - light.kitchen
+      no_motion_wait: 500
+- id: '1642840892073'
+  alias: Switch bedroom lights on
+  description: ''
+  trigger:
+  - device_id: 73d43f030cd64813e19b99aecd5514d8
+    domain: hue
+    platform: device
+    type: initial_press
+    subtype: 1
+    unique_id: 96cc1fc4-c1e4-40ad-985c-743bf64f64a4
+    id: '0010'
+  condition: []
+  action:
+  - scene: scene.switch_bedroom_lights_on
+  mode: single
+- id: '1642840987513'
+  alias: Switch bedroom lights off
+  description: ''
+  trigger:
+  - device_id: 73d43f030cd64813e19b99aecd5514d8
+    domain: hue
+    platform: device
+    type: initial_press
+    subtype: 4
+    unique_id: 20b45320-c95e-47d7-bc65-8b2ffd33ac27
+    id: '0011'
+  condition: []
+  action:
+  - scene: scene.switch_bedroom_lights_off
+  mode: single
+- id: '1643143620307'
+  alias: Flip the office lights on
+  description: ''
+  trigger:
+  - device_id: 8917568565f71c0086aa5ba970fb74e5
+    domain: hue
+    platform: device
+    type: initial_press
+    subtype: 1
+    unique_id: 8ffc1b33-6789-4407-ad8c-0a24596967ad
+    id: '0012'
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.office_lights_on
+    metadata: {}
+  mode: single
+- id: '1643143677971'
+  alias: Flip off the office lights
+  description: ''
+  trigger:
+  - device_id: 8917568565f71c0086aa5ba970fb74e5
+    domain: hue
+    platform: device
+    type: initial_press
+    subtype: 4
+    unique_id: e77e08a0-19d4-4cde-bf98-b609425895ee
+    id: '0013'
+  condition: []
+  action:
+  - scene: scene.flip_the_office_lights_off
+  mode: single
+- id: '1644639631154'
+  alias: Why are you here?
+  description: ''
+  trigger:
+  - platform: device
+    device_id: d7636910b949254d63fe0275c7e28194
+    domain: nest
+    type: doorbell_chime
+  condition: []
+  action:
+  - service: tts.cloud_say
+    data:
+      entity_id: media_player.living_room_display
+      message: 'God, someone is here. '
+      language: en-US
+  mode: single
+- id: '1652072097261'
+  alias: Kitchen Motion
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.hue_motion_sensor_1_motion
+      light_target:
+        entity_id: light.kitchen
+- id: '1653521558427'
+  alias: Door's Open
+  description: ''
+  use_blueprint:
+    path: SirGoodenough/door_open_tts_cloud_say_announcer_nabu_casa_required.yaml
+    input:
+      speaker_language: en-US
+      door_entity: binary_sensor.front_door_2
+      end_time: '22:00:00'
+      speaker_target: media_player.living_room_display
+      announcement_message: Door's open
+      final_message: Door is now closed
+- id: 00008
+  alias: Porch on if cloudy
+  description: Is it cloudy or rainy? Turn on the porch light
+  trigger:
+  - platform: state
+    entity_id: weather.openweathermap
+    to:
+    - hail
+    - lightning
+    - cloudy
+    - lightning-rainy
+    - pouring
+    - rainy
+    - snowy
+    - snowy-rainy
+  condition: []
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.porch
+    data:
+      brightness: 255
+      kelvin: 2700
+- id: 0009
+  alias: Porch light off in the morning
+  trigger:
+  - platform: sun
+    event: sunrise
+  action:
+  - service: light.turn_off
+    data:
+      transition: 30
+    target:
+      entity_id: light.porch
+- id: '1665388965237'
+  alias: Ask a question
+  description: ''
+  trigger:
+  - platform: device
+    device_id: d7636910b949254d63fe0275c7e28194
+    domain: nest
+    type: doorbell_chime
+  condition: []
+  action:
+  - service: notify.mobile_app_tiffdev
+    data:
+      message: Someone is here, unfortunately
+      title: Doors ringing
+  mode: single
+- id: '1667197431029'
+  alias: Night cool off
+  description: ''
+  trigger:
+  - platform: time
+    at: '19:00:00'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 35c209fe9b7290c95d2729d9b49866fa
+    entity_id: switch.fan_3
+    domain: switch
+  mode: single
+- id: '1667197548916'
+  alias: Fan off
+  description: ''
+  trigger:
+  - platform: time
+    at: 01:00:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 35c209fe9b7290c95d2729d9b49866fa
+    entity_id: switch.fan_3
+    domain: switch
+  mode: single
+- id: '1668655800217'
+  alias: Turn on the warm lights
+  description: ''
+  trigger:
+  - device_id: 8917568565f71c0086aa5ba970fb74e5
+    domain: hue
+    platform: device
+    type: initial_press
+    subtype: 2
+    unique_id: a6b07961-2613-46d2-a431-8d65929ca09f
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.warm_the_office_lights
+    metadata: {}
+  mode: single
+- id: '1669189126185'
+  alias: Purify the living room during the work day
+  description: ''
+  trigger:
+  - platform: time
+    at: '10:00:00'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 7d9dd1c187af1ca42d5059a27ee79987
+    entity_id: fan.living_room_purifier
+    domain: fan
+  mode: single
+- id: '1669189189971'
+  alias: Living room purifier off
+  description: ''
+  trigger:
+  - platform: time
+    at: '19:00:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 7d9dd1c187af1ca42d5059a27ee79987
+    entity_id: fan.living_room_purifier
+    domain: fan
+  mode: single
+- id: '1669189916891'
+  alias: Door's open
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: bc59153d1c070794f8fb07d76130ff11
+    entity_id: binary_sensor.front_door
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  condition: []
+  action:
+  - service: tts.cloud_say
+    data:
+      entity_id: media_player.living_room_display
+      message: The door is open
+  mode: single
+- id: '1669190046716'
+  alias: HOLD
+  description: ''
+  trigger:
+  - type: problem
+    platform: device
+    device_id: bc59153d1c070794f8fb07d76130ff11
+    entity_id: binary_sensor.front_door_tamper
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  condition: []
+  action:
+  - repeat:
+      count: 2
+      sequence: []
+  mode: single
+- id: '1669499766268'
+  alias: MWII
+  description: Turn the lights green when playing MW II on Xbox
+  trigger:
+  - platform: device
+    device_id: aed9ed0dc326cddb99525560b691afe1
+    domain: media_player
+    entity_id: media_player.living_room_xbox
+    type: turned_on
+  - platform: device
+    device_id: aed9ed0dc326cddb99525560b691afe1
+    domain: media_player
+    entity_id: media_player.living_room_xbox
+    type: playing
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.mwii
+    metadata: {}
+  mode: single
+- id: '1669504215922'
+  alias: Game Mode off
+  description: ''
+  trigger:
+  - platform: device
+    device_id: aed9ed0dc326cddb99525560b691afe1
+    domain: media_player
+    entity_id: media_player.living_room_xbox
+    type: paused
+  condition:
+  - condition: and
+    conditions: []
+  - condition: device
+    device_id: 7486ef40df7152bd47fe7e63c40c530c
+    domain: media_player
+    entity_id: media_player.living_room_atv
+    type: is_playing
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.warm_the_living_room_lights
+    metadata: {}
+  mode: single
+- id: '1671821941666'
+  alias: 'Get Gigi out of the garage '
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: 45244241f00227a076682c64df63196d
+    entity_id: binary_sensor.garage_pet_detector_sensor
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  condition: []
+  action:
+  - if:
+    - type: is_motion
+      condition: device
+      device_id: 45244241f00227a076682c64df63196d
+      entity_id: binary_sensor.garage_pet_detector_sensor
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 10
+    then:
+    - type: turn_on
+      device_id: f5ccb441ab952319d70028c97cdeab11
+      entity_id: switch.harrisburg_siren
+      domain: switch
+    else: []
+  mode: single
+- id: '1672022087626'
+  alias: PS5 Lights
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 39bcea99ed84d23f67c40d4e5c25731e
+    entity_id: switch.ps5_930_power
+    domain: switch
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.ps5_night
+    metadata: {}
+  mode: single
+- id: '1674891588768'
+  alias: Press button fan
+  description: ''
+  trigger:
+  - device_id: e014e823f9e88d4078774a98b28f6927
+    domain: hue
+    platform: device
+    type: repeat
+    subtype: 2
+    unique_id: cabb1d33-92e0-415e-817d-eb34fe30653a
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.fan_only
+    metadata: {}
+  mode: single
+- id: '1674891664742'
+  alias: Press button fan off
+  description: ''
+  trigger:
+  - device_id: e014e823f9e88d4078774a98b28f6927
+    domain: hue
+    platform: device
+    type: repeat
+    subtype: 3
+    unique_id: dcf888f8-e685-451d-9800-44c01f60f383
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.fan_off
+    metadata: {}
+  mode: single
+- id: '1674891857116'
+  alias: Office lights off from couch
+  description: ''
+  trigger:
+  - device_id: e014e823f9e88d4078774a98b28f6927
+    domain: hue
+    platform: device
+    type: repeat
+    subtype: 4
+    unique_id: 10c7381f-280d-4822-80bb-20aaf30ddefb
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.flip_the_office_lights_off
+    metadata: {}
+  mode: single
+- id: '1674891946839'
+  alias: Office lights on from couch
+  description: ''
+  trigger:
+  - device_id: e014e823f9e88d4078774a98b28f6927
+    domain: hue
+    platform: device
+    type: initial_press
+    subtype: 2
+    unique_id: cabb1d33-92e0-415e-817d-eb34fe30653a
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.flip_on_office_lights
+    metadata: {}
+  mode: single

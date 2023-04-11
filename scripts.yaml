@@ -1,0 +1,18 @@
+art_lights_on:
+  alias: Art lights on
+  sequence:
+  - service: remote.send_command
+    data:
+      device: art_lights
+      command: power
+    target:
+      entity_id: remote.art_lights_remote
+  mode: single
+art_lights_off:
+  alias: Art lights off
+  sequence:
+  - service: remote.turn_off
+    data: {}
+    target:
+      entity_id: remote.art_lights_remote
+  mode: single

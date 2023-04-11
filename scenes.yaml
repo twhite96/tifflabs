@@ -1,0 +1,2623 @@
+- id: '1632292690973'
+  name: Night Night
+  entities:
+    light.office_lights:
+      min_mireds: 111
+      max_mireds: 556
+      supported_color_modes:
+      - color_temp
+      - hs
+      - xy
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      entity_id:
+      - light.desk_strip
+      - light.monitor_bars
+      - light.office_shelf_1
+      - light.office_shelf_2
+      - light.office
+      - light.desk_lamp
+      icon: mdi:lightbulb-group
+      friendly_name: Office lights
+      supported_features: 40
+      state: 'on'
+  icon: fas:moon
+- id: '1632293306146'
+  name: Get Ta Work
+  entities:
+    light.office_lights:
+      min_mireds: 111
+      max_mireds: 556
+      supported_color_modes:
+      - color_temp
+      - hs
+      - xy
+      color_mode: color_temp
+      brightness: 255
+      color_temp: 250
+      hs_color:
+      - 26.812
+      - 34.87
+      rgb_color:
+      - 255
+      - 205
+      - 166
+      xy_color:
+      - 0.421
+      - 0.364
+      entity_id:
+      - light.desk_strip
+      - light.monitor_bars
+      - light.office_shelf_1
+      - light.office_shelf_2
+      - light.office
+      - light.desk_lamp
+      icon: mdi:lightbulb-group
+      friendly_name: Office lights
+      supported_features: 40
+      state: 'on'
+  icon: fas:building
+- id: '1634508877139'
+  name: Entering Office
+  entities:
+    light.bookshelf_light_2:
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 255
+      color_temp: 276
+      hs_color:
+      - 27.059
+      - 42.165
+      rgb_color:
+      - 255
+      - 195
+      - 147
+      xy_color:
+      - 0.446
+      - 0.371
+      icon: phu:floor-lamp
+      friendly_name: Office Main
+      supported_features: 55
+      state: 'on'
+    light.office_shelf_2:
+      min_mireds: 154
+      max_mireds: 556
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      color_temp: 275
+      attribution: Data provided by Wyze
+      state: 'on'
+      available: true
+      device model: WLPA19C
+      mac: 7C78B21C5B12
+      IP: 192.168.68.121
+      RSSI: '-35'
+      SSID: GetYourOwnWiFi
+      icon: phu:bulbs-classic
+      friendly_name: Office 1
+      supported_features: 19
+    light.office_shelf_1:
+      min_mireds: 154
+      max_mireds: 556
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      color_temp: 273
+      attribution: Data provided by Wyze
+      state: 'on'
+      available: true
+      device model: WLPA19C
+      mac: 7C78B216CB1F
+      IP: 192.168.68.116
+      RSSI: '-33'
+      SSID: GetYourOwnWiFi
+      icon: phu:bulbs-classic
+      friendly_name: Office 2
+      supported_features: 19
+    light.desk_lamp:
+      min_mireds: 153
+      max_mireds: 454
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 255
+      color_temp: 230
+      hs_color:
+      - 26.722
+      - 28.925
+      rgb_color:
+      - 255
+      - 214
+      - 181
+      xy_color:
+      - 0.401
+      - 0.359
+      mode: normal
+      dynamics: none
+      icon: phu:desk-lamp
+      friendly_name: Desk lamp
+      supported_features: 40
+      state: 'on'
+    light.desk_strip:
+      min_mireds: 153
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: color_temp
+      brightness: 255
+      color_temp: 281
+      hs_color:
+      - 27.117
+      - 43.528
+      rgb_color:
+      - 255
+      - 194
+      - 144
+      xy_color:
+      - 0.449
+      - 0.373
+      mode: normal
+      dynamics: none
+      icon: bha:led-strip
+      friendly_name: Desk Strip
+      supported_features: 40
+      state: 'on'
+    light.monitor_bars:
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      color_temp: 287
+      rate_limit_total: 100
+      rate_limit_remaining: 89
+      rate_limit_reset_seconds: 6.763822078704834
+      rate_limit_reset: 1641333628
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: hue:play-bar-v-two
+      friendly_name: Monitor bars
+      supported_features: 19
+      state: 'on'
+- id: '1640714538015'
+  name: Turn on living room lights
+  entities:
+    light.living_room_lights_2:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 3533
+      color_temp: 283
+      hs_color:
+      - 27.141
+      - 44.062
+      rgb_color:
+      - 255
+      - 193
+      - 142
+      xy_color:
+      - 0.452
+      - 0.373
+      entity_id:
+      - light.tv_lamp
+      - light.window_lamp
+      - light.tv_strip
+      icon: phu:livingroom-group
+      friendly_name: Living room lights
+      supported_features: 36
+      state: 'on'
+  icon: hue:dimmer-switch
+  metadata:
+    light.living_room_lights_2:
+      entity_only: true
+- id: '1640714785233'
+  name: Turn off living room lights at night
+  entities:
+    light.living_room_lights_2:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      entity_id:
+      - light.tv_lamp
+      - light.window_lamp
+      - light.tv_strip
+      icon: phu:livingroom-group
+      friendly_name: Living room lights
+      supported_features: 36
+      state: 'off'
+  icon: hue:dimmer-switch
+  metadata:
+    light.living_room_lights_2:
+      entity_only: true
+- id: '1641427456650'
+  name: Kitchen lights activate
+  entities:
+    light.kitchen:
+      min_mireds: 153
+      max_mireds: 454
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 255
+      color_temp: 283
+      hs_color:
+      - 27.141
+      - 44.062
+      rgb_color:
+      - 255
+      - 193
+      - 142
+      xy_color:
+      - 0.452
+      - 0.373
+      is_hue_group: true
+      hue_scenes:
+      - Bright
+      - Energize
+      - Savanna sunset
+      - Nightlight
+      - Read
+      - Relax
+      - Concentrate
+      - Spring blossom
+      - Arctic aurora
+      - Tropical twilight
+      - Dimmed
+      hue_type: room
+      lights:
+      - Chandelier light 3
+      - Chandelier light 2
+      - Chandelier light 1
+      - Kitchen down light
+      dynamics: false
+      icon: mdi:lightbulb-group
+      friendly_name: Kitchen
+      supported_features: 40
+      state: 'on'
+    scene.kitchen_tropical_twilight:
+      group_name: Kitchen
+      group_type: room
+      name: Tropical twilight
+      speed: 0.6388888888888888
+      brightness: 43.7
+      is_dynamic: true
+      friendly_name: Kitchen Tropical twilight
+      state: unknown
+    scene.kitchen_dimmed:
+      group_name: Kitchen
+      group_type: room
+      name: Dimmed
+      speed: 0.5
+      brightness: 30.31
+      is_dynamic: false
+      friendly_name: Kitchen Dimmed
+      state: unknown
+    scene.kitchen_arctic_aurora:
+      group_name: Kitchen
+      group_type: room
+      name: Arctic aurora
+      speed: 0.6388888888888888
+      brightness: 30.71
+      is_dynamic: true
+      friendly_name: Kitchen Arctic aurora
+      state: unknown
+    scene.kitchen_savanna_sunset:
+      group_name: Kitchen
+      group_type: room
+      name: Savanna sunset
+      speed: 0.6190476190476191
+      brightness: 80.71
+      is_dynamic: true
+      friendly_name: Kitchen Savanna sunset
+      state: unknown
+    scene.kitchen_nightlight:
+      group_name: Kitchen
+      group_type: room
+      name: Nightlight
+      speed: 0.5
+      brightness: 0.39
+      is_dynamic: false
+      friendly_name: Kitchen Nightlight
+      state: unknown
+    scene.kitchen_read:
+      group_name: Kitchen
+      group_type: room
+      name: Read
+      speed: 0.5
+      brightness: 100
+      is_dynamic: false
+      friendly_name: Kitchen Read
+      state: unknown
+    scene.kitchen_bright:
+      group_name: Kitchen
+      group_type: room
+      name: Bright
+      speed: 0.5
+      brightness: 100
+      is_dynamic: false
+      friendly_name: Kitchen Bright
+      state: unknown
+    scene.kitchen_energize:
+      group_name: Kitchen
+      group_type: room
+      name: Energize
+      speed: 0.5
+      brightness: 100
+      is_dynamic: false
+      friendly_name: Kitchen Energize
+      state: unknown
+    scene.kitchen_relax:
+      group_name: Kitchen
+      group_type: room
+      name: Relax
+      speed: 0.5
+      brightness: 56.69
+      is_dynamic: false
+      friendly_name: Kitchen Relax
+      state: unknown
+    scene.kitchen_concentrate:
+      group_name: Kitchen
+      group_type: room
+      name: Concentrate
+      speed: 0.5
+      brightness: 100
+      is_dynamic: false
+      friendly_name: Kitchen Concentrate
+      state: unknown
+    scene.kitchen_spring_blossom:
+      group_name: Kitchen
+      group_type: room
+      name: Spring blossom
+      speed: 0.5595238095238095
+      brightness: 81.1
+      is_dynamic: true
+      friendly_name: Kitchen Spring blossom
+      state: unknown
+- id: '1642840700980'
+  name: Switch bedroom lights off
+  entities:
+    light.bedroom_lights:
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      entity_id:
+      - light.bed_tv_strip
+      - light.bedroom_light
+      - light.glass_lamp
+      icon: mdi:lightbulb-group
+      friendly_name: Bedroom lights
+      supported_features: 44
+      state: 'off'
+  icon: hue:dimmer-switch
+- id: '1642840743828'
+  name: Switch bedroom lights on
+  entities:
+    light.bedroom_lights:
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 207
+      color_temp: 246
+      hs_color:
+      - 26.785
+      - 33.706
+      rgb_color:
+      - 255
+      - 207
+      - 169
+      xy_color:
+      - 0.416
+      - 0.363
+      entity_id:
+      - light.bed_tv_strip
+      - light.bedroom_light
+      - light.glass_lamp
+      icon: mdi:lightbulb-group
+      friendly_name: Bedroom lights
+      supported_features: 44
+      state: 'on'
+  icon: hue:dimmer-switch
+- id: '1643141909315'
+  name: Flip on Office lights
+  entities:
+    light.office_lights:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 554
+      effect_list:
+      - None
+      - candle
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      - fire
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      - xy
+      entity_id:
+      - light.desk_strip
+      - light.monitor_bars
+      - light.office_shelf_1
+      - light.office_shelf_2
+      - light.office_main
+      - light.desk_lamp
+      icon: mdi:lightbulb-group
+      friendly_name: Office lights
+      supported_features: 44
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 27.158
+      - 37.255
+      rgb_color:
+      - 255
+      - 203
+      - 159
+      xy_color:
+      - 0.428
+      - 0.369
+      state: 'on'
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      rate_limit_total: 100
+      rate_limit_remaining: -1987
+      rate_limit_reset_seconds: -1668245565.03
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      color_mode: hs
+      brightness: 249
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      color_temp_kelvin: 2770
+      color_temp: 361
+      state: 'on'
+  icon: hue:dimmer-switch
+  metadata:
+    light.bars:
+      entity_only: true
+- id: '1643143545126'
+  name: Flip the office lights off
+  entities:
+    light.office_lights:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 554
+      effect_list:
+      - None
+      - candle
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      - fire
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      - xy
+      entity_id:
+      - light.desk_strip
+      - light.monitor_bars
+      - light.office_shelf_1
+      - light.office_shelf_2
+      - light.office_main
+      - light.desk_lamp
+      icon: mdi:lightbulb-group
+      friendly_name: Office lights
+      supported_features: 44
+      state: 'off'
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      rate_limit_total: 100
+      rate_limit_remaining: -1996
+      rate_limit_reset_seconds: -1668245625.09
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      state: 'off'
+  icon: hue:dimmer-switch
+  metadata:
+    light.bars:
+      entity_only: true
+- id: '1656805433299'
+  name: Porch Light On
+  entities:
+    light.porch:
+      supported_color_modes:
+      - brightness
+      is_hue_group: true
+      hue_scenes: []
+      hue_type: room
+      lights:
+      - Porch light
+      dynamics: false
+      icon: mdi:lightbulb-group
+      friendly_name: Porch
+      supported_features: 40
+      color_mode: brightness
+      brightness: 255
+      state: 'on'
+    light.hue_white_lamp_1_3:
+      effect_list:
+      - None
+      - candle
+      supported_color_modes:
+      - brightness
+      mode: normal
+      dynamics: none
+      friendly_name: Porch light
+      supported_features: 44
+      color_mode: brightness
+      brightness: 255
+      effect: None
+      state: 'on'
+  icon: phu:wall-lantern
+  metadata:
+    light.hue_white_lamp_1_3:
+      entity_only: false
+    light.porch:
+      entity_only: false
+- id: '1656805526720'
+  name: Porch light off
+  entities:
+    light.hue_white_lamp_1_3:
+      effect_list:
+      - None
+      - candle
+      supported_color_modes:
+      - brightness
+      mode: normal
+      dynamics: none
+      friendly_name: Porch light
+      supported_features: 44
+      state: 'off'
+    light.porch:
+      supported_color_modes:
+      - brightness
+      is_hue_group: true
+      hue_scenes: []
+      hue_type: room
+      lights:
+      - Porch light
+      dynamics: false
+      icon: mdi:lightbulb-group
+      friendly_name: Porch
+      supported_features: 40
+      state: 'off'
+  icon: phu:wall-econic-lantern-base
+  metadata:
+    light.hue_white_lamp_1_3:
+      entity_only: false
+    light.porch:
+      entity_only: true
+- id: '1657909659290'
+  name: TV Time
+  entities:
+    light.tv_strip:
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 255
+      color_temp: 301
+      hs_color:
+      - 27.369
+      - 48.786
+      rgb_color:
+      - 255
+      - 187
+      - 130
+      xy_color:
+      - 0.468
+      - 0.377
+      icon: hue:lightstrip-tv
+      friendly_name: TV Strip
+      supported_features: 36
+      state: 'on'
+    light.patio_door_lamp:
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 71
+      color_temp: 285
+      hs_color:
+      - 27.165
+      - 44.6
+      rgb_color:
+      - 255
+      - 192
+      - 141
+      xy_color:
+      - 0.454
+      - 0.373
+      icon: bha:floor-lamp
+      friendly_name: Patio Door Lamp
+      supported_features: 36
+      state: 'on'
+    light.couch_lamp:
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 69
+      color_temp: 285
+      hs_color:
+      - 27.165
+      - 44.6
+      rgb_color:
+      - 255
+      - 192
+      - 141
+      xy_color:
+      - 0.454
+      - 0.373
+      icon: bha:floor-lamp
+      friendly_name: Couch Lamp
+      supported_features: 36
+      state: 'on'
+    media_player.living_room_atv:
+      friendly_name: Living Room ATV
+      supported_features: 450487
+      volume_level: 0.821
+      media_duration: 1293
+      media_position: 109
+      media_position_updated_at: '2022-07-15T18:42:17.107806+00:00'
+      media_title: The Moab Creeper | The Cases of Kylen Schulte, Crystal Turner,
+        & Lauren Cho
+      media_artist: Coffeehouse Crime
+      media_album_name: ''
+      app_id: com.google.ios.youtube
+      app_name: YouTube
+      source_list:
+      - App Store
+      - Arcade
+      - CBS Sports
+      - CNBC
+      - Computers
+      - Developer
+      - ESPN
+      - Fitness
+      - FOX Sports
+      - fuboTV
+      - HBO Max
+      - HomeCam
+      - Hulu
+      - Infuse
+      - Investigation Discovery GO
+      - MLB
+      - Movies
+      - Music
+      - NBC Sports
+      - NCAA March Madness
+      - Netflix
+      - NFL
+      - Oxygen
+      - Paramount+
+      - Photos
+      - Plex
+      - Podcasts
+      - Prime Video
+      - Search
+      - Settings
+      - Speedtest
+      - TBS
+      - TNT
+      - TV
+      - TV Shows
+      - TVApp
+      - Twitch
+      - Vimeo
+      - WPXI Ch. 11 News Pittsburgh
+      - YouTube
+      state: paused
+    remote.living_room_atv:
+      friendly_name: Living Room ATV
+      supported_features: 0
+      state: 'on'
+  icon: phu:apple-tv-box
+  metadata: {}
+- id: '1659065576796'
+  name: Morning Reading Vibes
+  entities:
+    light.office_shelf_2:
+      min_mireds: 154
+      max_mireds: 554
+      effect_list:
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 252.4
+      hs_color:
+      - 29.404
+      - 59.216
+      rgb_color:
+      - 255
+      - 177
+      - 103
+      xy_color:
+      - 0.501
+      - 0.388
+      color_temp: 215
+      attribution: Data provided by Wyze
+      state: 'on'
+      available: true
+      device_model: WLPA19C
+      mac: 7C78B21C5B12
+      IP: 192.168.68.53
+      RSSI: '-36'
+      SSID: GetYourOwnWiFi
+      Sun Match: false
+      local_control: true
+      mode: White
+      icon: phu:bulbs-classic
+      friendly_name: Office
+      supported_features: 23
+  icon: phu:apple-watch
+  metadata:
+    light.office_shelf_2:
+      entity_only: true
+- id: '1668653743787'
+  name: Planning
+  entities:
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      rate_limit_total: 100
+      rate_limit_remaining: -9188
+      rate_limit_reset_seconds: -1668653737.06
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      color_temp_kelvin: 8333
+      color_temp: 120
+      state: 'on'
+    light.office_shelf_2:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6493
+      min_mireds: 154
+      max_mireds: 554
+      effect_list:
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 284.941
+      - 100
+      rgb_color:
+      - 190
+      - 0
+      - 255
+      xy_color:
+      - 0.299
+      - 0.115
+      color_temp_kelvin: 6451
+      color_temp: 155
+      attribution: Data provided by Wyze
+      state: 'on'
+      available: true
+      device_model: WLPA19C
+      mac: 7C78B21C5B12
+      IP: 192.168.68.53
+      RSSI: '-26'
+      SSID: GetYourOwnWiFi
+      Sun Match: false
+      local_control: true
+      mode: White
+      icon: phu:bulbs-classic
+      friendly_name: Office
+      supported_features: 23
+    light.patio_door_lamp:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 9000
+      color_temp: 111
+      hs_color:
+      - 222.461
+      - 17.81
+      rgb_color:
+      - 209
+      - 222
+      - 255
+      xy_color:
+      - 0.285
+      - 0.292
+      icon: bha:floor-lamp
+      friendly_name: Patio Door Lamp
+      supported_features: 36
+      state: 'on'
+    light.tv_strip:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 9009
+      color_temp: 111
+      hs_color:
+      - 222.449
+      - 17.843
+      rgb_color:
+      - 209
+      - 222
+      - 255
+      xy_color:
+      - 0.285
+      - 0.292
+      icon: hue:lightstrip-tv
+      friendly_name: TV Strip
+      supported_features: 36
+      state: 'on'
+  icon: phu:apple-ipad-pro
+  metadata: {}
+- id: '1668654039503'
+  name: Night time planning
+  entities:
+    light.living_room:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 232
+      hs_color:
+      - 179.999
+      - 100
+      rgb_color:
+      - 0
+      - 255
+      - 254
+      xy_color:
+      - 0.151
+      - 0.344
+      entity_id:
+      - light.tv_strip
+      - light.couch_lamp
+      - light.patio_door_lamp
+      icon: phu:livingroom-group
+      friendly_name: Living Room
+      supported_features: 36
+      state: 'on'
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 284.941
+      - 100
+      rgb_color:
+      - 190
+      - 0
+      - 255
+      xy_color:
+      - 0.299
+      - 0.115
+      rate_limit_total: 100
+      rate_limit_remaining: -9224
+      rate_limit_reset_seconds: -1668654037.07
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      state: 'on'
+    light.office_shelf_2:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6493
+      min_mireds: 154
+      max_mireds: 554
+      effect_list:
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 315.059
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 190
+      xy_color:
+      - 0.478
+      - 0.197
+      color_temp_kelvin: 6451
+      color_temp: 155
+      attribution: Data provided by Wyze
+      state: 'on'
+      available: true
+      device_model: WLPA19C
+      mac: 7C78B21C5B12
+      IP: 192.168.68.53
+      RSSI: '-26'
+      SSID: GetYourOwnWiFi
+      Sun Match: false
+      local_control: true
+      mode: Color
+      icon: phu:bulbs-classic
+      friendly_name: Office
+      supported_features: 23
+  icon: phu:mini
+  metadata:
+    light.living_room:
+      entity_only: true
+- id: '1668654138479'
+  name: Night time content
+  entities:
+    light.living_room:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 255
+      hs_color:
+      - 28.077
+      - 60.925
+      rgb_color:
+      - 255
+      - 172
+      - 99
+      xy_color:
+      - 0.51
+      - 0.386
+      entity_id:
+      - light.tv_strip
+      - light.couch_lamp
+      - light.patio_door_lamp
+      icon: phu:livingroom-group
+      friendly_name: Living Room
+      supported_features: 36
+      color_temp_kelvin: 2857
+      color_temp: 350
+      state: 'on'
+    light.office_lights:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 554
+      effect_list:
+      - None
+      - candle
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      - fire
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      - xy
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 27.481
+      - 51.373
+      rgb_color:
+      - 255
+      - 183
+      - 123
+      xy_color:
+      - 0.478
+      - 0.379
+      entity_id:
+      - light.desk_strip
+      - light.monitor_bars
+      - light.office_shelf_1
+      - light.office_shelf_2
+      - light.office_main
+      - light.desk_lamp
+      icon: mdi:lightbulb-group
+      friendly_name: Office lights
+      supported_features: 44
+      state: 'on'
+  icon: phu:mini
+  metadata:
+    light.living_room:
+      entity_only: true
+    light.office_lights:
+      entity_only: true
+- id: '1668654631986'
+  name: Suburban Smarts
+  entities:
+    light.office_lights:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 554
+      effect_list:
+      - None
+      - candle
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      - fire
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      - xy
+      entity_id:
+      - light.desk_strip
+      - light.monitor_bars
+      - light.office_shelf_1
+      - light.office_shelf_2
+      - light.office_main
+      - light.desk_lamp
+      icon: mdi:lightbulb-group
+      friendly_name: Office lights
+      supported_features: 44
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 0
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      xy_color:
+      - 0.701
+      - 0.299
+      state: 'on'
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      rate_limit_total: 100
+      rate_limit_remaining: -84
+      rate_limit_reset_seconds: -1669326347.04
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 0
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      xy_color:
+      - 0.701
+      - 0.299
+      state: 'on'
+    light.living_room_lights_2:
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      icon: phu:livingroom-group
+      friendly_name: Living room lights
+      supported_features: 36
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      entity_id:
+      - light.tv_lamp
+      - light.window_lamp
+      - light.tv_strip
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 360
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      xy_color:
+      - 0.701
+      - 0.299
+      state: 'on'
+  icon: si:ghost
+  metadata:
+    light.office_lights:
+      entity_only: true
+    light.living_room_lights_2:
+      entity_only: true
+- id: '1668654795170'
+  name: To The Crazy Ones
+  entities:
+    light.office_shelf_2:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6493
+      min_mireds: 154
+      max_mireds: 554
+      effect_list:
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      attribution: Data provided by Wyze
+      state: 'on'
+      available: true
+      device_model: WLPA19C
+      mac: 7C78B21C5B12
+      IP: 192.168.68.95
+      RSSI: '-23'
+      SSID: GetYourOwnWiFi
+      Sun Match: false
+      local_control: true
+      mode: Color
+      icon: phu:bulbs-classic
+      friendly_name: Office
+      supported_features: 23
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 180
+      - 100
+      rgb_color:
+      - 0
+      - 255
+      - 255
+      xy_color:
+      - 0.151
+      - 0.343
+      color_temp_kelvin: 3484
+      color_temp: 287
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      rate_limit_total: 100
+      rate_limit_remaining: -92
+      rate_limit_reset_seconds: -1669326397.02
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 269.647
+      - 100
+      rgb_color:
+      - 125
+      - 0
+      - 255
+      xy_color:
+      - 0.215
+      - 0.076
+      state: 'on'
+    light.tv_strip:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      icon: hue:lightstrip-tv
+      friendly_name: TV Strip
+      supported_features: 36
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 315
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 191
+      xy_color:
+      - 0.477
+      - 0.196
+      state: 'on'
+    light.window_lamp:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 400
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      friendly_name: Window lamp
+      supported_features: 32
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 180
+      - 100
+      rgb_color:
+      - 0
+      - 255
+      - 255
+      xy_color:
+      - 0.151
+      - 0.343
+      state: 'on'
+    light.tv_lamp:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 400
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      friendly_name: TV lamp
+      supported_features: 32
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 285
+      - 100
+      rgb_color:
+      - 191
+      - 0
+      - 255
+      xy_color:
+      - 0.301
+      - 0.116
+      state: 'on'
+  icon: si:apple
+  metadata: {}
+- id: '1668654935104'
+  name: Tiffany R. White Blog
+  entities:
+    light.office_shelf_2:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6493
+      min_mireds: 154
+      max_mireds: 554
+      effect_list:
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      attribution: Data provided by Wyze
+      state: 'on'
+      available: true
+      device_model: WLPA19C
+      mac: 7C78B21C5B12
+      IP: 192.168.68.95
+      RSSI: '-23'
+      SSID: GetYourOwnWiFi
+      Sun Match: false
+      local_control: true
+      mode: Color
+      icon: phu:bulbs-classic
+      friendly_name: Office
+      supported_features: 23
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 210.137
+      - 85.882
+      rgb_color:
+      - 36
+      - 145
+      - 255
+      xy_color:
+      - 0.148
+      - 0.165
+      color_temp_kelvin: 3484
+      color_temp: 287
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      rate_limit_total: 100
+      rate_limit_remaining: -101
+      rate_limit_reset_seconds: -1669326447.83
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 315.294
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 190
+      xy_color:
+      - 0.478
+      - 0.197
+      state: 'on'
+    light.tv_strip:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      icon: hue:lightstrip-tv
+      friendly_name: TV Strip
+      supported_features: 36
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 285
+      - 100
+      rgb_color:
+      - 191
+      - 0
+      - 255
+      xy_color:
+      - 0.301
+      - 0.116
+      state: 'on'
+    light.tv_lamp:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 400
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      friendly_name: TV lamp
+      supported_features: 32
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 180
+      - 100
+      rgb_color:
+      - 0
+      - 255
+      - 255
+      xy_color:
+      - 0.151
+      - 0.343
+      state: 'on'
+    light.window_lamp:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 400
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      friendly_name: Window lamp
+      supported_features: 32
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 285
+      - 71
+      rgb_color:
+      - 209
+      - 73
+      - 255
+      xy_color:
+      - 0.32
+      - 0.147
+      state: 'on'
+  icon: si:substack
+  metadata: {}
+- id: '1668655177056'
+  name: Warm the living room lights
+  entities:
+    light.office_lights:
+      supported_color_modes:
+      - color_temp
+      - hs
+      - xy
+      icon: mdi:lightbulb-group
+      friendly_name: Office lights
+      supported_features: 44
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 554
+      effect_list:
+      - None
+      - candle
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      - fire
+      - sun match
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 27.541
+      - 47.843
+      rgb_color:
+      - 255
+      - 189
+      - 133
+      xy_color:
+      - 0.464
+      - 0.377
+      entity_id:
+      - light.desk_strip
+      - light.monitor_bars
+      - light.office_shelf_1
+      - light.office_shelf_2
+      - light.office_main
+      - light.desk_lamp
+      state: 'on'
+    light.living_room_lights_2:
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      icon: phu:livingroom-group
+      friendly_name: Living room lights
+      supported_features: 36
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      color_mode: color_temp
+      brightness: 255
+      hs_color:
+      - 28.874
+      - 72.522
+      rgb_color:
+      - 255
+      - 159
+      - 70
+      xy_color:
+      - 0.546
+      - 0.389
+      entity_id:
+      - light.tv_lamp
+      - light.window_lamp
+      - light.tv_strip
+      color_temp_kelvin: 2500
+      color_temp: 400
+      state: 'on'
+  icon: phu:dimmer-switch
+  metadata:
+    light.office_lights:
+      entity_only: true
+    light.living_room_lights_2:
+      entity_only: true
+- id: '1668655357617'
+  name: Warm the office lights
+  entities:
+    light.office_lights:
+      supported_color_modes:
+      - color_temp
+      - hs
+      - xy
+      icon: mdi:lightbulb-group
+      friendly_name: Office lights
+      supported_features: 44
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 554
+      effect_list:
+      - None
+      - candle
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      - fire
+      - sun match
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 27.731
+      - 46.667
+      rgb_color:
+      - 255
+      - 190
+      - 135
+      xy_color:
+      - 0.461
+      - 0.376
+      entity_id:
+      - light.desk_strip
+      - light.monitor_bars
+      - light.office_shelf_1
+      - light.office_shelf_2
+      - light.office_main
+      - light.desk_lamp
+      state: 'on'
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      rate_limit_total: 100
+      rate_limit_remaining: -44
+      rate_limit_reset_seconds: -1669329134
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      color_temp_kelvin: 2739
+      color_temp: 365
+      state: 'on'
+  icon: phu:dimmer-switch
+  metadata:
+    light.office_lights:
+      entity_only: true
+- id: '1668655648000'
+  name: Office lights on
+  entities:
+    light.office_lights:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 554
+      effect_list:
+      - None
+      - candle
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      - fire
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      - xy
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 27
+      - 39.216
+      rgb_color:
+      - 255
+      - 199
+      - 154
+      xy_color:
+      - 0.436
+      - 0.369
+      entity_id:
+      - light.desk_strip
+      - light.monitor_bars
+      - light.office_shelf_1
+      - light.office_shelf_2
+      - light.office_main
+      - light.desk_lamp
+      icon: mdi:lightbulb-group
+      friendly_name: Office lights
+      supported_features: 44
+      state: 'on'
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      rate_limit_total: 100
+      rate_limit_remaining: -9415
+      rate_limit_reset_seconds: -1668655643.52
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      color_temp_kelvin: 4166
+      color_temp: 240
+      state: 'on'
+  icon: hue:dimmer-switch
+  metadata:
+    light.office_lights:
+      entity_only: true
+- id: '1669190293444'
+  name: Someone is trying to get in
+  entities:
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      rate_limit_total: 100
+      rate_limit_remaining: -10042
+      rate_limit_reset_seconds: -1669190328.09
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 0
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      xy_color:
+      - 0.701
+      - 0.299
+      state: 'on'
+    light.tv_lamp:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 400
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 360
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      xy_color:
+      - 0.701
+      - 0.299
+      friendly_name: TV lamp
+      supported_features: 32
+      state: 'on'
+    light.window_lamp:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 400
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      friendly_name: Window lamp
+      supported_features: 32
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 360
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      xy_color:
+      - 0.701
+      - 0.299
+      state: 'on'
+  metadata: {}
+  icon: phu:ring-alarm
+- id: '1669190493701'
+  name: Porch light flicker
+  entities:
+    light.porch_light:
+      effect_list:
+      - None
+      - candle
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 68
+      effect: candle
+      mode: normal
+      dynamics: none
+      friendly_name: Porch light
+      supported_features: 44
+      state: 'on'
+  icon: phu:wall-econic-lantern
+  metadata:
+    light.porch_light:
+      entity_only: true
+- id: '1669329303574'
+  name: All lights in living room
+  entities:
+    light.office_lights_2:
+      supported_color_modes:
+      - color_temp
+      - hs
+      - xy
+      icon: mdi:lightbulb-group
+      friendly_name: Office Lights
+      supported_features: 44
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 554
+      effect_list:
+      - None
+      - candle
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      - fire
+      - sun match
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 19.267
+      - 49.935
+      rgb_color:
+      - 255
+      - 168
+      - 127
+      xy_color:
+      - 0.489
+      - 0.358
+      entity_id:
+      - light.office_lights_temp
+      - light.office_main
+      - light.desk_strip
+      state: 'on'
+    light.living_room_lights_2:
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      icon: phu:livingroom-group
+      friendly_name: Living room lights
+      supported_features: 36
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      color_mode: color_temp
+      brightness: 255
+      hs_color:
+      - 28.874
+      - 72.522
+      rgb_color:
+      - 255
+      - 159
+      - 70
+      xy_color:
+      - 0.546
+      - 0.389
+      entity_id:
+      - light.tv_lamp
+      - light.window_lamp
+      - light.tv_strip
+      color_temp_kelvin: 2500
+      color_temp: 400
+      state: 'on'
+  icon: phu:kitchen-group
+  metadata:
+    light.office_lights_2:
+      entity_only: true
+    light.living_room_lights_2:
+      entity_only: true
+- id: '1669359231310'
+  name: Temp Goodnight Lights
+  entities:
+    light.office_lights_2:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 554
+      effect_list:
+      - None
+      - candle
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      - fire
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      - xy
+      entity_id:
+      - light.office_lights_temp
+      - light.office_main
+      - light.desk_strip
+      icon: mdi:lightbulb-group
+      friendly_name: Office Lights
+      supported_features: 44
+      state: 'off'
+    light.living_room_lights_2:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      entity_id:
+      - light.tv_lamp
+      - light.window_lamp
+      - light.tv_strip
+      icon: phu:livingroom-group
+      friendly_name: Living room lights
+      supported_features: 36
+      state: 'off'
+  icon: bha:night-light
+  metadata:
+    light.office_lights_2:
+      entity_only: true
+    light.living_room_lights_2:
+      entity_only: true
+- id: '1669434151002'
+  name: MWII
+  entities:
+    light.living_room_lights_2:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 115
+      - 95
+      rgb_color:
+      - 32
+      - 255
+      - 12
+      xy_color:
+      - 0.18
+      - 0.737
+      effect: ''
+      entity_id:
+      - light.tv_lamp
+      - light.window_lamp
+      - light.tv_strip
+      icon: phu:livingroom-group
+      friendly_name: Living room lights
+      supported_features: 36
+      state: 'on'
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 120
+      - 100
+      rgb_color:
+      - 0
+      - 255
+      - 0
+      xy_color:
+      - 0.172
+      - 0.747
+      rate_limit_total: 100
+      rate_limit_remaining: -7888
+      rate_limit_reset_seconds: -1670565201.04
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      state: 'on'
+    light.office_shelf_2:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6493
+      min_mireds: 154
+      max_mireds: 554
+      effect_list:
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 127.115
+      - 99.606
+      rgb_color:
+      - 1
+      - 255
+      - 31
+      xy_color:
+      - 0.172
+      - 0.734
+      color_temp_kelvin: 4000
+      color_temp: 250
+      attribution: Data provided by Wyze
+      state: 'on'
+      available: true
+      device_model: WLPA19C
+      mac: 7C78B21C5B12
+      IP: 192.168.68.95
+      RSSI: '-41'
+      SSID: GetYourOwnWiFi
+      Sun Match: false
+      local_control: true
+      mode: Color
+      icon: phu:bulbs-classic
+      friendly_name: Office
+      supported_features: 23
+  icon: mdi:microsoft-xbox
+  metadata:
+    light.living_room_lights_2:
+      entity_only: true
+    light.bars:
+      entity_only: true
+    light.office_shelf_2:
+      entity_only: true
+- id: '1669848990768'
+  name: Living room switch
+  entities:
+    light.living_room_lights_2:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      entity_id:
+      - light.tv_lamp
+      - light.window_lamp
+      - light.tv_strip
+      icon: phu:livingroom-group
+      friendly_name: Living room lights
+      supported_features: 36
+      state: 'off'
+  metadata:
+    light.living_room_lights_2:
+      entity_only: true
+  icon: phu:ls-sultan-iris-group-v2
+- id: '1670565602597'
+  name: PS5 Night
+  entities:
+    light.office_shelf_2:
+      min_color_temp_kelvin: 1805
+      max_color_temp_kelvin: 6493
+      min_mireds: 154
+      max_mireds: 554
+      effect_list:
+      - sun match
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 279.294
+      - 100
+      rgb_color:
+      - 166
+      - 0
+      - 255
+      xy_color:
+      - 0.267
+      - 0.1
+      color_temp_kelvin: 4000
+      color_temp: 250
+      attribution: Data provided by Wyze
+      state: 'on'
+      available: true
+      device_model: WLPA19C
+      mac: 7C78B21C5B12
+      IP: 192.168.68.95
+      RSSI: '-36'
+      SSID: GetYourOwnWiFi
+      Sun Match: false
+      local_control: true
+      mode: Color
+      icon: phu:bulbs-classic
+      friendly_name: Office
+      supported_features: 23
+    light.bars:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 272.706
+      - 100
+      rgb_color:
+      - 139
+      - 0
+      - 255
+      xy_color:
+      - 0.232
+      - 0.084
+      rate_limit_total: 100
+      rate_limit_remaining: -7962
+      rate_limit_reset_seconds: -1670565888.35
+      rate_limit_reset: '1969-12-31T19:00:00'
+      rate_limit_on: 5
+      manufacturer: Govee
+      model: H6056
+      icon: phu:play-bar-v-two
+      friendly_name: Bars
+      supported_features: 19
+      state: 'on'
+    light.tv_strip:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 400
+      effect_list:
+      - Aurora
+      - Bubbling Cauldron
+      - Candy Cane
+      - Christmas
+      - Flicker
+      - Hanukkah
+      - Haunted Mansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Valentines
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 293
+      - 99
+      rgb_color:
+      - 225
+      - 2
+      - 255
+      xy_color:
+      - 0.347
+      - 0.137
+      effect: Horizon Forbidden West
+      icon: hue:lightstrip-tv
+      friendly_name: TV Strip
+      supported_features: 36
+      state: 'on'
+    light.tv_lamp:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 400
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 315
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 191
+      xy_color:
+      - 0.477
+      - 0.196
+      friendly_name: TV lamp
+      supported_features: 32
+      state: 'on'
+    light.window_lamp:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 400
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 255
+      hs_color:
+      - 285
+      - 100
+      rgb_color:
+      - 191
+      - 0
+      - 255
+      xy_color:
+      - 0.301
+      - 0.116
+      friendly_name: Window lamp
+      supported_features: 32
+      state: 'on'
+  icon: si:playstation5
+  metadata:
+    light.office_shelf_2:
+      entity_only: true
+    light.bars:
+      entity_only: true
+    light.tv_strip:
+      entity_only: true
+    light.tv_lamp:
+      entity_only: true
+    light.window_lamp:
+      entity_only: true
+- id: '1674891476601'
+  name: 'Fan Only '
+  entities:
+    switch.fan_3:
+      friendly_name: Fan
+      state: 'on'
+  icon: fas:fan
+  metadata: {}
+- id: '1674891522780'
+  name: Fan Off
+  entities:
+    switch.fan_3:
+      friendly_name: Fan
+      state: 'off'
+  icon: mdi:fan-off
+  metadata: {}

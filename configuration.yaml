@@ -1,0 +1,144 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+# Example configuration.yaml entry
+
+# recorder:
+#   db_url: mysql://homeassistant:password@core-mariadb/homeassistant?charset=utf8mb4
+
+
+zeroconf:
+# Text to speech
+tts:
+  - platform: google_translate
+    cache: true
+    cache_dir: /tmp/tts
+    time_memory: 300
+    #base_url: http://192.168.0.10:8123
+    service_name: google_say
+
+# YAML configs
+homeassistant:
+  packages: !include_dir_named packages
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+zone: !include zones.yaml
+sensor: !include_dir_merge_named  sensors
+switch: !include_dir_merge_named switches
+
+
+
+# sensors: !include sensors.yaml
+frontend:
+  themes: !include_dir_merge_named themes
+
+  extra_module_url:
+  - /local/community/custom-brand-icons/custom-brand-icons.js
+  - /hacsfiles/hass-bha-icons/hass-bha-icons.js
+
+
+#################################################################
+#                                                               #
+#                        SSL/Server Config                      #
+#                                                               #
+#################################################################
+
+
+
+http:
+  # server_port: 8123
+  # ssl_certificate: /ssl/fullchain.pem
+  # ssl_key: /ssl/privkey.pem
+  ip_ban_enabled: false
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+    - ::1
+  login_attempts_threshold: 5
+
+#################################################################
+#                                                               #
+#                        Groups                                 #
+#                                                               #
+#################################################################
+
+group: !include_dir_merge_named groups
+light: !include light_groups.yaml
+
+# Example configuration.yaml entry
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+  # "Project ID" in the Device Access Console (not Cloud Project ID!)
+  project_id: !secret nest_project_id
+  subscriber_id: !secret nest_subscriber_id
+
+# Sonos config
+# sonos:
+#   media_player:
+#     hosts:
+#       - 192.168.68.201
+
+# Nintendo Wishlist
+nintendo_wishlist:
+  country: US
+  wishlist:
+    - "STAR WARS™: Knights of the Old Republic™"
+    - "ASSASSIN’S CREED® THE EZIO COLLECTION"
+    - "The Elder Scrolls V: Skyrim"
+    - "Assassins Creed: The Rebel Collection"
+    - "The Legend of Zelda: Tears of the Kingdom"
+  scan_interval:
+    days: 0
+    hours: 0
+    minutes: 3
+    seconds: 30
+    milliseconds: 0
+
+# Prescence detection
+device_tracker:
+  - platform: iphonedetect
+    consider_home: 60
+    new_device_defaults:
+      track_new_devices: true
+    hosts:
+      rick: 192.168.68.84
+  - platform: bluetooth_le_tracker
+    consider_home: 60
+    new_device_defaults:
+      track_new_devices: true
+
+
+# camera:
+#   - platform: xiaomi_cloud_map_extractor
+#     name: 'Steve McClean'
+#     host: !secret xiaomi_vacuum_host_steve
+#     token: !secret xiaomi_vacuum_token_steve
+#     username: !secret xiaomi_cloud_username
+#     password: !secret xiaomi_cloud_password
+#     draw: ['all']
+#     attributes:
+#       - calibration_points
+#   - platform: xiaomi_cloud_map_extractor
+#     name: 'Mr. Robot'
+#     host: !secret xiaomi_vacuum_host_robot
+#     token: !secret xiaomi_vacuum_token_robot
+#     username: !secret xiaomi_cloud_username
+#     password: !secret xiaomi_cloud_password
+#     draw: ["all"]
+#     attributes:
+#       - calibration_points
+
+calendar:
+  - platform: todoist
+    token: !secret todoist_token
+
+# influxdb:
+#   host: [host]
+#   port: 8086
+#   database: homeassistant
+#   username: homeassistant
+#   password: !secret influxdb_password
+#   max_retries: 3
+#   default_measurement: state
