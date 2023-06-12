@@ -18,3 +18,4 @@ requirements.txt
 token_extractor.py
 
 .vscode/settings.json
+ps5-mqtt/credentials.json
