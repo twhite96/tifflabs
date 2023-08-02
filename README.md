@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/ss-docs-header.png" width="1200"/>
+  <img src="images/tifflabs.png" width="1200"/>
 </p>
 
 <h1 align="center">Tiff Labs <br />Smart Home Configuration</h1>
