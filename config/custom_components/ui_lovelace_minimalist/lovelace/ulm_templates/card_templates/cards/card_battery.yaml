@@ -3,9 +3,9 @@
 card_battery:
   template:
     - "icon_more_info_new"
-    - "ulm_actions_card"
     - "ulm_translation_engine"
   variables:
+    ulm_card_battery_name: "[[[ return entity.attributes.friendly_name ]]]"
     ulm_card_battery_attribute:
     ulm_card_battery_battery_state_entity_id:
     ulm_card_battery_charger_type_entity_id:
@@ -14,21 +14,33 @@ card_battery:
     ulm_card_battery_color_battery_level_danger: "var(--google-red)"
     ulm_card_battery_color_battery_level_warning: "var(--google-yellow)"
     ulm_card_battery_color_battery_level_ok: "var(--google-green)"
+    ulm_outlet_power_enable_popup: false
   triggers_update: "all"
   custom_fields:
     item1:
       card:
         type: "custom:button-card"
-        template:
-          - "icon_more_info"
         custom_fields:
           item1:
             card:
               type: "custom:button-card"
-              variables:
-                ulm_input_select_option: "[[[ return variables.ulm_input_select_option; ]]]"
-                ulm_input_select: "[[[ return variables.ulm_input_select; ]]]"
               entity: "[[[ return entity.entity_id ]]]"
+              variables: >
+                [[[
+                  let vars = variables;
+
+                  if(variables.ulm_outlet_power_enable_popup) {
+                    vars.ulm_custom_popup = {
+                      'template': 'popup_power_outlet_stats',
+                      'popup_variables': {
+                        'ulm_popup_power_outlet_sensor1': variables.ulm_popup_power_outlet_sensor1,
+                        'ulm_popup_power_outlet_sensor2': variables.ulm_popup_power_outlet_sensor2,
+                        'ulm_popup_power_outlet_graph_sensor': variables.ulm_popup_power_outlet_graph_sensor
+                      }
+                    };
+                  }
+                  return vars;
+                ]]]
               icon: |
                 [[[
                   // Get battery level
@@ -99,10 +111,24 @@ card_battery:
           item2:
             card:
               type: "custom:button-card"
-              variables:
-                ulm_input_select_option: "[[[ return variables.ulm_input_select_option; ]]]"
-                ulm_input_select: "[[[ return variables.ulm_input_select; ]]]"
               entity: "[[[ return entity.entity_id ]]]"
+              name: "[[[ return variables.ulm_card_battery_name ]]]"
+              variables: >
+                [[[
+                  let vars = variables;
+
+                  if(variables.ulm_outlet_power_enable_popup) {
+                    vars.ulm_custom_popup = {
+                      'template': 'popup_power_outlet_stats',
+                      'popup_variables': {
+                        'ulm_popup_power_outlet_sensor1': variables.ulm_popup_power_outlet_sensor1,
+                        'ulm_popup_power_outlet_sensor2': variables.ulm_popup_power_outlet_sensor2,
+                        'ulm_popup_power_outlet_graph_sensor': variables.ulm_popup_power_outlet_graph_sensor
+                      }
+                    };
+                  }
+                  return vars;
+                ]]]
               label: |
                 [[[
                   const battery_level = variables.ulm_card_battery_attribute !== null
@@ -113,8 +139,4 @@ card_battery:
                   { return variables.ulm_translation_state; }
                   else
                   { return battery_level + "%"; }
-                ]]]
-              name: |
-                [[[
-                  return states[entity.entity_id].attributes.friendly_name;
                 ]]]

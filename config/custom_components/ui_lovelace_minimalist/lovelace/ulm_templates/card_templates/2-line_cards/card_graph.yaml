@@ -1,39 +1,29 @@
 ---
 ### Card Graph ###
 card_graph:
+  template:
+    - "extended_card"
   variables:
     ulm_card_graph_color: "var(--info-color)"
-    ulm_card_graph_name: "n/a"
+    ulm_card_graph_name: "[[[ return entity.attributes.friendly_name; ]]]"
+    ulm_card_graph_icon: "[[[ return entity.attributes.icon ]]]"
     ulm_card_graph_color2: "var(--info-color)"
-    ulm_card_graph_name2: "n/a"
     ulm_card_graph_entity2: ""
     ulm_card_graph_hours: 24
     ulm_card_graph_type: "fill"
     ulm_card_graph_points: "0.5"
+    ulm_card_graph_group_by: "interval"
   triggers_update: "all"
-  styles:
-    grid:
-      - grid-template-areas: "'item1' 'item2'"
-      - grid-template-columns: "1fr"
-      - grid-template-rows: "min-content  min-content"
-    card:
-      - border-radius: "var(--border-radius)"
-      - box-shadow: "var(--box-shadow)"
-      - padding: "0px"
   custom_fields:
     item1:
       card:
         type: "custom:button-card"
         template:
-          - "icon_info"
           - "card_generic"
-        styles:
-          card:
-            - box-shadow: "none"
-            - border-radius: "var(--border-radius) var(--border-radius) 0px 0px"
-            - padding: "12px"
-        entity: "[[[ return variables.ulm_card_graph_entity ]]]"
-        name: "[[[ return variables.ulm_card_graph_name ]]]"
+        variables:
+          ulm_card_generic_icon: "[[[ return variables.ulm_card_graph_icon; ]]]"
+          ulm_card_generic_name: "[[[ return variables.ulm_card_graph_name; ]]]"
+
     item2:
       card:
         type: "custom:mini-graph-card"
@@ -62,6 +52,7 @@ card_graph:
           fill: "[[[ return variables.ulm_card_graph_type=='fill'?true:false; ]]]"
         hours_to_show: "[[[ return variables.ulm_card_graph_hours; ]]]"
         points_per_hour: "[[[ return variables.ulm_card_graph_points; ]]]"
+        group_by: "[[[ return variables.ulm_card_graph_group_by; ]]]"
         style: |
           ha-card {
             box-shadow: none;

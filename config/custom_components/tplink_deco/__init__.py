@@ -29,6 +29,7 @@ from homeassistant.helpers import entity_registry
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import TplinkDecoApi
+from .const import CONFIG_VERIFY_SSL
 from .const import COORDINATOR_CLIENTS_KEY
 from .const import COORDINATOR_DECOS_KEY
 from .const import DEFAULT_CONSIDER_HOME
@@ -57,9 +58,10 @@ async def async_create_and_refresh_coordinators(
     host = config_data.get(CONF_HOST)
     username = config_data.get(CONF_USERNAME)
     password = config_data.get(CONF_PASSWORD)
+    verify_ssl = config_data.get(CONFIG_VERIFY_SSL)
     session = async_get_clientsession(hass)
 
-    api = TplinkDecoApi(host, username, password, session)
+    api = TplinkDecoApi(host, username, password, verify_ssl, session)
     deco_coordinator = TplinkDecoUpdateCoordinator(
         hass, api, update_interval, deco_data
     )
@@ -199,7 +201,7 @@ async def async_reload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
 
 async def update_listener(hass: HomeAssistant, config_entry: ConfigEntry) -> None:
     """Update options."""
-    if config_entry.data == config_entry.options:
+    if not config_entry.options or config_entry.data == config_entry.options:
         _LOGGER.debug(
             "update_listener: No changes in options for %s", config_entry.entry_id
         )
@@ -210,6 +212,26 @@ async def update_listener(hass: HomeAssistant, config_entry: ConfigEntry) -> Non
     )
     hass.config_entries.async_update_entry(
         entry=config_entry,
-        data=config_entry.options.copy(),
+        title=config_entry.options.get(CONF_HOST),
+        data=config_entry.options,
+        options={},
     )
     await async_reload_entry(hass, config_entry)
+
+
+async def async_migrate_entry(hass, config_entry: ConfigEntry):
+    """Migrate old entry."""
+    _LOGGER.debug("Migrating from version %s", config_entry.version)
+
+    if config_entry.version == 1:
+
+        new = {**config_entry.data}
+        # TODO: modify Config Entry data
+
+        config_entry.version = 2
+        new[CONFIG_VERIFY_SSL] = True
+        hass.config_entries.async_update_entry(config_entry, data=new)
+
+    _LOGGER.info("Migration to version %s successful", config_entry.version)
+
+    return True

@@ -11,24 +11,28 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_send, async_dispatcher_connect
-from wyzeapy import CameraService, SwitchService, Wyzeapy
+from wyzeapy import CameraService, SwitchService, WallSwitchService, Wyzeapy, BulbService
 from wyzeapy.services.camera_service import Camera
 from wyzeapy.services.switch_service import Switch
-from wyzeapy.types import Device, Event
+from wyzeapy.services.bulb_service import Bulb
+from wyzeapy.types import Device, Event, DeviceTypes
 
-from .const import CAMERA_UPDATED
+from .const import CAMERA_UPDATED, LIGHT_UPDATED
 from .const import DOMAIN, CONF_CLIENT, WYZE_CAMERA_EVENT, WYZE_NOTIFICATION_TOGGLE
 from .token_manager import token_exception_handler
 
 _LOGGER = logging.getLogger(__name__)
 ATTRIBUTION = "Data provided by Wyze"
 SCAN_INTERVAL = timedelta(seconds=30)
-
+MOTION_SWITCH_UNSUPPORTED = ["GW_BE1"]
 
 # noinspection DuplicatedCode
 @token_exception_handler
-async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry,
-                            async_add_entities: Callable[[List[Any], bool], None]) -> None:
+async def async_setup_entry(
+    hass: HomeAssistant,
+    config_entry: ConfigEntry,
+    async_add_entities: Callable[[List[Any], bool], None],
+) -> None:
     """
     This function sets up the config entry
 
@@ -41,17 +45,33 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry,
     _LOGGER.debug("""Creating new WyzeApi light component""")
     client: Wyzeapy = hass.data[DOMAIN][config_entry.entry_id][CONF_CLIENT]
     switch_service = await client.switch_service
+    wall_switch_service = await client.wall_switch_service
     camera_service = await client.camera_service
+    bulb_service = await client.bulb_service
 
-    switches: List[SwitchEntity] = [WyzeSwitch(switch_service, switch) for switch in
-                                    await switch_service.get_switches()]
+    switches: List[SwitchEntity] = [
+        WyzeSwitch(switch_service, switch)
+        for switch in await switch_service.get_switches()
+    ]
+
+    switches.extend(
+        WyzeSwitch(wall_switch_service, switch)
+        for switch in await wall_switch_service.get_switches()
+    )
 
     camera_switches = await camera_service.get_cameras()
     for switch in camera_switches:
         switches.extend([WyzeSwitch(camera_service, switch)])
         switches.extend([WyzeCameraNotificationSwitch(camera_service, switch)])
+        if switch.product_model not in MOTION_SWITCH_UNSUPPORTED:
+            switches.extend([WyzeCameraMotionSwitch(camera_service, switch)])
 
     switches.append(WyzeNotifications(client))
+
+    bulb_switches = await bulb_service.get_bulbs()
+    for bulb in bulb_switches:
+        if bulb.type is DeviceTypes.LIGHTSTRIP:
+            switches.extend([WzyeLightstripSwitch(bulb_service, bulb)])
 
     async_add_entities(switches, True)
 
@@ -365,5 +385,155 @@ class WyzeCameraNotificationSwitch(SwitchEntity):
                 self.hass,
                 f"{CAMERA_UPDATED}-{self._device.mac}",
                 self.handle_camera_update,
+            )
+        )
+
+
+class WyzeCameraMotionSwitch(SwitchEntity):
+    """Representation of a Wyze Camera Motion Detection Switch."""
+
+    _available: bool
+
+    def __init__(self, service: CameraService, device: Device) -> None:
+        """Initialize a Wyze Notification Switch."""
+        self._service = service
+        self._device = Camera(device.raw_dict)
+
+    @property
+    def device_info(self):
+        """Return the device info."""
+        return {
+            "identifiers": {(DOMAIN, self._device.mac)},
+            "name": self._device.nickname,
+            "manufacturer": "WyzeLabs",
+            "model": self._device.product_model,
+        }
+
+    @property
+    def should_poll(self) -> bool:
+        """No polling needed."""
+        return False
+
+    async def async_turn_on(self, **kwargs: Any) -> None:
+        """Turn on the switch."""
+        await self._service.turn_on_motion_detection(self._device)
+
+        self._device.motion = True
+        self.async_schedule_update_ha_state()
+
+    async def async_turn_off(self, **kwargs: Any) -> None:
+        """Turn off the switch."""
+        await self._service.turn_off_motion_detection(self._device)
+
+        self._device.motion = False
+        self.async_schedule_update_ha_state()
+
+    @property
+    def name(self):
+        """Return the display name of this switch."""
+        return f"{self._device.nickname} Motion Detection"
+
+    @property
+    def available(self):
+        """Return the connection status of this switch."""
+        return self._device.available
+
+    @property
+    def is_on(self):
+        """Return true if switch is on."""
+        return self._device.motion
+
+    @property
+    def unique_id(self):
+        """Add a unique ID to the switch."""
+        return "{}-motion_switch".format(self._device.mac)
+
+    @callback
+    def handle_camera_update(self, camera: Camera) -> None:
+        """Update the switch whenever there is an update."""
+        self._device = camera
+        self.async_write_ha_state()
+
+    async def async_added_to_hass(self) -> None:
+        """Listen for camera updates."""
+        self.async_on_remove(
+            async_dispatcher_connect(
+                self.hass,
+                f"{CAMERA_UPDATED}-{self._device.mac}",
+                self.handle_camera_update,
+            )
+        )
+
+
+class WzyeLightstripSwitch(SwitchEntity):
+    """Music Mode Switch for Wyze Light Strip."""
+
+    def __init__(self, service: BulbService, device: Device) -> None:
+        """Initialize a Wyze Music Mode Switch."""
+        self._service = service
+        self._device = Bulb(device.raw_dict)
+
+    @property
+    def device_info(self):
+        """Return the device info."""
+        return {
+            "identifiers": {(DOMAIN, self._device.mac)},
+            "name": self._device.nickname,
+            "manufacturer": "WyzeLabs",
+            "model": self._device.product_model,
+        }
+
+    @property
+    def should_poll(self) -> bool:
+        """No polling needed."""
+        return False
+
+    async def async_turn_on(self, **kwargs: Any) -> None:
+        """Turn on the switch."""
+        await self._service.music_mode_on(self._device)
+
+        self._device.music_mode = True
+        self.async_schedule_update_ha_state()
+
+    async def async_turn_off(self, **kwargs: Any) -> None:
+        """Turn off the switch."""
+        await self._service.music_mode_off(self._device)
+
+        self._device.music_mode = False
+        self.async_schedule_update_ha_state()
+
+    @property
+    def name(self):
+        """Return the display name of this switch."""
+        return f"{self._device.nickname} Music Mode for Effects"
+
+    @property
+    def available(self):
+        """Return the connection status of this switch."""
+        return self._device.available
+
+    @property
+    def is_on(self):
+        """Return true if switch is on."""
+        return self._device.music_mode
+
+    @property
+    def unique_id(self):
+        """Add a unique ID to the switch."""
+        return "{}-music_mode".format(self._device.mac)
+
+    @callback
+    def handle_light_update(self, bulb: Bulb) -> None:
+        """Update the switch whenever there is an update."""
+        self._device = bulb
+        self.async_write_ha_state()
+
+    async def async_added_to_hass(self) -> None:
+        """Listen for light updates."""
+        self.async_on_remove(
+            async_dispatcher_connect(
+                self.hass,
+                f"{LIGHT_UPDATED}-{self._device.mac}",
+                self.handle_light_update,
             )
         )

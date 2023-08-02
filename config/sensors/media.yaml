@@ -8,3 +8,8 @@
   sp_dc: !secret sp_dc
   sp_key: !secret sp_key
   country: US #optional, added in 3.6.24
+
+- platform: sonos
+  media_player:
+    hosts:
+      - 192.168.68.201

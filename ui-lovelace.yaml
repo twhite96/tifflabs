@@ -1,0 +1,255 @@
+title: Suburban Smarts
+
+lovelace:
+  resources:
+    - url: /hacsfiles/github-flexi-card/github-flexi-card.js
+      type: module
+    - url: /local/purifier-card.js
+      type: module
+    - url: /local/mini-graph-card-bundle.js?v=0.10.0
+      type: module
+    - url: /hacsfiles/surveillance-card.js?v=0
+      type: module
+    - url: /local/custom-lovelace/nintendo-wishlist-card.js
+      type: js
+    - url: /local/custom-lovelace/nintendo-wishlist-card.js
+      type: js
+    - url: /local/custom-lovelace/nintendo-wishlist-card.js
+      type: js
+    - url: /local/circle-sensor-card.js?v=0
+      type: module
+    - type: js
+      url: /local/community/custom-brand-icons/custom-brand-icons.js
+
+
+## Custom cards  
+views:
+  - theme: Light Soft UI Red
+    title: Stats
+    path: stats
+    icon: far:chart-bar
+    badges: []
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.dwains_dashboard_latest_version
+              - entity: update.home_assistant_core_update
+              - entity: update.home_assistant_operating_system_update
+              - entity: update.home_assistant_supervisor_update
+              - entity: sensor.mac_mini_last_update_trigger
+              - entity: update.unifi_network_application_update
+            title: Updates
+            state_color: true
+      - hours_to_show: 24
+        graph: line
+        type: sensor
+        detail: 1
+        entity: sensor.tiffdev_battery_level_2
+        icon: phu:apple-iphone
+      - hours_to_show: 24
+        graph: line
+        type: sensor
+        detail: 1
+        entity: sensor.woz_battery_level
+        icon: phu:apple-ipad-pro
+      - type: logbook
+        entities:
+          - automation.evening_patio_light_on
+          - automation.patio_light_off_in_the_morning
+          - binary_sensor.harrisburg_alarm_tamper
+          - binary_sensor.front_door_tamper_2
+        title: Logs
+      - show_name: true
+        show_icon: true
+        show_state: true
+        type: glance
+        entities:
+          - entity: person.rick
+          - entity: person.t_home
+          - entity: person.uncle_jose
+        title: Persons
+      - type: entities
+        entities:
+          - entity: sensor.tiffdev_bssid
+          - entity: sensor.tiffdev_ssid
+          - entity: sensor.woz_bssid
+          - entity: sensor.woz_ssid
+          - entity: sensor.mac_mini_bssid
+          - entity: sensor.mac_mini_ssid
+        title: SSID Connections
+        state_color: false
+        show_header_toggle: true
+      - hours_to_show: 23
+        graph: line
+        type: sensor
+        entity: sensor.mac_mini_storage
+        detail: 2
+      - type: entities
+        entities:
+          - entity: binary_sensor.mac_mini_camera_in_use
+          - entity: binary_sensor.mac_mini_microphone_in_use
+          - entity: sensor.mac_mini_active_camera
+          - entity: sensor.mac_mini_displays
+          - entity: sensor.mac_mini_primary_display_id
+          - entity: sensor.mac_mini_active_microphone
+          - entity: sensor.mac_mini_connection_type
+          - entity: binary_sensor.mac_mini_active
+        title: Mini Stats
+        state_color: true
+      - hours_to_show: 24
+        graph: line
+        type: sensor
+        detail: 1
+        entity: sensor.woz_storage
+      - hours_to_show: 24
+        graph: line
+        type: sensor
+        detail: 2
+        entity: sensor.tiffdev_storage_2
+      - chart_type: line
+        period: hour
+        days_to_show: 30
+        type: statistics-graph
+        entities:
+          - >-
+            sensor.netatmo_tiffany_s_place_weather_station_outdoor_module_temperature
+        title: Weather Station Temp
+        stat_types:
+          - min
+          - max
+      - type: entities
+        entities:
+          - entity: sensor.twhite96_suburbansmarts_forks
+          - entity: sensor.twhite96_suburbansmarts_discussions
+          - entity: sensor.twhite96_suburbansmarts_issues
+          - entity: sensor.twhite96_suburbansmarts_stars
+        state_color: true
+        show_header_toggle: true
+        title: Suburban Smarts Stats
+      - type: custom:github-flexi-card
+      - chart_type: line
+        period: hour
+        days_to_show: 30
+        type: statistics-graph
+        entities:
+          - sensor.netatmo_tiffany_s_place_weather_station_temperature
+        stat_types:
+          - min
+          - max
+        title: Indoor Temp
+      - type: custom:uptime-card
+        entity: switch.ss_docs_active
+        title_adaptive_color: true
+        status_adaptive_color: true
+        icon_adaptive_color: true
+        tooltip_adaptive_color: true
+        bar:
+          height: 31
+          spacing: 5
+          amount: 19
+        init: {}
+        color:
+          ko: '#ff0000'
+          half: '#ffa500'
+          none: '#48566a'
+        alias: {}
+        tooltip: {}
+        tap_action: {}
+        blink:
+          speed: 1
+        clip: {}
+      - hours_to_show: 24
+        graph: line
+        type: sensor
+        entity: sensor.speedtest_download
+        detail: 1
+        theme: Light Soft UI Red
+      - hours_to_show: 24
+        graph: line
+        type: sensor
+        entity: sensor.speedtest_upload
+        detail: 1
+        theme: Light Soft UI Red
+      - hours_to_show: 24
+        graph: line
+        type: sensor
+        entity: sensor.speedtest_ping
+        detail: 1
+        theme: Light Soft UI Red
+      - hours_to_show: 24
+        graph: line
+        type: sensor
+        entity: sensor.x55_wan_status
+        detail: 2
+        name: WAN Status
+        icon: phu:google-wifi-router
+      - hours_to_show: 24
+        graph: line
+        type: sensor
+        detail: 2
+        entity: sensor.x55_kib_s_sent
+        name: Packets Sent
+        icon: si:packer
+        theme: Mushroom
+      - type: entity
+        entity: sensor.local_ip
+        name: Local IP
+        icon: phu:apple-iphone
+        state_color: true
+      - hours_to_show: 24
+        graph: line
+        type: sensor
+        detail: 2
+        entity: sensor.x55_external_ip
+        name: External IP
+        icon: si:serverfault
+      - type: custom:uptime-card
+        icon_adaptive_color: true
+        status_adaptive_color: true
+        bar: {}
+        tap_action: {}
+        blink:
+          speed: 3
+      # - type: custom:upcoming-media-card
+      #   entity: sensor.plex_recently_added
+      #   title: Recently Added
+
+# Purifier card
+type: custom:purifier-card
+entity: fan.living_room_purifier
+stats:
+  - attribute: sensor.living_room_purifier_filter_life_remaining
+    unit: '%'
+    subtitle: Filter Remaining
+  - attribute: motor_speed
+    unit: RPM
+    subtitle: Motor Speed
+  - entity_id: sensor.purifier_filter_life
+    value_template: '{{ (value | float(0) / 3600) | round(1) }}'
+    unit: hours
+    subtitle: Filter Life
+shortcuts:
+  - name: Silent
+    icon: mdi:weather-night
+    preset_mode: Silent
+  - name: 25%
+    icon: mdi:circle-slice-2
+    percentage: 25
+  - name: 50%
+    icon: mdi:circle-slice-4
+    percentage: 50
+  - name: 75%
+    icon: mdi:circle-slice-6
+    percentage: 75
+  - name: 100%
+    icon: mdi:circle-slice-8
+    percentage: 100
+  - name: Auto
+    icon: mdi:brightness-auto
+    preset_mode: Auto
+show_name: true
+show_state: true
+show_toolbar: true
+compact_view: false

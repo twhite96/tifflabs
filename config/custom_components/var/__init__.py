@@ -24,7 +24,11 @@ from homeassistant.helpers.restore_state import RestoreEntity
 from homeassistant.helpers.event import async_track_state_change
 from homeassistant.helpers.json import JSONEncoder
 from homeassistant.components import recorder
-from homeassistant.components.recorder.models import Events
+try:
+  # Try new import, starting in HA 2022.7.0
+  from homeassistant.components.recorder.db_schema import Events
+except ImportError:
+  from homeassistant.components.recorder.models import Events
 from homeassistant.helpers.service import async_register_admin_service
 
 _LOGGER = logging.getLogger(__name__)
@@ -40,7 +44,7 @@ CONF_COLUMN = 'column'
 CONF_TRACKED_ENTITY_ID = 'tracked_entity_id'
 CONF_TRACKED_EVENT_TYPE = 'tracked_event_type'
 CONF_ATTRIBUTES = 'attributes'
-
+CONF_UNIQUE_ID = 'unique_id'
 ATTR_VALUE = 'value'
 
 def validate_event_types(value: Union[str, Sequence]) -> Sequence[str]:
@@ -92,6 +96,7 @@ CONFIG_SCHEMA = vol.Schema({
             vol.Optional(ATTR_UNIT_OF_MEASUREMENT): cv.string,
             vol.Optional(CONF_RESTORE): cv.boolean,
             vol.Optional(CONF_FORCE_UPDATE): cv.boolean,
+            vol.Optional(CONF_UNIQUE_ID): cv.string,
             vol.Optional(ATTR_FRIENDLY_NAME): cv.string,
             vol.Optional(CONF_FRIENDLY_NAME_TEMPLATE): cv.template,
             vol.Optional(CONF_ICON): cv.icon,
@@ -148,10 +153,11 @@ async def _load_from_config(hass, config, component):
         initial_value = cfg.get(CONF_INITIAL_VALUE)
         unit = cfg.get(ATTR_UNIT_OF_MEASUREMENT)
         restore = cfg.get(CONF_RESTORE, True)
-        force_update = cfg.get(CONF_FORCE_UPDATE, False) 
+        force_update = cfg.get(CONF_FORCE_UPDATE, False)
         friendly_name = cfg.get(ATTR_FRIENDLY_NAME, object_id)
         icon = cfg.get(CONF_ICON)
         entity_picture = cfg.get(ATTR_ENTITY_PICTURE)
+        unique_id = cfg.get(CONF_UNIQUE_ID)
 
         value_template = cfg.get(CONF_VALUE_TEMPLATE)
         attribute_templates = cfg.get(CONF_ATTRIBUTES)
@@ -190,6 +196,7 @@ async def _load_from_config(hass, config, component):
             Variable(
                 hass,
                 object_id,
+                unique_id,
                 initial_value,
                 value_template,
                 attribute_templates,
@@ -218,7 +225,7 @@ async def _load_from_config(hass, config, component):
 class Variable(RestoreEntity):
     """Representation of a variable."""
 
-    def __init__(self, hass, object_id, initial_value, value_template, attribute_templates,
+    def __init__(self, hass, object_id, unique_id, initial_value, value_template, attribute_templates,
                  session, query, column, unit, restore, force_update,
                  friendly_name, friendly_name_template, icon,
                  icon_template, entity_picture, entity_picture_template,
@@ -249,6 +256,7 @@ class Variable(RestoreEntity):
         self._stop_track_state_change = None
         self._tracked_event_types = tracked_event_types
         self._stop_track_events = []
+        self._attr_unique_id = unique_id
 
     def _is_event_in_db(self, event):
         """Query the database to see if the event has been written."""

@@ -1,5 +1,4 @@
 {
-    "title": "Meross LAN",
     "config": {
         "flow_title": "Meross {device_type}",
         "abort": {
@@ -15,7 +14,6 @@
         },
         "step": {
             "user": {
-                "title": "Meross LAN",
                 "description": "Setup meross device",
                 "data": {}
             },
@@ -27,8 +25,7 @@
                 }
             },
             "device": {
-                "title": "Meross LAN",
-                "description": "Setup meross device",
+                "description": "Setup meross device\nType: {device_type}\nUUID: {device_id}",
                 "data": {
                     "host": "Device host address",
                     "keymode": "Key selection mode",
@@ -68,7 +65,7 @@
             },
             "device": {
                 "title": "Device configuration",
-                "description": "Type: {device_type}\nUUID: {device_id}\nHost: {host}\n\n{payload}",
+                "description": "Type: {device_type}\nUUID: {device_id}\nHost: {host}",
                 "data": {
                     "host": "Device host address",
                     "keymode": "Key selection mode",

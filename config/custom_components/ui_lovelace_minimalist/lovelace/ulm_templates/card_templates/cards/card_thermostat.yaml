@@ -4,7 +4,6 @@ card_thermostat:
   template:
     - "ulm_translation_engine"
     - "icon_more_info_new"
-    - "ulm_actions_card"
   variables:
     ulm_card_thermostat_name: "[[[ return entity.attributes.friendly_name ]]]"
     ulm_card_thermostat_icon: "[[[ return 'mdi:thermometer' ]]]"
@@ -16,6 +15,8 @@ card_thermostat:
     ulm_card_thermostat_enable_horizontal: false
     ulm_card_thermostat_enable_popup: false
     ulm_card_thermostat_fan_entity: null
+    ulm_card_thermostat_minimum_temp_spread: 1
+    ulm_card_thermostat_preset_mode: false
   show_icon: false
   show_name: false
   show_label: false
@@ -142,17 +143,23 @@ card_thermostat:
     item1:
       card:
         type: "custom:button-card"
-        template:
-          - "icon_more_info"
         custom_fields:
           item1:
             card:
               type: "custom:button-card"
               entity: "[[[ return entity.entity_id ]]]"
-              variables:
-                ulm_input_select_option: "[[[ return variables.ulm_input_select_option; ]]]"
-                ulm_input_select: "[[[ return variables.ulm_input_select; ]]]"
-                ulm_card_thermostat_enable_popup: "[[[ return variables.ulm_card_thermostat_enable_popup; ]]]"
+              variables: >
+                [[[
+                  let vars = variables;
+
+                  if(variables.ulm_card_thermostat_enable_popup) {
+                    vars.ulm_custom_popup = {
+                      'template': 'popup_thermostat_temperature',
+                      'popup_variables': {'ulm_card_thermostat_preset_mode': variables.ulm_card_thermostat_preset_mode }
+                    };
+                  }
+                  return vars;
+                ]]]
               icon: "[[[ return variables.ulm_card_thermostat_icon ]]]"
               state:
                 - operator: "template"
@@ -179,10 +186,18 @@ card_thermostat:
             card:
               type: "custom:button-card"
               entity: "[[[ return entity.entity_id ]]]"
-              variables:
-                ulm_input_select_option: "[[[ return variables.ulm_input_select_option; ]]]"
-                ulm_input_select: "[[[ return variables.ulm_input_select; ]]]"
-                ulm_card_thermostat_enable_popup: "[[[ return variables.ulm_card_thermostat_enable_popup; ]]]"
+              variables: >
+                [[[
+                  let vars = variables;
+
+                  if(variables.ulm_card_thermostat_enable_popup) {
+                    vars.ulm_custom_popup = {
+                      'template': 'popup_thermostat_temperature',
+                      'popup_variables': {'ulm_card_thermostat_preset_mode': variables.ulm_card_thermostat_preset_mode }
+                    };
+                  }
+                  return vars;
+                ]]]
               name: "[[[ return variables.ulm_card_thermostat_name ]]]"
               label: >-
                 [[[
@@ -218,7 +233,7 @@ card_thermostat:
                         const unit = hass.config.unit_system.temperature
                         const step = entity.attributes.target_temp_step || (unit == '°F' ? 1.0 : 0.5)
                         const new_temp =  (parseFloat(entity.attributes.target_temp_high) - step)
-                        return (new_temp < entity.attributes.target_temp_low ? new_temp : entity.attributes.target_temp_low);
+                        return (new_temp - variables.ulm_card_thermostat_minimum_temp_spread < entity.attributes.target_temp_low ? new_temp - variables.ulm_card_thermostat_minimum_temp_spread : entity.attributes.target_temp_low);
                       }
                     ]]]
                   target_temp_high: |
@@ -393,7 +408,7 @@ card_thermostat:
                       const unit = hass.config.unit_system.temperature
                       const step = entity.attributes.target_temp_step || (unit == '°F' ? 1.0 : 0.5)
                       const new_temp = (parseFloat(entity.attributes.target_temp_low) + step)
-                      return (new_temp > entity.attributes.target_temp_high ? new_temp : entity.attributes.target_temp_high)
+                      return (new_temp + variables.ulm_card_thermostat_minimum_temp_spread > entity.attributes.target_temp_high ? new_temp + variables.ulm_card_thermostat_minimum_temp_spread : entity.attributes.target_temp_high)
                     ]]]
                   entity_id: "[[[ return entity.entity_id ]]]"
               state:
