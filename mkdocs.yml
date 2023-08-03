@@ -87,23 +87,21 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
-repo_url: https://github.com/twhite96/SuburbanSmarts
-repo_name: twhite96/SuburbanSmarts
+repo_url: https://github.com/twhite96/tifflabs
+repo_name: twhite96/tifflabs
 extra:
   disqus: "SuburbanSmarts"
   social:
     - icon: "fontawesome/solid/globe"
-      link: "https://suburbansmarts.org"
+      link: "https://tifflabs.org"
     - icon: "fontawesome/brands/github"
-      link: "https://github.com/twhite96/SuburbanSmarts"
-    - icon: "fontawesome/brands/twitter"
-      link: "https://twitter.com/SuburbanSmarts"
+      link: "https://github.com/twhite96/tifflabs"
     - icon: "fontawesome/brands/youtube"
       link: "https://www.youtube.com/@SuburbanSmarts"
 copyright: "Copyright &copy; 2021 - 2023 Tiffany White"
 site_author: "Tiffany White"
-site_name: Suburban Smarts
-site_url: "https://docs.suburbansmarts.org/"
+site_name: Tiff Labs
+site_url: "https://docs.tifflabs.org/"
 dev_addr: "0.0.0.0:8000"
 site_description: "Documentation for my over-engineered smart apartment"
 extra_css:
