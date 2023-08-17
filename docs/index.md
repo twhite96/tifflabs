@@ -18,34 +18,27 @@ disqus: "overrides/partials/disqus.html"
 <h1 align="center">Welcome to my Smart Home!</h1>
 
 
-=== "Living Room"
+=== "Main Room"
 
-    ![Living Room](./images/HA-Dashboard-Screenshots/living-room.webp){: loading=lazy }
+    ![Main Room](./images/HA-Dashboard-Screenshots/living-room.webp){: loading=lazy }
 
-=== "Bedroom"
+=== "Other Dashboards"
 
-    ![Bedroom](./images/HA-Dashboard-Screenshots/bedroom.webp){: loading=lazy }
-
-
-=== "Kitchen"
-
-    ![Kitchen](./images/HA-Dashboard-Screenshots/kitchen.webp){: loading=lazy }
-
-
-=== "Office"
-
-    ![Office](./images/HA-Dashboard-Screenshots/office.webp){: loading=lazy }
-
+    ![Networking](./images/HA-Dashboard-Screenshots/network-speeds.webp){: loading=lazy }
+    
+    ![Devices](./images/HA-Dashboard-Screenshots/device-monitoring.webp){: loading=lazy }
+    
+    ![Energy](./images/HA-Dashboard-Screenshots/energy.webp){: loading=lazy }
 
 === "Home Network Topology"
 
     ![network](./images/SuburbanSmarts-Page-1.jpg){: loading=lazy }
     <p align="center"><strong>You can find a larger picture of this diagram at <a href="images/diagram.png">at this link</a>. You can also get the XML file <a href="images/SuburbanSmarts.drawio.xml" download="suburban-smarts-diagram">over here.</a></strong></p>
 
-=== "Home Alarm System"
+<!-- === "Home Alarm System"
 
     ![Front Porch](./images/HA-Dashboard-Screenshots/security.webp){: loading=lazy }
-    
+     -->
 
 
 
@@ -107,7 +100,7 @@ I have a [public Notion board][notion] with ideas and tasks for my smart home. Y
 
 <!-- References -->
 
-[notion]: https://tiffanywhite.notion.site/01507ea26b0a433d8f6c010e07a9eede?v=59ac97c69a7a41d1b82bc3a08fa9a1dd
+[notion]: https://tifflabs.notion.site/tifflabs/3463e6e8136c448da09cfff4ef00c553?v=f4207e2f0822443abd4fd0d9f033db35
 [github-url]: https://github.com/twhite96/SuburbanSmarts
 [denys-docs-url]: https://denysdovhan.com/smart-home
 [macburys-docs]: https://macbury.github.io/SmartHouse/

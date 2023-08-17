@@ -49,7 +49,7 @@ theme:
   #     bug: fontawesome/solid/robot
   #     example: fontawesome/solid/flask
   #     quote: fontawesome/solid/quote-left
-  favicon: images/favi.png
+  favicon: images/favi.svg
   features:
     - navigation.instant
     - navigation.tracking
