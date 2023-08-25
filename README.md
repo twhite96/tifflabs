@@ -26,8 +26,8 @@
 This project has moved over to my documentation site, https://docs.tifflabs.org. Check them out for more information.
 
 
-!!!note "Beware of changes"
-    The configuration files for my Home Assistant Instance is in a different repo, which you can find https://haconfig.tiff.tools.
+[NOTE]\ "Beware of changes"
+The configuration files for my Home Assistant Instance is in a different repo, which you can find https://haconfig.tiff.tools.
 
 For general updates, you can check out the Suburban Smarts blog, https://tifflabs.org, and more stuff at https://links.tifflabs.org/.
 
