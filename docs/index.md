@@ -59,9 +59,7 @@ disqus: "overrides/partials/disqus.html"
   <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?color=%23ff0000&style=for-the-badge">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/twhite96/SuburbanSmarts?color=%23fa476f&style=for-the-badge">
   <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/twhite96/SuburbanSmarts/ci.yml?branch=main&color=4AF2A1&style=for-the-badge"  >
-  <img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m789189727-a36056ec240ae744a06b8a8e?color=%2377ee9f&style=for-the-badge">
-  <img alt="Uptime Robot ratio (30 days)" src="https://img.shields.io/uptimerobot/ratio/m789189727-a36056ec240ae744a06b8a8e?color=%2377ee9f&style=for-the-badge">
-  </img>
+  <img src="https://uptime.tifflabs.org/api/badge/1/status?upColor=%232ece9d&downColor=%23ff0000&pendingColor=%23eb64b9&maintenanceColor=%23b4dce7&style=for-the-badge" />
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/twhite96/SuburbanSmarts?color=%234fbad6&style=for-the-badge">
   <a href="https://www.buymeacoffee.com/tiffanywhitedev">
     <img src="https://img.shields.io/badge/Buy_Me_A_Coffee-gray?style=for-the-badge&logo=buy-me-a-coffee&logoColor=fdd937" />
