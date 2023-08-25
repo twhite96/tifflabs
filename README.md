@@ -26,6 +26,8 @@
 This project has moved over to my documentation site, https://docs.tifflabs.org. Check them out for more information.
 
 
+
+
 > [!IMPORTANT]\
 > **Beware of changes**
     The configuration files for my Home Assistant Instance is in a different repo, which you can find https://haconfig.tiff.tools.
