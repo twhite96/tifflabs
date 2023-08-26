@@ -12,7 +12,7 @@ disqus: "overrides/partials/disqus.html"
 
 
 <p align="center">
-  <img src="images/tifflabs2.png" width="1200"/>
+  <img src="images/tifflabs3.png" width="1200"/>
 </p>
 
 <h1 align="center">Welcome to my Smart Home!</h1>
@@ -22,12 +22,14 @@ disqus: "overrides/partials/disqus.html"
 
     ![Main Room](./images/HA-Dashboard-Screenshots/living-room.webp){: loading=lazy }
 
-=== "Other Dashboards"
+=== "Monitoring"
 
     ![Networking](./images/HA-Dashboard-Screenshots/network-speeds.webp){: loading=lazy }
     
     ![Devices](./images/HA-Dashboard-Screenshots/device-monitoring.webp){: loading=lazy }
-    
+
+=== "Energy"
+
     ![Energy](./images/HA-Dashboard-Screenshots/energy.webp){: loading=lazy }
 
 === "Home Network Topology"
