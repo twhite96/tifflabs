@@ -12,7 +12,7 @@ disqus: "overrides/partials/disqus.html"
 
 
 <p align="center">
-  <img src="images/tifflabs3.png" width="1200"/>
+  <img src="images/tiff.svg" width="1200"/>
 </p>
 
 <h1 align="center">Welcome to my Smart Home!</h1>
