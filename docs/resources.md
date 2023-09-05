@@ -40,3 +40,4 @@ On this page, I'm trying to collect useful resources I used to improve my home:
 
 - [Awesome Home Assistant](https://www.awesome-ha.com/) for general links related to Home Assistant
 - [Home Assistant Twitter](https://twitter.com/home_assistant) for news and community interactions
+
