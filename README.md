@@ -2,6 +2,8 @@
   <img src="images/tifflabs.gif" width="1200"/>
 </p>
 
+
+
 <h1 align="center">Tiff Labs <br />Smart Home Configuration</h1>
 <h3 align="center">Home Assistant Configuration &amp; Documentation for my Smart Home.</h3>
 <p align="center">
