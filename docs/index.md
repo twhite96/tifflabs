@@ -9,7 +9,7 @@ disqus: "overrides/partials/disqus.html"
   I live in <img src="images/us.png"/>, and therefore my links are for where I purchased from. There may be better (and most likely cheaper) sites in your local regions.</p>
 <p align="center">Be sure to ⭐ my repo!</p>  -->
 
-
+<a rel="me" style="display:none;" href="https://fosstodon.org/@tiff">Mastodon</a>
 
 <p align="center">
   <img src="images/tiff.svg" width="1200"/>
