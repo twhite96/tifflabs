@@ -14,13 +14,6 @@ As you know, Home Assistant is a *rabbit hole*, a *time sink*. So I've added mor
     ![Home](../images/HA-Dashboard-Screenshots/living-room.webp){: loading=lazy }
     The Living room part of my Home dashboard.
 
-=== "CCTV"
-
-    ![Frigate](../images/HA-Dashboard-Screenshots/cctv.webp){: loading=lazy }
-    I'd been using MotionEye for quite a while but the frame rate was really poor. I was using a Raspberry Pi 4 with an SD card then, but even when I switch to my NUC the frame rates were below 1 fps, steadily, on all cameras, all pluged in and on WiFi 6 mesh hardware. I decided that, with the new hardware, I'd use Frigate for object detection and streaming video. 
-
-    I am still setting up object detection, as that is going to take a little fiddling.
-
 
 === "System Stats"
 
@@ -34,11 +27,6 @@ As you know, Home Assistant is a *rabbit hole*, a *time sink*. So I've added mor
     My second pride and joy, my home theater room dashboard. Still working on it, but it has all my gaming, TV, and music related interests on it.
 
     I am working on setting up <a href="https://github.com/hassio-addons/addon-tautulli/blob/main/README.md">Tautulli</a> for managing my Plex server. I am also thinking about migrating the server to dedicated hardware and not on my Mac Mini.
-
-=== "Cat Watch"
-
-    ![Cat watch](../images/HA-Dashboard-Screenshots/cat-monitor.webp){: loading=lazy }
-    The old girl loves to explore but there is no way for her to safely hide when someone comes in. I use this to let me know where she is at all times. I love that middle-aged cat and am hoping to ride off into the sunset with her. I don't want her to get out as she's skittish and would never make it.
 
 === "Energy Usage"
 
