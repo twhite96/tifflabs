@@ -98,7 +98,7 @@ extra:
       link: "https://github.com/twhite96/tifflabs"
     - icon: "fontawesome/brands/youtube"
       link: "https://www.youtube.com/@tifflabs"
-    - icon: "fontawesome/brands/Mastodon"
+    - icon: "fontawesome/brands/mastodon"
       link: "https://fosstodon.org/@tifflabs"
 copyright: "Copyright &copy; 2021 - 2023 Tiffany White"
 site_author: "Tiffany White"
