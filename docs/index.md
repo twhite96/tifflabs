@@ -9,7 +9,7 @@ disqus: "overrides/partials/disqus.html"
   I live in <img src="images/us.png"/>, and therefore my links are for where I purchased from. There may be better (and most likely cheaper) sites in your local regions.</p>
 <p align="center">Be sure to ⭐ my repo!</p>  -->
 
-<a rel="me" style="display:none;" href="https://fosstodon.org/@tiff">Mastodon</a>
+<a rel="me" style="display: none;" href="https://fosstodon.org/@tiff">Mastodon</a>
 
 <p align="center">
   <img src="images/tiff.svg" width="1200"/>
@@ -52,7 +52,7 @@ disqus: "overrides/partials/disqus.html"
 
 ## All the badges
 <p>
-  <img<img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
+  <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/HA-Version_10.3-41BDF5?style=for-the-badge&logo=homeassistant">
   <img alt="Maintenance" src="https://img.shields.io/maintenance/yes/2023?color=4af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
