@@ -90,6 +90,11 @@ theme:
 repo_url: https://github.com/twhite96/tifflabs
 repo_name: twhite96/tifflabs
 extra:
+  plugins:
+    - material-plausible
+  analytics:
+      provider: plausible
+      domain: example.com
   disqus: "SuburbanSmarts"
   social:
     - icon: "fontawesome/solid/globe"
@@ -100,6 +105,7 @@ extra:
       link: "https://www.youtube.com/@tifflabs"
     - icon: "fontawesome/brands/mastodon"
       link: "https://fosstodon.org/@tifflabs"
+  
 copyright: "Copyright &copy; 2021 - 2023 Tiffany White"
 site_author: "Tiffany White"
 site_name: Tiff Labs

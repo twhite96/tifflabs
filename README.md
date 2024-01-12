@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/tifflabs.gif" width="1200"/>
+  <img src="images/tifflabs.svg" width="1200"/>
 </p>
 
 

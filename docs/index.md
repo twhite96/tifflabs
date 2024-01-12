@@ -12,7 +12,7 @@ disqus: "overrides/partials/disqus.html"
 <a rel="me" style="display: none;" href="https://fosstodon.org/@tiff">Mastodon</a>
 
 <p align="center">
-  <img src="images/tiff.svg" width="1200"/>
+  <img src="images/labs.png" width="1200"/>
 </p>
 
 <h1 align="center">Welcome to my Smart Home!</h1>
