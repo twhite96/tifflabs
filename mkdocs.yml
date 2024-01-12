@@ -94,7 +94,7 @@ extra:
     - material-plausible
   analytics:
       provider: plausible
-      domain: example.com
+      domain: docs.tifflabs.org
   disqus: "SuburbanSmarts"
   social:
     - icon: "fontawesome/solid/globe"
