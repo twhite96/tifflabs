@@ -106,7 +106,7 @@ I have a [public Notion board][notion] with ideas and tasks for my smart home. Y
 
 <!-- References -->
 
-[notion]: https://tifflabs.notion.site/tifflabs/3463e6e8136c448da09cfff4ef00c553?v=f4207e2f0822443abd4fd0d9f033db35
+[notion]: https://tifflabs.notion.site/Home-Automation-Planner-a959620c46b74977a5209fdf6c2d3b40?pvs=4
 [github-url]: https://github.com/twhite96/SuburbanSmarts
 [denys-docs-url]: https://denysdovhan.com/smart-home
 [macburys-docs]: https://macbury.github.io/SmartHouse/
