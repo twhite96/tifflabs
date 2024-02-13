@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/tifflabs.svg" width="1200"/>
+  <img src="images/labs.png" width="1200"/>
 </p>
 
 
@@ -19,10 +19,13 @@
   <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?style=for-the-badge">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/twhite96/tifflabs?color=%23fa476f&style=for-the-badge">
   <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/twhite96/tifflabs/ci.yml?branch=main&color=4AF2A1&style=for-the-badge"  >
-  <img src="https://uptime.tifflabs.org/api/badge/1/status?upColor=%232ece9d&downColor=%23ff0000&pendingColor=%23eb64b9&maintenanceColor=%23b4dce7&style=for-the-badge" />
+  <!-- <img src="https://uptime.tifflabs.org/api/badge/1/status?upColor=%232ece9d&downColor=%23ff0000&pendingColor=%23eb64b9&maintenanceColor=%23b4dce7&style=for-the-badge" /> -->
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/twhite96/SuburbanSmarts?color=%234fbad6&style=for-the-badge">
   <a href="https://www.buymeacoffee.com/tifflabs">
     <img src="https://img.shields.io/badge/Buy_Me_A_Coffee-gray?style=for-the-badge&logo=buy-me-a-coffee&logoColor=fdd937" />
+  </a>
+  <a href="https://github.com/sponsors/twhite96/button">
+    <img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/twhite96?style=for-the-badge&logo=github&logoColor=black&labelColor=white&color=hotpink">
   </a>
 </p>
 This project has moved over to my documentation site, https://docs.tifflabs.org. Check them out for more information.
