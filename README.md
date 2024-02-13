@@ -25,7 +25,7 @@
     <img src="https://img.shields.io/badge/Buy_Me_A_Coffee-gray?style=for-the-badge&logo=buy-me-a-coffee&logoColor=fdd937" />
   </a>
   <a href="https://github.com/sponsors/twhite96/button">
-    <img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/twhite96?style=for-the-badge&logo=github&logoColor=black&labelColor=white&color=hotpink">
+    <img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/twhite96?style=for-the-badge&logo=github&logoColor=black&label=Sponsor&labelColor=white&color=hotpink">
   </a>
 </p>
 This project has moved over to my documentation site, https://docs.tifflabs.org. Check them out for more information.
