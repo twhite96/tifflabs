@@ -7,50 +7,9 @@ disqus: 'overrides/partials/disqus.html'
     come back if you'd like!
 
 # Docker Containers
-## Portainer CE
 
-![](/images/portainer.webp)
+I've moved all of my Docker containers to Proxmox VMs, which you can check out on the [Proxmox](../proxmox) page!
 
-
-## Pihole
-
-![](/images/pihole.webp)
-
-## Ngnix Proxy Manager
-
-![](/images/nginx-proxy-manager1.webp)
-
-## Duplicati
-
-![](/images/duplicati.webp)
-
-
-## Calibre Web
-
-![](/images/calibre-web.webp)
-
-## Calibre Files
-
-![](/images/calibre-files.webp)
-
-## HA Files
-
-![](/images/ha-files.webp)
-
-## ESPHome
-
-![](/images/esphome.webp)
-
-## Heimdall Dashboard
-
-![](/images/heimdall.webp)
-
-## Uptime Kuma
-
-![](/images/uptime-kuma.webp)
-## Pihole
-
-![](/images/pihole.webp)
 
 !!!note Update
     I am running a small server farm in my house, and in an effort to redesign my dashboards, I wanted to run another version of Home Assistant on a headless server running in Docker. This meant that I had to learn more about HA Supervised. Since digging into how that works, I am debating whether I should move my whole system to a Docker install running HA Supervised.    

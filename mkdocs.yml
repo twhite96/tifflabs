@@ -21,6 +21,7 @@ nav:
   - Software:
       - System Overview: Software/system-overview.md
       - Docker Containers: Software/docker.md
+      - Proxmox: Software/proxmox.md
       - External Access: Software/external-access.md
       - Ad-Blocking: Software/ad-blocking.md
       # - Ports: Software/ports.md

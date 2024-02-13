@@ -12,7 +12,7 @@ disqus: "overrides/partials/disqus.html"
 <a rel="me" style="display: none;" href="https://fosstodon.org/@tiff">Mastodon</a>
 
 <p align="center">
-  <img src="images/labs.png" width="1200"/>
+  <img src="labs.png" width="1200"/>
 </p>
 
 <h1 align="center">Welcome to my Smart Home!</h1>
@@ -61,10 +61,13 @@ disqus: "overrides/partials/disqus.html"
   <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?color=%23ff0000&style=for-the-badge">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/twhite96/SuburbanSmarts?color=%23fa476f&style=for-the-badge">
   <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/twhite96/SuburbanSmarts/ci.yml?branch=main&color=4AF2A1&style=for-the-badge"  >
-  <img src="https://uptime.tifflabs.org/api/badge/1/status?upColor=%232ece9d&downColor=%23ff0000&pendingColor=%23eb64b9&maintenanceColor=%23b4dce7&style=for-the-badge" />
+  <!-- <img src="https://uptime.tifflabs.org/api/badge/1/status?upColor=%232ece9d&downColor=%23ff0000&pendingColor=%23eb64b9&maintenanceColor=%23b4dce7&style=for-the-badge" /> -->
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/twhite96/SuburbanSmarts?color=%234fbad6&style=for-the-badge">
   <a href="https://www.buymeacoffee.com/tiffanywhitedev">
     <img src="https://img.shields.io/badge/Buy_Me_A_Coffee-gray?style=for-the-badge&logo=buy-me-a-coffee&logoColor=fdd937" />
+  </a>
+  <a href="https://github.com/sponsors/twhite96/button">
+    <img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/twhite96?style=for-the-badge&logo=github&logoColor=black&label=Sponsor&labelColor=white&color=hotpink">
   </a>
 </p>
 
@@ -97,6 +100,9 @@ I'm renting my townhouse. My landlord handles fixing stuff in my home, covering 
 I have a [public Notion board][notion] with ideas and tasks for my smart home. You can follow and comment my plans there.
 
 [See future plans][notion]{: .md-button }
+
+
+
 
 <!-- References -->
 
