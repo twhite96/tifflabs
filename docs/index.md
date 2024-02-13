@@ -78,7 +78,7 @@ The best way to discover new ideas and inspire is by [reading the code][github-u
 Read this documentation to see the bigger picture:
 
 [Hardware](./hardware){: .md-button }
-[Software](./Software/system-overview){: .md-button }
+[Software](./Software/overview){: .md-button }
 [Home Assistant](./HomeAssistant/introduction){: .md-button }
 [Resources](./resources){: .md-button }
 [Topology](./topology){: .md-button}

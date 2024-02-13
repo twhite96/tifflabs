@@ -19,7 +19,7 @@ nav:
   - Home: index.md
   - Hardware: hardware.md
   - Software:
-      - System Overview: Software/system-overview.md
+      - System Overview: Software/overview.md
       - Docker Containers: Software/docker.md
       - Proxmox: Software/proxmox.md
       - External Access: Software/external-access.md
