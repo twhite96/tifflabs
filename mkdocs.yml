@@ -107,8 +107,8 @@ extra:
     - icon: "fontawesome/brands/mastodon"
       link: "https://fosstodon.org/@tifflabs"
   
-copyright: "Copyright &copy; 2021 - 2024 Tiffany White"
-site_author: "Tiffany White"
+copyright: "Copyright &copy; 2021 - 2024 Tiff Labs"
+site_author: "tiff"
 site_name: Tiff Labs
 site_url: "https://docs.tifflabs.org/"
 dev_addr: "0.0.0.0:8000"
