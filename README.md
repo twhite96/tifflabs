@@ -12,7 +12,7 @@
 <p>
   <img<img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/HA-Version_10.3-41BDF5?style=for-the-badge&logo=homeassistant">
-  <img src="https://img.shields.io/maintenance/yes/2023?color=%234af2a1&style=for-the-badge">
+  <img src="https://img.shields.io/maintenance/yes/2024?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/tifflabs?color=%234af2a1&style=for-the-badge">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/twhite96/tifflabs?color=%23ff000f&style=for-the-badge">
