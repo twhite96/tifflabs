@@ -4,15 +4,10 @@ hide:
 disqus: "overrides/partials/disqus.html"
 ---
 
-<!-- <h3 align="center">Home Assistant Configuration &amp; Documentation for my Smart Home.</h3> -->
-<!-- <p align="center">
-  I live in <img src="images/us.png"/>, and therefore my links are for where I purchased from. There may be better (and most likely cheaper) sites in your local regions.</p>
-<p align="center">Be sure to ⭐ my repo!</p>  -->
-
 <a rel="me" style="display: none;" href="https://fosstodon.org/@tiff">Mastodon</a>
 
 <p align="center">
-  <img src="labs.png" width="1200"/>
+  <img src="./images/labs.svg"/>
 </p>
 
 <h1 align="center">Welcome to my Smart Home!</h1>
@@ -32,15 +27,17 @@ disqus: "overrides/partials/disqus.html"
 
     ![Energy](./images/HA-Dashboard-Screenshots/energy.webp){: loading=lazy }
 
+
+=== "Wall Kiosk"
+
+    ![Home Control](./images/HA-Dashboard-Screenshots/home-control-dash-1.jpg){: loading=lazy }
+    
+    ![Media Control](./images/HA-Dashboard-Screenshots/media-dash-1.jpg){: loading=lazy }
+
 === "Home Network Topology"
 
     ![network](./images/SuburbanSmarts-Page-1.jpg){: loading=lazy }
     <p align="center"><strong>You can find a larger picture of this diagram at <a href="images/diagram.png">at this link</a>. You can also get the XML file <a href="images/SuburbanSmarts.drawio.xml" download="suburban-smarts-diagram">over here.</a></strong></p>
-
-<!-- === "Home Alarm System"
-
-    ![Front Porch](./images/HA-Dashboard-Screenshots/security.webp){: loading=lazy }
-     -->
 
 
 
