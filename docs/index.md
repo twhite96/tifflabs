@@ -67,7 +67,7 @@ disqus: "overrides/partials/disqus.html"
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/HA-Version_12.2-41BDF5?style=for-the-badge&logo=homeassistant">
-  <img alt="Maintenance" src="https://img.shields.io/maintenance/yes/2024?color=4af2a1&style=for-the-badge">
+  <img src="https://img.shields.io/maintenance/yes/2024?color=%234af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/tifflabs?color=%234af2a1&style=for-the-badge">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/twhite96/tifflabs?color=%23ff000f&style=for-the-badge">
@@ -76,14 +76,13 @@ disqus: "overrides/partials/disqus.html"
   <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/twhite96/tifflabs/ci.yml?branch=main&color=4AF2A1&style=for-the-badge"  >
   <!-- <img src="https://uptime.tifflabs.org/api/badge/1/status?upColor=%232ece9d&downColor=%23ff0000&pendingColor=%23eb64b9&maintenanceColor=%23b4dce7&style=for-the-badge" /> -->
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/twhite96/SuburbanSmarts?color=%234fbad6&style=for-the-badge">
-  <a href="https://www.buymeacoffee.com/tiffanywhitedev">
+  <a href="https://www.buymeacoffee.com/tifflabs">
     <img src="https://img.shields.io/badge/Buy_Me_A_Coffee-gray?style=for-the-badge&logo=buy-me-a-coffee&logoColor=fdd937" />
   </a>
   <a href="https://github.com/sponsors/twhite96/button">
     <img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/twhite96?style=for-the-badge&logo=github&logoColor=black&label=Sponsor&labelColor=white&color=hotpink">
   </a>
 </p>
-
 ## Lost and don't know where to start?
 
 The best way to discover new ideas and inspire is by [reading the code][github-url], copying-pasting parts of my configuration and adjusting it to your needs.
