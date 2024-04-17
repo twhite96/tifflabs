@@ -1,0 +1,64 @@
+/* :root {
+    --md-primary-fg-color: #ff0000;
+    --md-primary-fg-color--light: #ECB7B6 !important;
+    --md-primary-fg-color--dark: #90030C !important;
+} */
+
+
+
+figcaption {
+  margin: 0.5rem 0;
+  font-size: 80%;
+}
+
+[data-md-color-primary=red] {
+  --md-primary-fg-color: #ff0000;
+  --md-primary-fg-color--light: #ECB7B6;
+  --md-primary-fg-color--dark: #90030C;
+  --md-primary-bg-color: #fff;
+  --md-primary-bg-color--light: hsla(0,0%,100%,.7);
+  --md-primary-bn-color: #330306;
+}
+
+
+
+
+small.caption-text {
+  color: gray;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 1.66667em;
+  padding-top: 1%;
+  text-align: center;
+}
+
+.md-top {
+  background-color: rgba(255, 0, 0, 1);
+  color: white;
+}
+
+.md-top:hover {
+  background-color: hsla(356, 96%, 29%, 60);
+  color: white;
+}
+
+.md-typeset .admonition {
+  /* border: none; */
+  box-shadow: 0px 7px 54px 5px rgba(0,0,0,0.1);
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  border-width: 0;
+  border-left-width: 4px;
+}
+
+.md-banner {
+  background-color: var(--md-primary-bn-color);
+  overflow: auto;
+}
+
+.md-banner.md-typeset a {
+  color: var(--md-primary-bg-color);
+}
