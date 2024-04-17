@@ -13,15 +13,31 @@ disqus: "overrides/partials/disqus.html"
 <h1 align="center">Welcome to my Smart Home!</h1>
 
 
-=== "Main Room"
+=== "Main Dashboards"
 
-    ![Main Room](./images/HA-Dashboard-Screenshots/living-room.webp){: loading=lazy }
+    ![Main Room](./images/HA-Dashboard-Screenshots/new-ha-main-dash.png){: loading=lazy }
+
+
+    ![Clean and Climate](./images/HA-Dashboard-Screenshots/new-ha-clean-and-air-dash.png){: loading=lazy }
+
+
+    ![Media](./images/HA-Dashboard-Screenshots/new-ha-media-dash.png){: loading=lazy }
+
+
+    ![Main Room](./images/HA-Dashboard-Screenshots/new-ha-things-control-dash.png){: loading=lazy }
 
 === "Monitoring"
 
-    ![Networking](./images/HA-Dashboard-Screenshots/network-speeds.webp){: loading=lazy }
+    ![Networking](./images/HA-Dashboard-Screenshots/new-ha-apex-charts-dash.png){: loading=lazy }
     
-    ![Devices](./images/HA-Dashboard-Screenshots/device-monitoring.webp){: loading=lazy }
+    
+    ![Devices](./images/HA-Dashboard-Screenshots/new-ha-things-status-dash.png){: loading=lazy }
+
+
+    ![Frigate](./images/HA-Dashboard-Screenshots/new-ha-frigate-dash.png){: loading=lazy }
+
+    
+    ![Devices](./images/HA-Dashboard-Screenshots/new-ha-grafana-dash.png){: loading=lazy }
 
 === "Energy"
 
@@ -50,14 +66,14 @@ disqus: "overrides/partials/disqus.html"
 ## All the badges
 <p>
   <img src="https://img.shields.io/github/last-commit/twhite96/SmartHome?color=%234af2a1&style=for-the-badge">
-  <img src="https://img.shields.io/badge/HA-Version_10.3-41BDF5?style=for-the-badge&logo=homeassistant">
+  <img src="https://img.shields.io/badge/HA-Version_12.2-41BDF5?style=for-the-badge&logo=homeassistant">
   <img alt="Maintenance" src="https://img.shields.io/maintenance/yes/2024?color=4af2a1&style=for-the-badge">
   <img src="https://img.shields.io/badge/License-Unlicense-blueviolet?style=for-the-badge" />
-  <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/SuburbanSmarts?color=%234af2a1&style=for-the-badge">
-  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/twhite96/SuburbanSmarts?color=%23ff000f&style=for-the-badge">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/twhite96/tifflabs?color=%234af2a1&style=for-the-badge">
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/twhite96/tifflabs?color=%23ff000f&style=for-the-badge">
   <img alt="GitHub followers" src="https://img.shields.io/github/followers/twhite96?color=%23ff0000&style=for-the-badge">
-  <img alt="GitHub forks" src="https://img.shields.io/github/forks/twhite96/SuburbanSmarts?color=%23fa476f&style=for-the-badge">
-  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/twhite96/SuburbanSmarts/ci.yml?branch=main&color=4AF2A1&style=for-the-badge"  >
+  <img alt="GitHub forks" src="https://img.shields.io/github/forks/twhite96/tifflabs?color=%23fa476f&style=for-the-badge">
+  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/twhite96/tifflabs/ci.yml?branch=main&color=4AF2A1&style=for-the-badge"  >
   <!-- <img src="https://uptime.tifflabs.org/api/badge/1/status?upColor=%232ece9d&downColor=%23ff0000&pendingColor=%23eb64b9&maintenanceColor=%23b4dce7&style=for-the-badge" /> -->
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/twhite96/SuburbanSmarts?color=%234fbad6&style=for-the-badge">
   <a href="https://www.buymeacoffee.com/tiffanywhitedev">
@@ -78,7 +94,6 @@ Read this documentation to see the bigger picture:
 [Software](./Software/overview){: .md-button }
 [Home Assistant](./HomeAssistant/introduction){: .md-button }
 [Resources](./resources){: .md-button }
-[Topology](./topology){: .md-button}
 
 
 ## Motivation
